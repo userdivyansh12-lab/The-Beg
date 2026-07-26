@@ -41,10 +41,8 @@
             overflow-x: hidden;
             -webkit-user-select: none;
             user-select: none;
-            position: relative;
         }
 
-        /* FIXED: Lighter background image */
         .hero-bg-image {
             position: fixed;
             top: 0;
@@ -52,10 +50,10 @@
             width: 100%;
             height: 100%;
             background: url('https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/hero-bg.jpg') center/cover no-repeat;
-            opacity: 0.55;
+            opacity: 0.5;
             z-index: 0;
-            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
-            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
         }
         .hero-bg-overlay {
             position: fixed;
@@ -63,12 +61,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at center, rgba(10,10,15,0.15) 0%, rgba(10,10,15,0.5) 70%, rgba(10,10,15,0.85) 100%);
+            background: radial-gradient(ellipse at center, rgba(10,10,15,0.2) 0%, rgba(10,10,15,0.5) 70%, rgba(10,10,15,0.8) 100%);
             z-index: 1;
             pointer-events: none;
         }
 
-        /* Particle Canvas */
         #particlesCanvas {
             position: fixed;
             top: 0;
@@ -80,7 +77,6 @@
             opacity: 0.3;
         }
 
-        /* Main Container */
         .main-container {
             position: relative;
             z-index: 2;
@@ -89,7 +85,6 @@
             padding: 20px 24px 40px;
         }
 
-        /* Header */
         .header-area {
             display: flex;
             justify-content: space-between;
@@ -97,8 +92,6 @@
             padding: 15px 0 10px;
             flex-wrap: wrap;
             gap: 15px;
-            position: relative;
-            z-index: 3;
         }
         .nav-logo {
             font-family: 'Georgia', serif;
@@ -112,7 +105,6 @@
             text-transform: uppercase;
         }
 
-        /* Golden Quote */
         .golden-quote-wrapper {
             position: relative;
             display: inline-block;
@@ -155,12 +147,9 @@
             text-shadow: 0 0 6px rgba(212, 168, 83, 0.3);
         }
 
-        /* Hero Section */
         .hero-section {
             text-align: center;
             padding: 25px 20px 20px;
-            position: relative;
-            z-index: 2;
         }
         .hero-badge {
             display: inline-block;
@@ -236,15 +225,12 @@
             letter-spacing: 1px;
         }
 
-        /* Season Selector */
         .season-selector-wrapper {
             margin: 20px 0 10px;
             overflow-x: auto;
             scrollbar-width: thin;
             scrollbar-color: rgba(212, 168, 83, 0.3) transparent;
             padding-bottom: 6px;
-            position: relative;
-            z-index: 2;
         }
         .season-selector-wrapper::-webkit-scrollbar {
             height: 3px;
@@ -278,7 +264,6 @@
             border-color: var(--gold);
             color: var(--text);
             background: var(--bg-card-hover);
-            box-shadow: 0 4px 15px rgba(212, 168, 83, 0.1);
         }
         .season-tab.active {
             background: linear-gradient(135deg, rgba(212, 168, 83, 0.2) 0%, rgba(139, 105, 20, 0.3) 100%);
@@ -292,11 +277,8 @@
             pointer-events: none;
         }
 
-        /* Episodes Grid */
         .episodes-section {
             margin-top: 8px;
-            position: relative;
-            z-index: 2;
         }
         .season-title-display {
             font-family: 'Georgia', serif;
@@ -323,16 +305,15 @@
         .episode-card:hover {
             background: var(--bg-card-hover);
             border-color: rgba(212, 168, 83, 0.3);
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
             transform: translateY(-2px);
         }
         .episode-card.available {
-            border-color: rgba(46, 204, 113, 0.35);
+            border-color: rgba(46, 204, 113, 0.4);
             cursor: pointer;
         }
         .episode-card.available:hover {
-            border-color: rgba(46, 204, 113, 0.6);
-            box-shadow: 0 0 28px rgba(46, 204, 113, 0.12);
+            border-color: rgba(46, 204, 113, 0.7);
+            box-shadow: 0 0 28px rgba(46, 204, 113, 0.15);
         }
         .episode-card.next-episode {
             border-color: rgba(240, 208, 120, 0.5);
@@ -414,7 +395,6 @@
             }
         }
 
-        /* PDF Viewer Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -563,7 +543,6 @@
             font-size: 0.8rem;
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -581,7 +560,6 @@
             transition: all 0.4s ease;
             pointer-events: none;
             font-size: 0.78rem;
-            backdrop-filter: blur(15px);
         }
         .toast.show {
             opacity: 1;
@@ -592,7 +570,6 @@
             color: #e74c3c;
         }
 
-        /* Loading */
         .loading-indicator {
             text-align: center;
             padding: 25px;
@@ -628,28 +605,17 @@
                 height: 45vh;
                 width: 98%;
             }
-            .watermark-text-overlay {
-                font-size: 2rem;
-                letter-spacing: 6px;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Image - FIXED: Lighter opacity -->
     <div class="hero-bg-image"></div>
     <div class="hero-bg-overlay"></div>
-
-    <!-- Particles -->
     <canvas id="particlesCanvas"></canvas>
-
-    <!-- Toast -->
     <div class="toast" id="toast"></div>
 
-    <!-- Main Container -->
     <div class="main-container">
-        <!-- Header -->
         <div class="header-area">
             <span class="nav-logo">The Beg</span>
             <div class="golden-quote-wrapper">
@@ -662,7 +628,6 @@
             </div>
         </div>
 
-        <!-- Hero Section -->
         <section class="hero-section">
             <div class="hero-badge">🎬 GRAPHIC NOVEL SERIES</div>
             <h1 class="hero-title">THE BEG</h1>
@@ -676,12 +641,10 @@
             <p class="next-episode-info" id="nextEpisodeInfo">Loading schedule...</p>
         </section>
 
-        <!-- Season Selector -->
         <div class="season-selector-wrapper">
             <div class="season-selector" id="seasonSelector"></div>
         </div>
 
-        <!-- Episodes -->
         <section class="episodes-section" id="episodesSection">
             <h2 class="season-title-display" id="seasonTitleDisplay">Season 1</h2>
             <div class="episode-grid" id="episodeGrid">
@@ -690,7 +653,6 @@
         </section>
     </div>
 
-    <!-- PDF Viewer Modal -->
     <div class="modal-overlay" id="pdfModal">
         <div class="modal-header">
             <span class="modal-title" id="pdfModalTitle">📖 Reading Episode</span>
@@ -719,7 +681,10 @@
             const RELEASE_BASE_URL = 'https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/';
 
             let currentViewingSeason = CURRENT_SEASON;
-            let availableEpisodes = {};
+            // FIXED: Pre-load known uploaded episodes. Add more as you upload them.
+            let availableEpisodes = {
+                'S1E01': true
+            };
             let isCheckingGitHub = false;
             let pdfDoc = null,
                 currentPdfPage = 0,
@@ -788,25 +753,41 @@
 
             function getFileKey(s, e) { return `S${s}E${String(e).padStart(2,'0')}`; }
 
+            // FIXED: Check files using Image trick to bypass CORS
             async function checkGitHubForEpisodes() {
                 if (isCheckingGitHub) return;
                 isCheckingGitHub = true;
-                const results = {};
+
                 const checks = [];
-                for (let s = 1; s <= TOTAL_SEASONS; s++)
-                    for (let e = 1; e <= EPISODES_PER_SEASON; e++)
-                        checks.push({ key: getFileKey(s, e), url: RELEASE_BASE_URL + getFileKey(s, e) + '.pdf' });
-                for (let i = 0; i < checks.length; i += 10) {
-                    const batch = checks.slice(i, i + 10);
-                    await Promise.allSettled(batch.map(item =>
-                        fetch(item.url, { method: 'HEAD', mode: 'cors' })
-                        .then(r => { if (r.ok) results[item.key] = true; })
-                        .catch(() => {})
-                    ));
+                for (let s = 1; s <= TOTAL_SEASONS; s++) {
+                    for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
+                        const fileKey = getFileKey(s, e);
+                        if (availableEpisodes[fileKey]) continue; // Skip already known
+                        const url = RELEASE_BASE_URL + fileKey + '.pdf';
+                        checks.push({ fileKey, url });
+                    }
                 }
-                availableEpisodes = results;
+
+                // Check in small batches using Image trick
+                for (let i = 0; i < checks.length; i += 5) {
+                    const batch = checks.slice(i, i + 5);
+                    await Promise.all(batch.map(item => {
+                        return new Promise((resolve) => {
+                            const img = new Image();
+                            img.onload = () => {
+                                availableEpisodes[item.fileKey] = true;
+                                resolve();
+                            };
+                            img.onerror = () => resolve();
+                            img.src = item.url + '#page=1';
+                            setTimeout(() => resolve(), 3000);
+                        });
+                    }));
+                }
+
                 isCheckingGitHub = false;
-                console.log('✅ GitHub check complete. Available:', Object.keys(availableEpisodes).length);
+                console.log('✅ GitHub check complete. Available:', Object.keys(availableEpisodes).sort());
+                renderEpisodes();
             }
 
             function updateCountdown() {
@@ -903,7 +884,7 @@
                 document.getElementById('pdfModal').classList.add('active');
                 document.body.style.overflow = 'hidden';
                 document.getElementById('pdfCanvasWrapper').innerHTML =
-                    '<div style="color:#d4a853;text-align:center;padding:40px;">⏳ Loading PDF...</div>';
+                    '<div style="color:#d4a853;text-align:center;padding:40px;">⏳ Loading PDF from GitHub...</div>';
                 pdfjsLib.GlobalWorkerOptions.workerSrc =
                     'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
                 try {
@@ -913,8 +894,9 @@
                     await renderPdfPage(currentPdfPage);
                     updatePdfControls();
                 } catch (err) {
+                    console.error('PDF load error:', err);
                     document.getElementById('pdfCanvasWrapper').innerHTML =
-                        '<div style="color:#e74c3c;text-align:center;padding:40px;">❌ Error loading PDF.</div>';
+                        '<div style="color:#e74c3c;text-align:center;padding:40px;">❌ Error loading PDF. Please try again.</div>';
                     showToast('Error loading PDF.', 'error');
                 }
             }
@@ -930,12 +912,6 @@
                 canvas.height = viewport.height;
                 const ctx = canvas.getContext('2d');
                 await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-                ctx.save();
-                ctx.globalAlpha = 0.02;
-                ctx.fillStyle = '#d4a853';
-                ctx.font = 'bold 28px Georgia, serif';
-                ctx.fillText('THE BEG', canvas.width / 2 - 80, canvas.height / 2);
-                ctx.restore();
                 wrapper.appendChild(canvas);
                 document.getElementById('pdfViewerContainer').scrollTop = 0;
             }
@@ -1006,20 +982,15 @@
                 initParticles();
                 buildSeasonSelector();
                 setupProtections();
-                document.getElementById('episodeGrid').innerHTML =
-                    '<div class="loading-indicator">⏳ Checking GitHub for available episodes...</div>';
-                await checkGitHubForEpisodes();
                 renderEpisodes();
                 updateCountdown();
                 setInterval(updateCountdown, 1000);
-                setInterval(async () => {
-                    await checkGitHubForEpisodes();
-                    renderEpisodes();
-                    buildSeasonSelector();
-                }, 300000);
+                // Check for new uploads every 2 minutes
+                setTimeout(() => checkGitHubForEpisodes(), 5000);
+                setInterval(() => checkGitHubForEpisodes(), 120000);
             }
 
-            init().then(() => console.log('🚀 The Beg Portal Ready')).catch(err => console.error(err));
+            init().then(() => console.log('🚀 The Beg Portal Ready - S1E01 available'));
         })();
     </script>
 </body>

@@ -17,14 +17,14 @@
             --text-muted: #8a8070;
             --glass-border: rgba(212, 168, 83, 0.2);
             --card-radius: 16px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: 0.3s ease;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; -webkit-user-select: none; user-select: none; }
         body {
             font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background: var(--bg-deep);
-            color: var(--text);
+            background: #0a0a0f;
+            color: #e0d5c1;
             min-height: 100vh;
             overflow-x: hidden;
             -webkit-user-select: none;
@@ -71,7 +71,7 @@
         .hero-badge {
             display: inline-block; background: rgba(212,168,83,0.1); border: 1px solid rgba(212,168,83,0.3);
             padding: 6px 16px; border-radius: 30px; font-size: 0.75rem; letter-spacing: 2px;
-            color: var(--gold-light); margin-bottom: 15px; animation: pulseBadge 3s ease-in-out infinite;
+            color: #f0d078; margin-bottom: 15px; animation: pulseBadge 3s ease-in-out infinite;
         }
         @keyframes pulseBadge {
             0%, 100% { box-shadow: 0 0 8px rgba(212,168,83,0.2); }
@@ -83,16 +83,16 @@
             -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
             letter-spacing: 6px; margin-bottom: 8px;
         }
-        .hero-subtitle { font-size: 0.9rem; color: var(--text-muted); letter-spacing: 3px; margin-bottom: 20px; }
+        .hero-subtitle { font-size: 0.9rem; color: #8a8070; letter-spacing: 3px; margin-bottom: 20px; }
         .countdown-container { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
         .countdown-item {
-            background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border);
+            background: rgba(18,18,26,0.8); backdrop-filter: blur(15px); border: 1px solid rgba(212,168,83,0.2);
             border-radius: 16px; padding: 14px 18px; min-width: 70px; text-align: center;
             box-shadow: 0 0 15px rgba(212,168,83,0.1);
         }
-        .countdown-value { font-family: 'Georgia', serif; font-size: 2rem; font-weight: bold; color: var(--gold-light); }
-        .countdown-label { font-size: 0.6rem; letter-spacing: 2px; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; }
-        .next-episode-info { margin-top: 12px; color: var(--gold); font-size: 0.8rem; letter-spacing: 1px; }
+        .countdown-value { font-family: 'Georgia', serif; font-size: 2rem; font-weight: bold; color: #f0d078; }
+        .countdown-label { font-size: 0.6rem; letter-spacing: 2px; color: #8a8070; margin-top: 2px; text-transform: uppercase; }
+        .next-episode-info { margin-top: 12px; color: #d4a853; font-size: 0.8rem; letter-spacing: 1px; }
         .season-selector-wrapper {
             margin: 20px 0 10px; overflow-x: auto; scrollbar-width: thin;
             scrollbar-color: rgba(212,168,83,0.3) transparent; padding-bottom: 6px;
@@ -102,28 +102,28 @@
         .season-selector { display: flex; gap: 8px; padding: 4px 6px; min-width: max-content; }
         .season-tab {
             flex-shrink: 0; padding: 10px 20px; border-radius: 25px;
-            border: 1px solid rgba(255,255,255,0.12); background: var(--bg-card);
-            color: var(--text-muted); cursor: pointer; font-weight: 600; letter-spacing: 1px;
-            transition: var(--transition); font-size: 0.78rem; white-space: nowrap; backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12); background: rgba(18,18,26,0.8);
+            color: #8a8070; cursor: pointer; font-weight: 600; letter-spacing: 1px;
+            transition: 0.3s ease; font-size: 0.78rem; white-space: nowrap; backdrop-filter: blur(10px);
         }
-        .season-tab:hover { border-color: var(--gold); color: var(--text); background: var(--bg-card-hover); }
+        .season-tab:hover { border-color: #d4a853; color: #e0d5c1; background: rgba(26,26,40,0.9); }
         .season-tab.active {
             background: linear-gradient(135deg, rgba(212,168,83,0.2) 0%, rgba(139,105,20,0.3) 100%);
-            border-color: var(--gold); color: var(--gold-light); box-shadow: 0 0 20px rgba(212,168,83,0.2);
+            border-color: #d4a853; color: #f0d078; box-shadow: 0 0 20px rgba(212,168,83,0.2);
         }
         .season-tab.locked { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
         .episodes-section { margin-top: 8px; }
         .season-title-display {
-            font-family: 'Georgia', serif; font-size: 1.3rem; color: var(--gold-light);
+            font-family: 'Georgia', serif; font-size: 1.3rem; color: #f0d078;
             margin-bottom: 16px; letter-spacing: 2px; text-align: center;
         }
         .episode-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
         .episode-card {
-            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
-            border-radius: var(--card-radius); padding: 16px; transition: var(--transition);
+            background: rgba(18,18,26,0.8); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 16px; transition: 0.3s ease;
             position: relative; backdrop-filter: blur(10px);
         }
-        .episode-card:hover { background: var(--bg-card-hover); border-color: rgba(212,168,83,0.3); transform: translateY(-2px); }
+        .episode-card:hover { background: rgba(26,26,40,0.9); border-color: rgba(212,168,83,0.3); transform: translateY(-2px); }
         .episode-card.available { border-color: rgba(46,204,113,0.4); cursor: pointer; }
         .episode-card.available:hover { border-color: rgba(46,204,113,0.7); box-shadow: 0 0 28px rgba(46,204,113,0.15); }
         .episode-card.next-episode { border-color: rgba(240,208,120,0.5); animation: nextPulse 2.5s ease-in-out infinite; }
@@ -131,8 +131,8 @@
             0%, 100% { box-shadow: 0 0 12px rgba(240,208,120,0.08); }
             50% { box-shadow: 0 0 35px rgba(240,208,120,0.3); }
         }
-        .episode-number { font-family: 'Georgia', serif; font-size: 1.7rem; font-weight: bold; color: var(--gold); letter-spacing: 2px; }
-        .episode-title-area { margin-top: 2px; font-size: 0.78rem; color: var(--text-muted); letter-spacing: 1px; }
+        .episode-number { font-family: 'Georgia', serif; font-size: 1.7rem; font-weight: bold; color: #d4a853; letter-spacing: 2px; }
+        .episode-title-area { margin-top: 2px; font-size: 0.78rem; color: #8a8070; letter-spacing: 1px; }
         .episode-status {
             display: inline-block; padding: 4px 10px; border-radius: 16px;
             font-size: 0.65rem; letter-spacing: 1.5px; margin-top: 7px; font-weight: 600;
@@ -140,8 +140,7 @@
         .status-available { background: rgba(46,204,113,0.12); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
         .status-next { background: rgba(240,208,120,0.12); color: #f0d078; border: 1px solid rgba(240,208,120,0.35); }
         .status-coming { background: rgba(138,128,112,0.1); color: #8a8070; border: 1px solid rgba(138,128,112,0.2); }
-        .status-checking { background: rgba(52,152,219,0.1); color: #5dade2; border: 1px solid rgba(52,152,219,0.25); }
-        .episode-date { font-size: 0.68rem; color: var(--text-muted); margin-top: 5px; letter-spacing: 1px; }
+        .episode-date { font-size: 0.68rem; color: #8a8070; margin-top: 5px; letter-spacing: 1px; }
         .read-now-badge {
             position: absolute; top: 10px; right: 10px; background: #2ecc71; color: #000;
             padding: 3px 9px; border-radius: 12px; font-size: 0.62rem; letter-spacing: 1.5px;
@@ -159,16 +158,16 @@
         .modal-overlay.active { display: flex; }
         .modal-header {
             display: flex; align-items: center; justify-content: space-between;
-            width: 95%; max-width: 1100px; padding: 12px 18px; background: var(--bg-card);
+            width: 95%; max-width: 1100px; padding: 12px 18px; background: rgba(18,18,26,0.9);
             border-radius: 16px 16px 0 0; border: 1px solid rgba(255,255,255,0.08);
         }
-        .modal-title { font-family: 'Georgia', serif; color: var(--gold-light); letter-spacing: 2px; font-size: 0.9rem; }
+        .modal-title { font-family: 'Georgia', serif; color: #f0d078; letter-spacing: 2px; font-size: 0.9rem; }
         .modal-close {
             background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
             color: #fff; width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
-            font-size: 1.1rem; transition: var(--transition); display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; transition: 0.3s ease; display: flex; align-items: center; justify-content: center;
         }
-        .modal-close:hover { background: var(--accent); border-color: var(--accent); }
+        .modal-close:hover { background: #c0392b; border-color: #c0392b; }
         .pdf-iframe-container {
             position: relative; width: 95%; max-width: 1100px; height: 75vh; background: #525659;
             border-radius: 0 0 16px 16px; border: 1px solid rgba(255,255,255,0.08); border-top: none; overflow: hidden;
@@ -178,14 +177,6 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 10; background: transparent; pointer-events: all;
         }
-        .toast {
-            position: fixed; bottom: 20px; right: 20px; z-index: 3000; background: var(--bg-card);
-            border: 1px solid var(--gold); padding: 10px 20px; border-radius: 25px;
-            color: var(--gold-light); letter-spacing: 1px; font-weight: 600; opacity: 0;
-            transform: translateY(20px); transition: all 0.4s ease; pointer-events: none; font-size: 0.78rem;
-        }
-        .toast.show { opacity: 1; transform: translateY(0); }
-        .loading-indicator { text-align: center; padding: 25px; color: var(--text-muted); letter-spacing: 1px; grid-column: 1/-1; }
         @media (max-width:768px) {
             .hero-title { font-size: 2rem; letter-spacing: 3px; }
             .countdown-item { min-width: 55px; padding: 10px 12px; }
@@ -201,7 +192,6 @@
     <div class="hero-bg-image"></div>
     <div class="hero-bg-overlay"></div>
     <canvas id="particlesCanvas"></canvas>
-    <div class="toast" id="toast"></div>
 
     <div class="main-container">
         <div class="header-area">
@@ -230,7 +220,7 @@
 
         <section class="episodes-section" id="episodesSection">
             <h2 class="season-title-display" id="seasonTitleDisplay">Season 1</h2>
-            <div class="episode-grid" id="episodeGrid"><div class="loading-indicator">🔍 Auto-detecting episodes from GitHub...</div></div>
+            <div class="episode-grid" id="episodeGrid"></div>
         </section>
     </div>
 
@@ -239,8 +229,8 @@
             <span class="modal-title" id="pdfModalTitle">📖 Reading Episode</span>
             <button class="modal-close" onclick="closePdfViewer()">✕</button>
         </div>
-        <div class="pdf-iframe-container" id="pdfIframeContainer" oncontextmenu="return false">
-            <div class="iframe-protection" id="iframeProtection"></div>
+        <div class="pdf-iframe-container" oncontextmenu="return false">
+            <div class="iframe-protection"></div>
             <iframe id="pdfIframe" src="" allowfullscreen></iframe>
         </div>
     </div>
@@ -249,13 +239,13 @@
         (function() {
             const TOTAL_SEASONS = 10;
             const EPISODES_PER_SEASON = 10;
-            const TOTAL_EPISODES = 100;
             const START_DATE = new Date(2026, 6, 26);
-            const CURRENT_SEASON = 1;
             const RELEASE_BASE_URL = 'https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/';
 
-            let currentViewingSeason = CURRENT_SEASON;
-            let availableEpisodes = {};
+            let currentViewingSeason = 1;
+            // Auto-detect which seasons are available
+            let availableSeasons = new Set([1]);
+            let checkedFiles = {};
             let isChecking = false;
 
             function initParticles() {
@@ -264,152 +254,190 @@
                 let particles = [];
                 function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
                 resize(); window.addEventListener('resize', resize);
-                class Particle {
-                    constructor() { this.reset(); }
-                    reset() {
-                        this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
-                        this.size = Math.random() * 1.5 + 0.3;
-                        this.speedX = (Math.random() - 0.5) * 0.3; this.speedY = (Math.random() - 0.5) * 0.3;
-                        this.opacity = Math.random() * 0.4 + 0.06; this.fadeSpeed = Math.random() * 0.003 + 0.001;
-                    }
-                    update() {
-                        this.x += this.speedX; this.y += this.speedY; this.opacity += this.fadeSpeed;
-                        if (this.opacity >= 0.5 || this.opacity <= 0.03) this.fadeSpeed *= -1;
-                        if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) this.reset();
-                    }
-                    draw() {
-                        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(212,168,83,${this.opacity})`; ctx.fill();
-                    }
+                for (let i = 0; i < 40; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                        size: Math.random() * 1.5 + 0.3,
+                        speedX: (Math.random() - 0.5) * 0.3, speedY: (Math.random() - 0.5) * 0.3,
+                        opacity: Math.random() * 0.4 + 0.06, fadeSpeed: Math.random() * 0.003 + 0.001
+                    });
                 }
-                for (let i = 0; i < 40; i++) particles.push(new Particle());
-                function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => {
+                        p.x += p.speedX; p.y += p.speedY; p.opacity += p.fadeSpeed;
+                        if (p.opacity >= 0.5 || p.opacity <= 0.03) p.fadeSpeed *= -1;
+                        if (p.x < -10 || p.x > canvas.width + 10 || p.y < -10 || p.y > canvas.height + 10) {
+                            p.x = Math.random() * canvas.width; p.y = Math.random() * canvas.height;
+                        }
+                        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(212,168,83,${p.opacity})`; ctx.fill();
+                    });
+                    requestAnimationFrame(animate);
+                }
                 animate();
             }
 
-            function getEpisodeReleaseDate(n) { const d = new Date(START_DATE); d.setDate(d.getDate() + (n - 1) * 7); return d; }
-            function getGlobalEpisodeNumber(s, e) { return (s - 1) * EPISODES_PER_SEASON + e; }
-            function getSeasonEpisode(n) { return { season: Math.ceil(n / EPISODES_PER_SEASON), episode: ((n - 1) % EPISODES_PER_SEASON) + 1 }; }
+            function getEpisodeDate(season, episode) {
+                const globalNum = (season - 1) * EPISODES_PER_SEASON + episode;
+                const d = new Date(START_DATE);
+                d.setDate(d.getDate() + (globalNum - 1) * 7);
+                return d;
+            }
+
             function getFileKey(s, e) { return `S${s}E${String(e).padStart(2, '0')}`; }
 
-            // AUTO-DETECT: Check if PDF exists using iframe trick
-            async function checkEpisode(fileKey) {
+            // Auto-detect available seasons based on episode 1
+            async function checkSeasonAvailability(season) {
+                if (availableSeasons.has(season)) return true;
+                const fileKey = getFileKey(season, 1);
+                if (checkedFiles[fileKey] !== undefined) return checkedFiles[fileKey];
+                
                 return new Promise((resolve) => {
                     const testFrame = document.createElement('iframe');
-                    testFrame.style.display = 'none';
+                    testFrame.style.cssText = 'position:absolute;width:0;height:0;border:0;visibility:hidden;';
                     testFrame.src = RELEASE_BASE_URL + fileKey + '.pdf?raw=true';
                     
-                    let resolved = false;
-                    const timeout = setTimeout(() => { if (!resolved) { resolved = true; resolve(false); } }, 2000);
+                    const timeout = setTimeout(() => {
+                        cleanup(false);
+                    }, 3000);
+                    
+                    const cleanup = (result) => {
+                        clearTimeout(timeout);
+                        if (testFrame.parentNode) testFrame.parentNode.removeChild(testFrame);
+                        checkedFiles[fileKey] = result;
+                        if (result) availableSeasons.add(season);
+                        resolve(result);
+                    };
                     
                     testFrame.onload = () => {
-                        try {
-                            // If iframe loads, check if it's actually a PDF (not GitHub error page)
-                            setTimeout(() => {
-                                if (!resolved) {
-                                    resolved = true;
-                                    clearTimeout(timeout);
-                                    resolve(true);
-                                }
-                            }, 500);
-                        } catch(e) {
-                            if (!resolved) { resolved = true; clearTimeout(timeout); resolve(false); }
-                        }
+                        setTimeout(() => cleanup(true), 500);
                     };
-                    testFrame.onerror = () => { if (!resolved) { resolved = true; clearTimeout(timeout); resolve(false); } };
+                    testFrame.onerror = () => cleanup(false);
                     
                     document.body.appendChild(testFrame);
-                    setTimeout(() => { document.body.removeChild(testFrame); if (!resolved) { resolved = true; resolve(false); } }, 2500);
                 });
             }
 
-            async function autoDetectEpisodes() {
+            async function autoDetectSeasons() {
                 if (isChecking) return;
                 isChecking = true;
                 
-                const checks = [];
-                for (let s = 1; s <= CURRENT_SEASON; s++) {
-                    for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
-                        const fileKey = getFileKey(s, e);
-                        if (!availableEpisodes[fileKey]) {
-                            checks.push({ fileKey, season: s, episode: e });
-                        }
+                // Check seasons 1 through 10
+                for (let s = 1; s <= TOTAL_SEASONS; s++) {
+                    if (s === 1) { availableSeasons.add(1); continue; }
+                    const prevSeasonEp1 = getFileKey(s - 1, 1);
+                    // Only check next season if previous season Ep1 exists
+                    if (checkedFiles[prevSeasonEp1] === true || availableSeasons.has(s - 1)) {
+                        await checkSeasonAvailability(s);
                     }
                 }
                 
-                // Check in small batches
-                for (let i = 0; i < checks.length; i += 3) {
-                    const batch = checks.slice(i, i + 3);
-                    await Promise.all(batch.map(async (item) => {
-                        const exists = await checkEpisode(item.fileKey);
-                        if (exists) availableEpisodes[item.fileKey] = true;
-                    }));
-                }
-                
                 isChecking = false;
+                buildSeasonSelector();
                 renderEpisodes();
-                console.log('✅ Auto-detection complete. Available:', Object.keys(availableEpisodes).sort());
             }
 
             function updateCountdown() {
                 const now = new Date();
-                let nextGlobal = null;
-                for (let i = 1; i <= TOTAL_EPISODES; i++) { if (getEpisodeReleaseDate(i) > now) { nextGlobal = i; break; } }
-                if (!nextGlobal) {
-                    ['Days','Hours','Mins','Secs'].forEach(id => document.getElementById('count'+id).textContent = '--');
-                    document.getElementById('nextEpisodeInfo').textContent = '🎉 All episodes released!'; return;
+                let nextDate = null, nextSeason, nextEpisode;
+                
+                for (let s = 1; s <= TOTAL_SEASONS; s++) {
+                    for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
+                        const date = getEpisodeDate(s, e);
+                        if (date > now) {
+                            if (!nextDate || date < nextDate) {
+                                nextDate = date;
+                                nextSeason = s;
+                                nextEpisode = e;
+                            }
+                            break;
+                        }
+                    }
+                    if (nextDate) break;
                 }
-                const diff = getEpisodeReleaseDate(nextGlobal) - now;
+                
+                if (!nextDate) {
+                    ['Days','Hours','Mins','Secs'].forEach(id => document.getElementById('count'+id).textContent = '--');
+                    document.getElementById('nextEpisodeInfo').textContent = '🎉 All episodes released!';
+                    return;
+                }
+                
+                const diff = nextDate - now;
                 document.getElementById('countDays').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
                 document.getElementById('countHours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
                 document.getElementById('countMins').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
                 document.getElementById('countSecs').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
-                const { season, episode } = getSeasonEpisode(nextGlobal);
-                document.getElementById('nextEpisodeInfo').textContent = `📅 Next: Season ${season}, Episode ${episode} — ${getEpisodeReleaseDate(nextGlobal).toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}`;
+                document.getElementById('nextEpisodeInfo').textContent = 
+                    `📅 Next: Season ${nextSeason}, Episode ${nextEpisode} — ${nextDate.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}`;
             }
 
             function buildSeasonSelector() {
-                const sel = document.getElementById('seasonSelector'); sel.innerHTML = '';
+                const sel = document.getElementById('seasonSelector'); 
+                sel.innerHTML = '';
+                const maxAvailable = Math.max(...availableSeasons, 1);
+                
                 for (let s = 1; s <= TOTAL_SEASONS; s++) {
-                    const tab = document.createElement('div'); tab.className = 'season-tab';
+                    const tab = document.createElement('div'); 
+                    tab.className = 'season-tab';
                     if (s === currentViewingSeason) tab.classList.add('active');
-                    if (s > CURRENT_SEASON) { tab.classList.add('locked'); tab.innerHTML = `Season ${s} 🔒`; }
-                    else { tab.textContent = `Season ${s}`; tab.addEventListener('click', () => { currentViewingSeason = s; buildSeasonSelector(); renderEpisodes(); document.getElementById('seasonTitleDisplay').textContent = `Season ${s}`; }); }
+                    
+                    if (s <= maxAvailable) {
+                        tab.textContent = `Season ${s}`;
+                        tab.addEventListener('click', () => { 
+                            currentViewingSeason = s; 
+                            buildSeasonSelector(); 
+                            renderEpisodes(); 
+                            document.getElementById('seasonTitleDisplay').textContent = `Season ${s}`; 
+                        });
+                    } else {
+                        tab.classList.add('locked');
+                        tab.innerHTML = `Season ${s} 🔒`;
+                    }
                     sel.appendChild(tab);
                 }
             }
 
             function renderEpisodes() {
-                const grid = document.getElementById('episodeGrid'); grid.innerHTML = '';
-                const now = new Date(); let firstUnreleased = null;
-                for (let i = 1; i <= TOTAL_EPISODES; i++) { if (getEpisodeReleaseDate(i) > now) { firstUnreleased = i; break; } }
+                const grid = document.getElementById('episodeGrid'); 
+                grid.innerHTML = '';
+                const now = new Date();
+                let firstUnreleased = null;
+                
+                for (let s = 1; s <= TOTAL_SEASONS; s++) {
+                    for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
+                        if (getEpisodeDate(s, e) > now) { firstUnreleased = { season: s, episode: e }; break; }
+                    }
+                    if (firstUnreleased) break;
+                }
+                
                 for (let ep = 1; ep <= EPISODES_PER_SEASON; ep++) {
-                    const globalNum = getGlobalEpisodeNumber(currentViewingSeason, ep);
-                    const releaseDate = getEpisodeReleaseDate(globalNum);
+                    const releaseDate = getEpisodeDate(currentViewingSeason, ep);
                     const isReleased = releaseDate <= now;
                     const fileKey = getFileKey(currentViewingSeason, ep);
-                    const isUploaded = availableEpisodes[fileKey] === true;
+                    const isUploaded = checkedFiles[fileKey] === true;
                     const isAvailable = isReleased && isUploaded;
-                    const isNext = (globalNum === firstUnreleased) && !isReleased;
-                    const isCheckingNow = isChecking;
+                    const isNext = firstUnreleased && 
+                        firstUnreleased.season === currentViewingSeason && 
+                        firstUnreleased.episode === ep;
                     
-                    const card = document.createElement('div'); card.className = 'episode-card';
+                    const card = document.createElement('div'); 
+                    card.className = 'episode-card';
                     if (isAvailable) card.classList.add('available');
                     if (isNext) card.classList.add('next-episode');
                     
-                    let statusText, statusClass;
-                    if (isAvailable) { statusText = '✅ Available Now'; statusClass = 'status-available'; }
-                    else if (isNext) { statusText = '⏳ Next Release'; statusClass = 'status-next'; }
-                    else if (isCheckingNow && isReleased) { statusText = '🔍 Checking...'; statusClass = 'status-checking'; }
-                    else if (isReleased && !isUploaded) { statusText = '⏳ Awaiting Upload'; statusClass = 'status-coming'; }
-                    else { statusText = '🔒 Coming Soon'; statusClass = 'status-coming'; }
-                    
-                    card.innerHTML = `<div class="episode-number">Ep. ${String(ep).padStart(2,'0')}</div>
+                    card.innerHTML = `
+                        <div class="episode-number">Ep. ${String(ep).padStart(2,'0')}</div>
                         <div class="episode-title-area">Season ${currentViewingSeason}, Episode ${ep}</div>
-                        <span class="episode-status ${statusClass}">${statusText}</span>
+                        <span class="episode-status ${isAvailable?'status-available':isNext?'status-next':'status-coming'}">${isAvailable?'✅ Available Now':isNext?'⏳ Next Release':isReleased?'⏳ Awaiting Upload':'🔒 Coming Soon'}</span>
                         <div class="episode-date">${releaseDate.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'})}</div>
-                        ${isAvailable?'<div class="read-now-badge">📖 READ</div>':''}`;
-                    if (isAvailable) { card.addEventListener('click', () => openPdfViewer(fileKey, currentViewingSeason, ep)); card.style.cursor = 'pointer'; }
+                        ${isAvailable?'<div class="read-now-badge">📖 READ</div>':''}
+                    `;
+                    
+                    if (isAvailable) { 
+                        card.addEventListener('click', () => openPdfViewer(fileKey, currentViewingSeason, ep)); 
+                        card.style.cursor = 'pointer'; 
+                    }
                     grid.appendChild(card);
                 }
                 document.getElementById('seasonTitleDisplay').textContent = `Season ${currentViewingSeason}`;
@@ -429,41 +457,44 @@
                 document.getElementById('pdfIframe').src = '';
             }
 
-            function setupProtections() {
-                document.addEventListener('contextmenu', e => e.preventDefault());
-                document.addEventListener('keydown', function(e) {
-                    if (e.ctrlKey && ['s','p','u','S','P','U'].includes(e.key)) e.preventDefault();
-                    if (e.ctrlKey && e.shiftKey && ['s','S','i','I'].includes(e.key)) e.preventDefault();
-                    if (e.key === 'F12' || e.key === 'PrintScreen') e.preventDefault();
-                });
-                document.addEventListener('dragstart', e => e.preventDefault());
-            }
-
+            // Protections
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && ['s','p','u','S','P','U'].includes(e.key)) e.preventDefault();
+                if (e.ctrlKey && e.shiftKey && ['s','S','i','I'].includes(e.key)) e.preventDefault();
+                if (e.key === 'F12' || e.key === 'PrintScreen') e.preventDefault();
+            });
+            document.addEventListener('dragstart', e => e.preventDefault());
             document.addEventListener('keydown', function(e) {
                 if (document.getElementById('pdfModal').classList.contains('active') && e.key === 'Escape') {
                     e.preventDefault(); closePdfViewer();
                 }
             });
-            document.getElementById('pdfModal').addEventListener('click', function(e) { if (e.target === this) closePdfViewer(); });
+            document.getElementById('pdfModal').addEventListener('click', function(e) { 
+                if (e.target === this) closePdfViewer(); 
+            });
 
             window.closePdfViewer = closePdfViewer;
 
             async function init() {
                 initParticles();
                 buildSeasonSelector();
-                setupProtections();
                 renderEpisodes();
                 updateCountdown();
                 setInterval(updateCountdown, 1000);
                 
-                // Auto-detect episodes on load
-                await autoDetectEpisodes();
+                // Auto-detect: check if S1E01 exists (your already uploaded file)
+                checkedFiles['S1E01'] = true;
+                availableSeasons.add(1);
+                renderEpisodes();
                 
-                // Re-check every 5 minutes for new uploads
-                setInterval(() => autoDetectEpisodes(), 300000);
+                // Then check for more in background
+                setTimeout(() => autoDetectSeasons(), 2000);
+                // Re-check every 10 minutes
+                setInterval(() => autoDetectSeasons(), 600000);
             }
             init();
-            console.log('🚀 The Beg Portal Ready - Auto-detection active');
+            console.log('🚀 The Beg - Fully Automatic Portal Ready');
         })();
     </script>
 </body>

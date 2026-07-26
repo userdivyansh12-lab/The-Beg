@@ -4,29 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Beg - Graphic Novel</title>
-    <meta name="description" content="The Beg - An epic graphic novel series. 10 Seasons, 100 Episodes.">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://unpkg.com; img-src 'self' data: blob: https:; media-src 'self' blob:;">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
-    </script>
+    <meta name="description" content="The Beg - 10 Seasons, 100 Episodes. New episode every Sunday.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://github.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:;">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         :root {
             --bg-deep: #0a0a0f;
-            --bg-card: #12121a;
-            --bg-card-hover: #1a1a28;
+            --bg-card: rgba(18, 18, 26, 0.85);
+            --bg-card-hover: rgba(26, 26, 40, 0.9);
             --gold: #d4a853;
             --gold-light: #f0d078;
-            --gold-dark: #8b6914;
             --accent: #c0392b;
-            --accent-glow: #e74c3c;
             --text: #e0d5c1;
             --text-muted: #8a8070;
-            --glass-bg: rgba(18, 18, 26, 0.85);
-            --glass-border: rgba(212, 168, 83, 0.25);
-            --neon-glow: 0 0 20px rgba(212, 168, 83, 0.4), 0 0 40px rgba(212, 168, 83, 0.15);
+            --glass-border: rgba(212, 168, 83, 0.2);
             --card-radius: 16px;
-            --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --font-heading: 'Georgia', 'Times New Roman', serif;
-            --font-body: 'Segoe UI', 'Helvetica Neue', sans-serif;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
@@ -39,25 +32,43 @@
             scroll-behavior: smooth;
             -webkit-user-select: none;
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none;
         }
 
         body {
-            font-family: var(--font-body);
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
             background: var(--bg-deep);
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
-            cursor: default;
-            position: relative;
             -webkit-user-select: none;
             user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
+            position: relative;
         }
 
-        /* === PARTICLE CANVAS BACKGROUND === */
+        /* Hero Background Image */
+        .hero-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/hero-bg.jpg') center/cover no-repeat;
+            opacity: 0.35;
+            z-index: 0;
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0) 80%);
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0) 80%);
+        }
+        .hero-bg-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(10,10,15,0.4) 0%, rgba(10,10,15,0.9) 80%);
+            z-index: 1;
+        }
+
+        /* Particle Canvas */
         #particlesCanvas {
             position: fixed;
             top: 0;
@@ -66,185 +77,99 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.6;
+            opacity: 0.4;
         }
 
-        /* === AMBIENT ORB BACKGROUNDS === */
-        .ambient-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.15;
-            animation: orbFloat 20s ease-in-out infinite;
-        }
-        .orb-1 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, #8b2fc9 0%, transparent 70%);
-            top: -200px;
-            right: -150px;
-            animation-delay: 0s;
-        }
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, #c0392b 0%, transparent 70%);
-            bottom: -150px;
-            left: -100px;
-            animation-delay: -7s;
-        }
-        .orb-3 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, #d4a853 0%, transparent 70%);
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -14s;
-        }
-        @keyframes orbFloat {
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
-            25% {
-                transform: translate(60px, -40px) scale(1.15);
-            }
-            50% {
-                transform: translate(-30px, 50px) scale(0.9);
-            }
-            75% {
-                transform: translate(-50px, -30px) scale(1.1);
-            }
-        }
-
-        /* === CHARACTER SILHOUETTES === */
-        .character-silhouette {
-            position: fixed;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.04;
-            filter: blur(2px);
-        }
-        .silhouette-left {
-            bottom: 0;
-            left: 5%;
-            width: 280px;
-            height: 500px;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 400'%3E%3Cpath d='M100 20 C130 20 155 45 160 75 C165 105 155 130 140 150 C155 160 170 180 175 210 C180 240 170 260 150 275 C160 290 165 310 155 330 C145 350 125 360 100 365 C75 360 55 350 45 330 C35 310 40 290 50 275 C30 260 20 240 25 210 C30 180 45 160 60 150 C45 130 35 105 40 75 C45 45 70 20 100 20Z' fill='white'/%3E%3Ccircle cx='85' cy='85' r='12' fill='%23d4a853'/%3E%3Ccircle cx='115' cy='85' r='12' fill='%23d4a853'/%3E%3C/svg%3E") no-repeat center/contain;
-        }
-        .silhouette-right {
-            bottom: 0;
-            right: 5%;
-            width: 260px;
-            height: 480px;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 400'%3E%3Cpath d='M100 15 C135 15 160 40 165 70 C170 100 158 125 142 148 C158 158 175 180 178 215 C181 250 168 268 148 282 C160 298 163 318 152 338 C141 358 120 368 100 372 C80 368 59 358 48 338 C37 318 40 298 52 282 C32 268 19 250 22 215 C25 180 42 158 58 148 C42 125 30 100 35 70 C40 40 65 15 100 15Z' fill='white'/%3E%3C/svg%3E") no-repeat center/contain;
-        }
-        .silhouette-hero {
-            top: 15%;
-            right: 8%;
-            width: 350px;
-            height: 550px;
-            opacity: 0.06;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 400'%3E%3Cpath d='M100 10 C140 10 170 38 178 72 C186 106 170 132 148 158 C165 170 182 195 185 230 C188 265 172 285 148 300 C162 318 164 340 150 360 C136 380 112 388 100 390 C88 388 64 380 50 360 C36 340 38 318 52 300 C28 285 12 265 15 230 C18 195 35 170 52 158 C30 132 14 106 22 72 C30 38 60 10 100 10Z' fill='white'/%3E%3Cpath d='M70 130 C55 145 45 170 50 195 C55 215 68 225 80 235' stroke='%23d4a853' stroke-width='3' fill='none'/%3E%3Cpath d='M130 130 C145 145 155 170 150 195 C145 215 132 225 120 235' stroke='%23d4a853' stroke-width='3' fill='none'/%3E%3C/svg%3E") no-repeat center/contain;
-        }
-
-        /* === MAIN CONTAINER === */
+        /* Main Container */
         .main-container {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             max-width: 1300px;
             margin: 0 auto;
             padding: 20px 24px;
         }
 
-        /* === NAVIGATION === */
-        .nav-bar {
+        /* Header */
+        .header-area {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 16px 28px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            margin-bottom: 30px;
-            position: sticky;
-            top: 16px;
-            z-index: 100;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            align-items: flex-start;
+            padding: 20px 0 10px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
         .nav-logo {
-            font-family: var(--font-heading);
-            font-size: 2rem;
+            font-family: 'Georgia', serif;
+            font-size: 2.2rem;
             font-weight: bold;
             background: linear-gradient(135deg, #f0d078 0%, #d4a853 40%, #8b6914 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-transform: uppercase;
         }
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            align-items: center;
+
+        /* Golden Quote */
+        .golden-quote-wrapper {
+            position: relative;
+            display: inline-block;
+            text-align: right;
         }
-        .nav-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition-smooth);
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 25px;
+        .star-top-left, .star-bottom-right {
+            position: absolute;
+            color: #f0d078;
+            font-size: 1.4rem;
+            animation: starPulse 2s ease-in-out infinite;
+            text-shadow: 0 0 12px rgba(240,208,120,0.9), 0 0 30px rgba(212,168,83,0.6);
         }
-        .nav-link:hover {
-            color: var(--gold-light);
-            background: rgba(212, 168, 83, 0.08);
+        .star-top-left {
+            top: -18px;
+            left: -22px;
+            animation-delay: 0s;
         }
-        .nav-link.active {
-            color: var(--gold);
-            background: rgba(212, 168, 83, 0.12);
+        .star-bottom-right {
+            bottom: -18px;
+            right: -22px;
+            animation-delay: 1s;
         }
-        .admin-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-muted);
-            padding: 8px 18px;
-            border-radius: 25px;
-            cursor: pointer;
+        @keyframes starPulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
+            }
+        }
+        .golden-quote {
+            font-family: 'Georgia', serif;
             font-size: 0.85rem;
-            transition: var(--transition-smooth);
-            letter-spacing: 1px;
-        }
-        .admin-btn:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            background: rgba(212, 168, 83, 0.06);
+            color: #f0d078;
+            letter-spacing: 2px;
+            line-height: 1.6;
+            text-shadow: 0 0 8px rgba(212,168,83,0.4);
         }
 
-        /* === HERO SECTION === */
+        /* Hero Section */
         .hero-section {
             text-align: center;
-            padding: 50px 20px 40px;
+            padding: 30px 20px 25px;
             position: relative;
+            z-index: 2;
         }
         .hero-badge {
             display: inline-block;
-            background: rgba(212, 168, 83, 0.12);
+            background: rgba(212, 168, 83, 0.1);
             border: 1px solid rgba(212, 168, 83, 0.3);
-            padding: 8px 20px;
+            padding: 7px 18px;
             border-radius: 30px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             letter-spacing: 2px;
             color: var(--gold-light);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             animation: pulseBadge 3s ease-in-out infinite;
         }
         @keyframes pulseBadge {
@@ -253,79 +178,72 @@
                 box-shadow: 0 0 8px rgba(212, 168, 83, 0.2);
             }
             50% {
-                box-shadow: 0 0 25px rgba(212, 168, 83, 0.5);
+                box-shadow: 0 0 22px rgba(212, 168, 83, 0.5);
             }
         }
         .hero-title {
-            font-family: var(--font-heading);
-            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-family: 'Georgia', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: bold;
             background: linear-gradient(180deg, #f5e6c8 0%, #d4a853 50%, #8b6914 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 5px;
-            margin-bottom: 10px;
-            line-height: 1.1;
+            letter-spacing: 6px;
+            margin-bottom: 8px;
         }
         .hero-subtitle {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
             letter-spacing: 3px;
-            margin-bottom: 25px;
+            margin-bottom: 22px;
         }
         .countdown-container {
             display: flex;
-            gap: 20px;
+            gap: 14px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 10px;
         }
         .countdown-item {
-            background: var(--glass-bg);
+            background: var(--bg-card);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 20px 24px;
-            min-width: 90px;
+            border-radius: 18px;
+            padding: 16px 20px;
+            min-width: 75px;
             text-align: center;
-            box-shadow: var(--neon-glow);
+            box-shadow: 0 0 18px rgba(212, 168, 83, 0.15);
         }
         .countdown-value {
-            font-family: var(--font-heading);
-            font-size: 3rem;
+            font-family: 'Georgia', serif;
+            font-size: 2.2rem;
             font-weight: bold;
             color: var(--gold-light);
-            line-height: 1;
         }
         .countdown-label {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             letter-spacing: 2px;
             color: var(--text-muted);
-            margin-top: 6px;
+            margin-top: 3px;
             text-transform: uppercase;
         }
         .next-episode-info {
-            margin-top: 18px;
+            margin-top: 14px;
             color: var(--gold);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             letter-spacing: 1px;
         }
 
-        /* === SEASON SELECTOR === */
+        /* Season Selector */
         .season-selector-wrapper {
-            margin: 30px 0 20px;
+            margin: 20px 0 10px;
             overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
             scrollbar-width: thin;
             scrollbar-color: rgba(212, 168, 83, 0.3) transparent;
-            padding-bottom: 8px;
+            padding-bottom: 6px;
         }
         .season-selector-wrapper::-webkit-scrollbar {
-            height: 4px;
-        }
-        .season-selector-wrapper::-webkit-scrollbar-track {
-            background: transparent;
+            height: 3px;
         }
         .season-selector-wrapper::-webkit-scrollbar-thumb {
             background: rgba(212, 168, 83, 0.3);
@@ -333,195 +251,171 @@
         }
         .season-selector {
             display: flex;
-            gap: 12px;
-            padding: 4px 8px;
+            gap: 8px;
+            padding: 4px 6px;
             min-width: max-content;
         }
         .season-tab {
             flex-shrink: 0;
-            padding: 14px 28px;
-            border-radius: 35px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 11px 22px;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
             background: var(--bg-card);
             color: var(--text-muted);
             cursor: pointer;
             font-weight: 600;
             letter-spacing: 1px;
-            transition: var(--transition-smooth);
-            font-size: 0.9rem;
+            transition: var(--transition);
+            font-size: 0.8rem;
             white-space: nowrap;
-            position: relative;
+            backdrop-filter: blur(15px);
         }
         .season-tab:hover {
             border-color: var(--gold);
             color: var(--text);
             background: var(--bg-card-hover);
-            box-shadow: 0 4px 20px rgba(212, 168, 83, 0.15);
+            box-shadow: 0 4px 18px rgba(212, 168, 83, 0.12);
         }
         .season-tab.active {
             background: linear-gradient(135deg, rgba(212, 168, 83, 0.2) 0%, rgba(139, 105, 20, 0.3) 100%);
             border-color: var(--gold);
             color: var(--gold-light);
-            box-shadow: var(--neon-glow);
+            box-shadow: 0 0 22px rgba(212, 168, 83, 0.25);
         }
         .season-tab.locked {
-            opacity: 0.5;
+            opacity: 0.35;
             cursor: not-allowed;
             pointer-events: none;
         }
-        .season-tab .lock-icon {
-            margin-left: 4px;
-            font-size: 0.7rem;
-        }
 
-        /* === EPISODE GRID === */
+        /* Episodes Grid */
         .episodes-section {
-            margin-top: 10px;
+            margin-top: 8px;
         }
         .season-title-display {
-            font-family: var(--font-heading);
-            font-size: 1.6rem;
+            font-family: 'Georgia', serif;
+            font-size: 1.4rem;
             color: var(--gold-light);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             letter-spacing: 2px;
             text-align: center;
         }
         .episode-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 14px;
         }
         .episode-card {
             background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: var(--card-radius);
-            padding: 22px;
-            transition: var(--transition-smooth);
+            padding: 18px;
+            transition: var(--transition);
             position: relative;
-            overflow: hidden;
-            cursor: default;
-        }
-        .episode-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            transition: left 0.6s ease;
-        }
-        .episode-card:hover::before {
-            left: 100%;
+            backdrop-filter: blur(15px);
         }
         .episode-card:hover {
             background: var(--bg-card-hover);
-            border-color: rgba(212, 168, 83, 0.35);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 168, 83, 0.08);
-            transform: translateY(-3px);
+            border-color: rgba(212, 168, 83, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            transform: translateY(-2px);
         }
         .episode-card.available {
-            border-color: rgba(212, 168, 83, 0.5);
+            border-color: rgba(46, 204, 113, 0.35);
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(212, 168, 83, 0.1);
         }
         .episode-card.available:hover {
-            box-shadow: 0 0 35px rgba(212, 168, 83, 0.25), 0 12px 40px rgba(0, 0, 0, 0.5);
-            border-color: var(--gold);
+            border-color: rgba(46, 204, 113, 0.65);
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.15);
         }
         .episode-card.next-episode {
-            border-color: rgba(240, 208, 120, 0.6);
+            border-color: rgba(240, 208, 120, 0.5);
             animation: nextPulse 2.5s ease-in-out infinite;
-            box-shadow: 0 0 25px rgba(240, 208, 120, 0.2);
         }
         @keyframes nextPulse {
             0%,
             100% {
-                box-shadow: 0 0 25px rgba(240, 208, 120, 0.2);
+                box-shadow: 0 0 15px rgba(240, 208, 120, 0.1);
             }
             50% {
-                box-shadow: 0 0 50px rgba(240, 208, 120, 0.45);
+                box-shadow: 0 0 40px rgba(240, 208, 120, 0.35);
             }
         }
         .episode-number {
-            font-family: var(--font-heading);
-            font-size: 2.2rem;
+            font-family: 'Georgia', serif;
+            font-size: 1.8rem;
             font-weight: bold;
             color: var(--gold);
             letter-spacing: 2px;
         }
         .episode-title-area {
-            margin-top: 6px;
-            font-size: 0.9rem;
+            margin-top: 3px;
+            font-size: 0.8rem;
             color: var(--text-muted);
             letter-spacing: 1px;
         }
         .episode-status {
             display: inline-block;
-            padding: 5px 14px;
-            border-radius: 20px;
-            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 18px;
+            font-size: 0.68rem;
             letter-spacing: 1.5px;
-            margin-top: 12px;
+            margin-top: 8px;
             font-weight: 600;
         }
         .status-available {
-            background: rgba(46, 204, 113, 0.15);
+            background: rgba(46, 204, 113, 0.12);
             color: #2ecc71;
-            border: 1px solid rgba(46, 204, 113, 0.35);
+            border: 1px solid rgba(46, 204, 113, 0.3);
         }
         .status-next {
-            background: rgba(240, 208, 120, 0.15);
+            background: rgba(240, 208, 120, 0.12);
             color: #f0d078;
-            border: 1px solid rgba(240, 208, 120, 0.4);
+            border: 1px solid rgba(240, 208, 120, 0.35);
         }
         .status-coming {
-            background: rgba(138, 128, 112, 0.12);
+            background: rgba(138, 128, 112, 0.1);
             color: #8a8070;
-            border: 1px solid rgba(138, 128, 112, 0.25);
-        }
-        .status-uploaded {
-            background: rgba(52, 152, 219, 0.15);
-            color: #5dade2;
-            border: 1px solid rgba(52, 152, 219, 0.3);
+            border: 1px solid rgba(138, 128, 112, 0.2);
         }
         .episode-date {
-            font-size: 0.78rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            margin-top: 8px;
+            margin-top: 6px;
             letter-spacing: 1px;
         }
         .read-now-badge {
             position: absolute;
-            top: 16px;
-            right: 16px;
-            background: var(--accent);
-            color: #fff;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.7rem;
+            top: 12px;
+            right: 12px;
+            background: #2ecc71;
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 14px;
+            font-size: 0.65rem;
             letter-spacing: 1.5px;
+            font-weight: 700;
             animation: badgeGlow 2s ease-in-out infinite;
             pointer-events: none;
         }
         @keyframes badgeGlow {
             0%,
             100% {
-                box-shadow: 0 0 8px rgba(231, 76, 60, 0.4);
+                box-shadow: 0 0 6px rgba(46, 204, 113, 0.4);
             }
             50% {
-                box-shadow: 0 0 22px rgba(231, 76, 60, 0.8);
+                box-shadow: 0 0 20px rgba(46, 204, 113, 0.8);
             }
         }
 
-        /* === PDF VIEWER MODAL === */
+        /* PDF Viewer Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.92);
+            background: rgba(0, 0, 0, 0.94);
             z-index: 1000;
             display: none;
             align-items: center;
@@ -538,27 +432,27 @@
             justify-content: space-between;
             width: 95%;
             max-width: 1100px;
-            padding: 14px 20px;
+            padding: 12px 18px;
             background: var(--bg-card);
-            border-radius: 20px 20px 0 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom: none;
+            border-radius: 18px 18px 0 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .modal-title {
-            font-family: var(--font-heading);
+            font-family: 'Georgia', serif;
             color: var(--gold-light);
             letter-spacing: 2px;
+            font-size: 0.9rem;
         }
         .modal-close {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.3rem;
-            transition: var(--transition-smooth);
+            font-size: 1.1rem;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -571,10 +465,10 @@
             position: relative;
             width: 95%;
             max-width: 1100px;
-            height: 75vh;
+            height: 65vh;
             background: #000;
-            border-radius: 0 0 20px 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0 0 18px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-top: none;
             overflow: hidden;
         }
@@ -585,16 +479,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
-            position: relative;
+            padding: 18px;
         }
         .pdf-canvas-wrapper canvas {
-            margin-bottom: 16px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7);
-            border-radius: 4px;
+            margin-bottom: 14px;
+            box-shadow: 0 6px 35px rgba(0, 0, 0, 0.7);
+            border-radius: 3px;
             max-width: 95%;
         }
-        /* Watermark overlay */
         .watermark-overlay {
             position: absolute;
             top: 0;
@@ -603,11 +495,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 10;
-            background: repeating-linear-gradient(-35deg,
-                    transparent,
-                    transparent 80px,
-                    rgba(212, 168, 83, 0.03) 80px,
-                    rgba(212, 168, 83, 0.03) 82px);
+            background: repeating-linear-gradient(-35deg, transparent, transparent 80px, rgba(212, 168, 83, 0.02) 80px, rgba(212, 168, 83, 0.02) 82px);
         }
         .watermark-text-overlay {
             position: absolute;
@@ -616,11 +504,11 @@
             transform: translate(-50%, -50%) rotate(-25deg);
             pointer-events: none;
             z-index: 11;
-            font-family: var(--font-heading);
-            font-size: 6rem;
-            color: rgba(212, 168, 83, 0.06);
+            font-family: 'Georgia', serif;
+            font-size: 4.5rem;
+            color: rgba(212, 168, 83, 0.03);
             white-space: nowrap;
-            letter-spacing: 15px;
+            letter-spacing: 14px;
             text-transform: uppercase;
         }
         .protection-layer {
@@ -630,194 +518,55 @@
             width: 100%;
             height: 100%;
             z-index: 20;
-            pointer-events: all;
             background: transparent;
+            pointer-events: all;
         }
         .pdf-controls {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
-            padding: 10px 20px;
+            padding: 8px 18px;
             background: var(--bg-card);
-            border-radius: 30px;
-            margin-top: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            margin-top: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .pdf-btn {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
-            padding: 10px 18px;
-            border-radius: 25px;
+            padding: 8px 16px;
+            border-radius: 22px;
             cursor: pointer;
-            transition: var(--transition-smooth);
-            font-size: 0.85rem;
+            transition: var(--transition);
+            font-size: 0.8rem;
             letter-spacing: 1px;
         }
         .pdf-btn:hover {
-            background: rgba(212, 168, 83, 0.15);
+            background: rgba(212, 168, 83, 0.12);
             border-color: var(--gold);
         }
         .pdf-btn:disabled {
-            opacity: 0.4;
+            opacity: 0.35;
             cursor: not-allowed;
         }
         .page-indicator {
             color: var(--gold-light);
             font-weight: 600;
             letter-spacing: 1px;
-            font-size: 0.9rem;
-        }
-
-        /* === ADMIN PANEL === */
-        .admin-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-        .admin-overlay.active {
-            display: flex;
-        }
-        .admin-panel {
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 30px;
-            width: 90%;
-            max-width: 700px;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-        }
-        .admin-panel h2 {
-            font-family: var(--font-heading);
-            color: var(--gold-light);
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .admin-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        .admin-input {
-            flex: 1;
-            min-width: 150px;
-            padding: 12px 16px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: var(--bg-deep);
-            color: #fff;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-        .admin-input:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 168, 83, 0.2);
-        }
-        .admin-select {
-            padding: 12px 16px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: var(--bg-deep);
-            color: #fff;
-            font-size: 0.9rem;
-            cursor: pointer;
-            letter-spacing: 1px;
-        }
-        .admin-btn-primary {
-            background: var(--gold);
-            color: #000;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 700;
-            letter-spacing: 1px;
-            transition: var(--transition-smooth);
-        }
-        .admin-btn-primary:hover {
-            background: var(--gold-light);
-            box-shadow: 0 0 25px rgba(212, 168, 83, 0.5);
-        }
-        .admin-btn-danger {
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent-glow);
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            letter-spacing: 1px;
-            transition: var(--transition-smooth);
-        }
-        .admin-btn-danger:hover {
-            background: rgba(231, 76, 60, 0.15);
-        }
-        .admin-list {
-            list-style: none;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .admin-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             font-size: 0.85rem;
-            letter-spacing: 1px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .admin-list .uploaded-badge {
-            background: rgba(46, 204, 113, 0.2);
-            color: #2ecc71;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-        }
-        .admin-list .not-uploaded {
-            color: #8a8070;
-            font-size: 0.7rem;
-        }
-        .admin-close {
-            display: block;
-            margin: 20px auto 0;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff;
-            padding: 10px 30px;
-            border-radius: 25px;
-            cursor: pointer;
-            letter-spacing: 1px;
-            transition: var(--transition-smooth);
-        }
-        .admin-close:hover {
-            background: rgba(255, 255, 255, 0.08);
         }
 
-        /* === TOAST === */
+        /* Toast */
         .toast {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 25px;
+            right: 25px;
             z-index: 3000;
             background: var(--bg-card);
             border: 1px solid var(--gold);
-            padding: 14px 24px;
-            border-radius: 30px;
+            padding: 12px 22px;
+            border-radius: 28px;
             color: var(--gold-light);
             letter-spacing: 1px;
             font-weight: 600;
@@ -825,93 +574,59 @@
             transform: translateY(20px);
             transition: all 0.4s ease;
             pointer-events: none;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            font-size: 0.8rem;
+            backdrop-filter: blur(20px);
         }
         .toast.show {
             opacity: 1;
             transform: translateY(0);
         }
         .toast.error {
-            border-color: var(--accent);
-            color: var(--accent-glow);
+            border-color: #e74c3c;
+            color: #e74c3c;
         }
 
-        /* === RESPONSIVE === */
         @media (max-width: 768px) {
-            .nav-bar {
-                padding: 12px 18px;
-                border-radius: 35px;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-            .nav-logo {
-                font-size: 1.5rem;
-            }
             .hero-title {
-                font-size: 2.8rem;
+                font-size: 2.2rem;
+                letter-spacing: 3px;
             }
             .countdown-item {
-                min-width: 65px;
-                padding: 14px 16px;
+                min-width: 60px;
+                padding: 12px 14px;
             }
             .countdown-value {
-                font-size: 2rem;
+                font-size: 1.7rem;
             }
             .episode-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 12px;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 10px;
             }
             .season-tab {
-                padding: 10px 18px;
-                font-size: 0.8rem;
+                padding: 9px 16px;
+                font-size: 0.72rem;
+            }
+            .golden-quote {
+                font-size: 0.7rem;
             }
             .pdf-viewer-container {
-                height: 60vh;
+                height: 50vh;
                 width: 98%;
             }
             .watermark-text-overlay {
-                font-size: 3rem;
+                font-size: 2.5rem;
                 letter-spacing: 8px;
-            }
-            .admin-panel {
-                width: 95%;
-                padding: 20px;
-            }
-        }
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2.2rem;
-                letter-spacing: 2px;
-            }
-            .countdown-container {
-                gap: 8px;
-            }
-            .countdown-item {
-                min-width: 55px;
-                padding: 10px 10px;
-                border-radius: 14px;
-            }
-            .countdown-value {
-                font-size: 1.5rem;
-            }
-            .countdown-label {
-                font-size: 0.6rem;
-            }
-            .episode-grid {
-                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Ambient background elements -->
-    <div class="ambient-orb orb-1"></div>
-    <div class="ambient-orb orb-2"></div>
-    <div class="ambient-orb orb-3"></div>
-    <div class="character-silhouette silhouette-left"></div>
-    <div class="character-silhouette silhouette-right"></div>
-    <div class="character-silhouette silhouette-hero"></div>
+    <!-- Background Image -->
+    <div class="hero-bg-image"></div>
+    <div class="hero-bg-overlay"></div>
+
+    <!-- Particles -->
     <canvas id="particlesCanvas"></canvas>
 
     <!-- Toast -->
@@ -919,836 +634,14 @@
 
     <!-- Main Container -->
     <div class="main-container">
-        <!-- Navigation -->
-        <nav class="nav-bar">
+        <!-- Header -->
+        <div class="header-area">
             <span class="nav-logo">The Beg</span>
-            <div class="nav-links">
-                <span class="nav-link active" onclick="scrollToEpisodes()">Episodes</span>
-                <span class="nav-link" onclick="document.querySelector('.season-selector-wrapper').scrollIntoView({behavior:'smooth'})">Seasons</span>
-                <button class="admin-btn" onclick="promptAdminPassword()" title="Admin Panel">🔑 Admin</button>
-            </div>
-        </nav>
-
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-badge">🎬 GRAPHIC NOVEL SERIES</div>
-            <h1 class="hero-title">THE BEG</h1>
-            <p class="hero-subtitle">10 Seasons · 100 Episodes · A Saga Unfolds</p>
-            <div class="countdown-container" id="countdownContainer">
-                <div class="countdown-item">
-                    <div class="countdown-value" id="countDays">--</div>
-                    <div class="countdown-label">Days</div>
+            <div class="golden-quote-wrapper">
+                <span class="star-top-left">✦</span>
+                <span class="star-bottom-right">✦</span>
+                <div class="golden-quote">
+                    SOME PEOPLE BEG TO BE SEEN.<br>
+                    FEW DARE TO DISAPPEAR.
                 </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="countHours">--</div>
-                    <div class="countdown-label">Hours</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="countMins">--</div>
-                    <div class="countdown-label">Minutes</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="countSecs">--</div>
-                    <div class="countdown-label">Seconds</div>
-                </div>
-            </div>
-            <p class="next-episode-info" id="nextEpisodeInfo">Next episode drops soon...</p>
-        </section>
-
-        <!-- Season Selector -->
-        <div class="season-selector-wrapper">
-            <div class="season-selector" id="seasonSelector"></div>
-        </div>
-
-        <!-- Episodes -->
-        <section class="episodes-section" id="episodesSection">
-            <h2 class="season-title-display" id="seasonTitleDisplay">Season 1</h2>
-            <div class="episode-grid" id="episodeGrid"></div>
-        </section>
-    </div>
-
-    <!-- PDF Viewer Modal -->
-    <div class="modal-overlay" id="pdfModal">
-        <div class="modal-header">
-            <span class="modal-title" id="pdfModalTitle">📖 Reading Episode</span>
-            <button class="modal-close" onclick="closePdfViewer()" title="Close">✕</button>
-        </div>
-        <div class="pdf-viewer-container" id="pdfViewerContainer"
-        oncontextmenu="return false"
-        onselectstart="return false"
-        ondragstart="return false">
-        <div class="watermark-overlay"></div>
-        <div class="watermark-text-overlay">THE BEG</div>
-        <div class="protection-layer" id="protectionLayer"></div>
-        <div class="pdf-canvas-wrapper" id="pdfCanvasWrapper"></div>
-    </div>
-    <div class="pdf-controls">
-        <button class="pdf-btn" id="pdfPrevBtn" onclick="changePdfPage(-1)">◀ Prev</button>
-        <span class="page-indicator" id="pdfPageIndicator">Page 0 / 0</span>
-        <button class="pdf-btn" id="pdfNextBtn" onclick="changePdfPage(1)">Next ▶</button>
-    </div>
-</div>
-
-<!-- Admin Panel -->
-<div class="admin-overlay" id="adminOverlay">
-    <div class="admin-panel" id="adminPanel">
-        <h2>🔐 Admin Panel — The Beg</h2>
-        <div id="adminLoginSection">
-            <div class="admin-input-group">
-                <input type="password" class="admin-input" id="adminPasswordInput" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')verifyAdminPassword()">
-                <button class="admin-btn-primary" onclick="verifyAdminPassword()">Unlock</button>
-            </div>
-        </div>
-        <div id="adminContentSection" style="display:none;">
-            <p style="color:#8a8070;text-align:center;letter-spacing:1px;margin-bottom:16px;">Upload PDFs for each episode</p>
-            <div class="admin-input-group">
-                <select class="admin-select" id="adminSeasonSelect">
-                    <option value="1">Season 1</option><option value="2">Season 2</option><option value="3">Season 3</option>
-                    <option value="4">Season 4</option><option value="5">Season 5</option><option value="6">Season 6</option>
-                    <option value="7">Season 7</option><option value="8">Season 8</option><option value="9">Season 9</option>
-                    <option value="10">Season 10</option>
-                </select>
-                <select class="admin-select" id="adminEpisodeSelect">
-                    <option value="1">Episode 1</option><option value="2">Episode 2</option><option value="3">Episode 3</option>
-                    <option value="4">Episode 4</option><option value="5">Episode 5</option><option value="6">Episode 6</option>
-                    <option value="7">Episode 7</option><option value="8">Episode 8</option><option value="9">Episode 9</option>
-                    <option value="10">Episode 10</option>
-                </select>
-                <input type="file" class="admin-input" id="adminPdfFile" accept=".pdf" style="padding:10px 12px;">
-                <button class="admin-btn-primary" onclick="uploadPdfAsAdmin()">Upload PDF</button>
-            </div>
-            <div style="margin-top:16px;">
-                <h4 style="color:#d4a853;letter-spacing:1px;margin-bottom:10px;">Uploaded Episodes:</h4>
-                <ul class="admin-list" id="adminUploadList"></ul>
-            </div>
-            <button class="admin-btn-danger" onclick="clearAllUploads()" style="margin-top:12px;">🗑 Clear All Uploads</button>
-            <button class="admin-close" onclick="closeAdminPanel()">Close Panel</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    (function() {
-        // ============ CONFIGURATION ============
-        const TOTAL_SEASONS = 10;
-        const EPISODES_PER_SEASON = 10;
-        const TOTAL_EPISODES = TOTAL_SEASONS * EPISODES_PER_SEASON; // 100
-        const START_DATE = new Date(2026, 6, 26); // July 26, 2026 (Sunday)
-        const END_DATE = new Date(2028, 5, 25); // June 25, 2028
-        const ADMIN_PASSWORD_HASH = 'thebeg2026'; // Simple password for demo
-        const CURRENT_SEASON = 1; // Current active season
-
-        // ============ INDEXEDDB SETUP ============
-        const DB_NAME = 'TheBegDB';
-        const DB_VERSION = 1;
-        const STORE_NAME = 'pdfs';
-        let db = null;
-
-        function openDB() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open(DB_NAME, DB_VERSION);
-                request.onupgradeneeded = (e) => {
-                    const database = e.target.result;
-                    if (!database.objectStoreNames.contains(STORE_NAME)) {
-                        database.createObjectStore(STORE_NAME, { keyPath: 'episodeId' });
-                    }
-                };
-                request.onsuccess = (e) => {
-                    db = e.target.result;
-                    resolve(db);
-                };
-                request.onerror = (e) => {
-                    console.error('IndexedDB error:', e);
-                    reject(e);
-                };
-            });
-        }
-
-        function storePDF(episodeId, pdfBlob) {
-            return new Promise((resolve, reject) => {
-                if (!db) { reject('DB not open'); return; }
-                const tx = db.transaction(STORE_NAME, 'readwrite');
-                const store = tx.objectStore(STORE_NAME);
-                store.put({ episodeId: episodeId, pdfBlob: pdfBlob, uploadedAt: Date.now() });
-                tx.oncomplete = () => resolve();
-                tx.onerror = (e) => reject(e);
-            });
-        }
-
-        function getPDF(episodeId) {
-            return new Promise((resolve, reject) => {
-                if (!db) { reject('DB not open'); return; }
-                const tx = db.transaction(STORE_NAME, 'readonly');
-                const store = tx.objectStore(STORE_NAME);
-                const request = store.get(episodeId);
-                request.onsuccess = (e) => resolve(e.target.result);
-                request.onerror = (e) => reject(e);
-            });
-        }
-
-        function getAllUploadedIds() {
-            return new Promise((resolve, reject) => {
-                if (!db) { reject('DB not open'); return; }
-                const tx = db.transaction(STORE_NAME, 'readonly');
-                const store = tx.objectStore(STORE_NAME);
-                const request = store.getAllKeys();
-                request.onsuccess = (e) => resolve(e.target.result);
-                request.onerror = (e) => reject(e);
-            });
-        }
-
-        function deletePDF(episodeId) {
-            return new Promise((resolve, reject) => {
-                if (!db) { reject('DB not open'); return; }
-                const tx = db.transaction(STORE_NAME, 'readwrite');
-                const store = tx.objectStore(STORE_NAME);
-                store.delete(episodeId);
-                tx.oncomplete = () => resolve();
-                tx.onerror = (e) => reject(e);
-            });
-        }
-
-        function clearAllPDFs() {
-            return new Promise((resolve, reject) => {
-                if (!db) { reject('DB not open'); return; }
-                const tx = db.transaction(STORE_NAME, 'readwrite');
-                const store = tx.objectStore(STORE_NAME);
-                store.clear();
-                tx.oncomplete = () => resolve();
-                tx.onerror = (e) => reject(e);
-            });
-        }
-
-        // ============ DATE CALCULATIONS ============
-        function getEpisodeReleaseDate(globalEpisodeNumber) {
-            // globalEpisodeNumber: 1-100
-            const daysOffset = (globalEpisodeNumber - 1) * 7;
-            const releaseDate = new Date(START_DATE);
-            releaseDate.setDate(START_DATE.getDate() + daysOffset);
-            return releaseDate;
-        }
-
-        function getGlobalEpisodeNumber(season, episode) {
-            return (season - 1) * EPISODES_PER_SEASON + episode;
-        }
-
-        function getSeasonEpisode(globalNumber) {
-            const season = Math.ceil(globalNumber / EPISODES_PER_SEASON);
-            const episode = ((globalNumber - 1) % EPISODES_PER_SEASON) + 1;
-            return { season, episode };
-        }
-
-        // ============ STATE ============
-        let currentViewingSeason = CURRENT_SEASON;
-        let uploadedEpisodeIds = new Set();
-        let pdfDoc = null;
-        let currentPdfPage = 0;
-        let totalPdfPages = 0;
-        let currentReadingEpisodeId = null;
-
-        // ============ PARTICLE BACKGROUND ============
-        function initParticles() {
-            const canvas = document.getElementById('particlesCanvas');
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            const maxParticles = 60;
-
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-
-            class Particle {
-                constructor() {
-                    this.reset();
-                }
-                reset() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 2 + 0.5;
-                    this.speedX = (Math.random() - 0.5) * 0.4;
-                    this.speedY = (Math.random() - 0.5) * 0.4;
-                    this.opacity = Math.random() * 0.5 + 0.1;
-                    this.fadeSpeed = Math.random() * 0.005 + 0.002;
-                }
-                update() {
-                    this.x += this.speedX;
-                    this.y += this.speedY;
-                    this.opacity += this.fadeSpeed;
-                    if (this.opacity >= 0.6 || this.opacity <= 0.05) this.fadeSpeed *= -1;
-                    if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height +
-                        10) {
-                        this.reset();
-                    }
-                }
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(212,168,83,${this.opacity})`;
-                    ctx.fill();
-                }
-            }
-
-            for (let i = 0; i < maxParticles; i++) {
-                particles.push(new Particle());
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => { p.update();
-                    p.draw(); });
-                // Draw connections
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < 150) {
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = `rgba(212,168,83,${0.04 * (1 - dist/150)})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.stroke();
-                        }
-                    }
-                }
-                requestAnimationFrame(animate);
-            }
-            animate();
-        }
-
-        // ============ COUNTDOWN ============
-        function updateCountdown() {
-            const now = new Date();
-            // Find the next unreleased episode
-            let nextEpGlobal = null;
-            for (let i = 1; i <= TOTAL_EPISODES; i++) {
-                const releaseDate = getEpisodeReleaseDate(i);
-                if (releaseDate > now) {
-                    nextEpGlobal = i;
-                    break;
-                }
-            }
-            if (!nextEpGlobal) {
-                document.getElementById('countDays').textContent = '--';
-                document.getElementById('countHours').textContent = '--';
-                document.getElementById('countMins').textContent = '--';
-                document.getElementById('countSecs').textContent = '--';
-                document.getElementById('nextEpisodeInfo').textContent = 'All episodes released!';
-                return;
-            }
-            const nextDate = getEpisodeReleaseDate(nextEpGlobal);
-            const diff = nextDate - now;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('countDays').textContent = String(days).padStart(2, '0');
-            document.getElementById('countHours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('countMins').textContent = String(mins).padStart(2, '0');
-            document.getElementById('countSecs').textContent = String(secs).padStart(2, '0');
-
-            const { season, episode } = getSeasonEpisode(nextEpGlobal);
-            const dateStr = nextDate.toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            document.getElementById('nextEpisodeInfo').textContent =
-                `Next: Season ${season}, Episode ${episode} — ${dateStr}`;
-        }
-
-        // ============ SEASON SELECTOR ============
-        function buildSeasonSelector() {
-            const selector = document.getElementById('seasonSelector');
-            selector.innerHTML = '';
-            for (let s = 1; s <= TOTAL_SEASONS; s++) {
-                const tab = document.createElement('div');
-                tab.className = 'season-tab';
-                if (s === currentViewingSeason) tab.classList.add('active');
-                if (s > CURRENT_SEASON) {
-                    tab.classList.add('locked');
-                    tab.innerHTML = `Season ${s} <span class="lock-icon">🔒</span>`;
-                    tab.title = 'Coming Soon';
-                } else {
-                    tab.textContent = `Season ${s}`;
-                    tab.addEventListener('click', () => {
-                        currentViewingSeason = s;
-                        buildSeasonSelector();
-                        renderEpisodes();
-                        document.getElementById('seasonTitleDisplay').textContent = `Season ${s}`;
-                    });
-                }
-                selector.appendChild(tab);
-            }
-        }
-
-        // ============ RENDER EPISODES ============
-        function renderEpisodes() {
-            const grid = document.getElementById('episodeGrid');
-            grid.innerHTML = '';
-            const now = new Date();
-            const season = currentViewingSeason;
-
-            // Find the first episode (globally) that hasn't been released yet
-            let firstUnreleasedGlobal = null;
-            for (let i = 1; i <= TOTAL_EPISODES; i++) {
-                if (getEpisodeReleaseDate(i) > now) {
-                    firstUnreleasedGlobal = i;
-                    break;
-                }
-            }
-
-            for (let ep = 1; ep <= EPISODES_PER_SEASON; ep++) {
-                const globalNum = getGlobalEpisodeNumber(season, ep);
-                const releaseDate = getEpisodeReleaseDate(globalNum);
-                const isReleased = releaseDate <= now;
-                const isUploaded = uploadedEpisodeIds.has(globalNum);
-                const isAvailable = isReleased && isUploaded;
-                const isNext = (globalNum === firstUnreleasedGlobal) && !isReleased;
-
-                const card = document.createElement('div');
-                card.className = 'episode-card';
-                if (isAvailable) card.classList.add('available');
-                if (isNext) card.classList.add('next-episode');
-
-                // Episode number
-                const epNum = document.createElement('div');
-                epNum.className = 'episode-number';
-                epNum.textContent = `Ep. ${String(ep).padStart(2, '0')}`;
-                card.appendChild(epNum);
-
-                // Title area
-                const titleArea = document.createElement('div');
-                titleArea.className = 'episode-title-area';
-                titleArea.textContent = `Season ${season}, Episode ${ep}`;
-                card.appendChild(titleArea);
-
-                // Status badge
-                const statusBadge = document.createElement('span');
-                statusBadge.className = 'episode-status';
-                if (isAvailable) {
-                    statusBadge.classList.add('status-available');
-                    statusBadge.textContent = '✅ Available Now';
-                } else if (isNext) {
-                    statusBadge.classList.add('status-next');
-                    statusBadge.textContent = '⏳ Next Release';
-                } else if (isReleased && !isUploaded) {
-                    statusBadge.classList.add('status-uploaded');
-                    statusBadge.textContent = '📤 Processing...';
-                } else {
-                    statusBadge.classList.add('status-coming');
-                    statusBadge.textContent = '🔒 Coming Soon';
-                }
-                card.appendChild(statusBadge);
-
-                // Date
-                const dateEl = document.createElement('div');
-                dateEl.className = 'episode-date';
-                dateEl.textContent = releaseDate.toLocaleDateString('en-US', {
-                    weekday: 'short',
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                });
-                card.appendChild(dateEl);
-
-                // Read now badge
-                if (isAvailable) {
-                    const readBadge = document.createElement('div');
-                    readBadge.className = 'read-now-badge';
-                    readBadge.textContent = '📖 READ';
-                    card.appendChild(readBadge);
-                    card.addEventListener('click', () => openPdfViewer(globalNum, season, ep));
-                    card.style.cursor = 'pointer';
-                }
-
-                if (isNext && !isAvailable) {
-                    card.title = `Releases on ${releaseDate.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'})}`;
-                }
-
-                grid.appendChild(card);
-            }
-            document.getElementById('seasonTitleDisplay').textContent = `Season ${season}`;
-        }
-
-        // ============ PDF VIEWER ============
-        async function openPdfViewer(globalEpisodeId, season, episode) {
-            const pdfData = await getPDF(globalEpisodeId);
-            if (!pdfData || !pdfData.pdfBlob) {
-                showToast('PDF not found. Please upload it first.', 'error');
-                return;
-            }
-            currentReadingEpisodeId = globalEpisodeId;
-            document.getElementById('pdfModalTitle').textContent =
-                `📖 The Beg — Season ${season}, Episode ${episode}`;
-            document.getElementById('pdfModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            const pdfBlob = pdfData.pdfBlob;
-            const arrayBuffer = await pdfBlob.arrayBuffer();
-            const pdfjsLib = window.pdfjsLib;
-            if (!pdfjsLib) {
-                showToast('PDF library loading... please try again.', 'error');
-                closePdfViewer();
-                return;
-            }
-            pdfjsLib.GlobalWorkerOptions.workerSrc =
-                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-            try {
-                pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                totalPdfPages = pdfDoc.numPages;
-                currentPdfPage = 1;
-                renderPdfPage(currentPdfPage);
-                updatePdfControls();
-            } catch (err) {
-                console.error('PDF load error:', err);
-                showToast('Error loading PDF. The file may be corrupted.', 'error');
-                closePdfViewer();
-            }
-        }
-
-        async function renderPdfPage(pageNum) {
-            if (!pdfDoc) return;
-            const wrapper = document.getElementById('pdfCanvasWrapper');
-            wrapper.innerHTML = '';
-            const page = await pdfDoc.getPage(pageNum);
-            const viewport = page.getViewport({ scale: 1.5 });
-            const canvas = document.createElement('canvas');
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
-            const ctx = canvas.getContext('2d');
-            await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-
-            // Add subtle watermark directly on canvas
-            ctx.save();
-            ctx.globalAlpha = 0.04;
-            ctx.fillStyle = '#d4a853';
-            ctx.font = 'bold 40px Georgia, serif';
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-            ctx.rotate(-0.5);
-            ctx.fillText('THE BEG - READ ONLY', -250, 0);
-            ctx.rotate(0.8);
-            ctx.fillText('THE BEG', -120, canvas.height / 3);
-            ctx.restore();
-
-            wrapper.appendChild(canvas);
-            // Scroll to top of viewer
-            document.getElementById('pdfViewerContainer').scrollTop = 0;
-        }
-
-        function updatePdfControls() {
-            document.getElementById('pdfPageIndicator').textContent =
-                `Page ${currentPdfPage} / ${totalPdfPages}`;
-            document.getElementById('pdfPrevBtn').disabled = currentPdfPage <= 1;
-            document.getElementById('pdfNextBtn').disabled = currentPdfPage >= totalPdfPages;
-        }
-
-        function changePdfPage(delta) {
-            const newPage = currentPdfPage + delta;
-            if (newPage >= 1 && newPage <= totalPdfPages) {
-                currentPdfPage = newPage;
-                renderPdfPage(currentPdfPage);
-                updatePdfControls();
-            }
-        }
-
-        function closePdfViewer() {
-            document.getElementById('pdfModal').classList.remove('active');
-            document.body.style.overflow = '';
-            pdfDoc = null;
-            currentPdfPage = 0;
-            totalPdfPages = 0;
-            currentReadingEpisodeId = null;
-            document.getElementById('pdfCanvasWrapper').innerHTML = '';
-            document.getElementById('pdfPageIndicator').textContent = 'Page 0 / 0';
-            document.getElementById('pdfPrevBtn').disabled = true;
-            document.getElementById('pdfNextBtn').disabled = true;
-        }
-
-        // ============ ANTI-SCREENSHOT / ANTI-DOWNLOAD MEASURES ============
-        function setupProtections() {
-            // Disable right-click globally
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
-            });
-
-            // Disable keyboard shortcuts
-            document.addEventListener('keydown', function(e) {
-                // Block Ctrl+S, Ctrl+P, Ctrl+Shift+S, Ctrl+U, Ctrl+Shift+I, F12
-                if (e.ctrlKey && (e.key === 's' || e.key === 'p' || e.key === 'u' || e.key === 'S' || e.key ===
-                        'P' || e.key === 'U')) {
-                    e.preventDefault();
-                    return false;
-                }
-                if (e.ctrlKey && e.shiftKey && (e.key === 's' || e.key === 'S' || e.key === 'i' || e.key ===
-                        'I')) {
-                    e.preventDefault();
-                    return false;
-                }
-                if (e.key === 'F12' || e.key === 'PrintScreen') {
-                    e.preventDefault();
-                    return false;
-                }
-                // Block Ctrl+Shift+C (inspect element)
-                if (e.ctrlKey && e.shiftKey && e.key === 'C') {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-
-            // Detect print attempts
-            window.addEventListener('beforeprint', function() {
-                if (document.getElementById('pdfModal').classList.contains('active')) {
-                    showToast('Printing is disabled for protected content.', 'error');
-                    closePdfViewer();
-                }
-            });
-
-            // Detect screenshot on mobile (blur event often fires during screenshots)
-            window.addEventListener('blur', function() {
-                if (document.getElementById('pdfModal').classList.contains('active')) {
-                    // Brief flash as deterrent
-                    const protectionLayer = document.getElementById('protectionLayer');
-                    protectionLayer.style.background = 'rgba(0,0,0,0.3)';
-                    setTimeout(() => {
-                        protectionLayer.style.background = 'transparent';
-                    }, 150);
-                }
-            });
-
-            // Prevent drag on all images and content
-            document.addEventListener('dragstart', function(e) {
-                e.preventDefault();
-                return false;
-            });
-
-            // Disable selection
-            document.addEventListener('selectstart', function(e) {
-                if (document.getElementById('pdfModal').classList.contains('active')) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-
-            // Mobile touch protections
-            document.addEventListener('touchstart', function(e) {
-                if (e.touches.length > 2 && document.getElementById('pdfModal').classList.contains(
-                        'active')) {
-                    showToast('Screenshots are not permitted.', 'error');
-                }
-            }, { passive: true });
-
-            // Prevent copy
-            document.addEventListener('copy', function(e) {
-                if (document.getElementById('pdfModal').classList.contains('active')) {
-                    e.preventDefault();
-                    showToast('Copying is disabled for protected content.', 'error');
-                    return false;
-                }
-            });
-        }
-
-        // ============ ADMIN FUNCTIONS ============
-        function promptAdminPassword() {
-            document.getElementById('adminOverlay').classList.add('active');
-            document.getElementById('adminLoginSection').style.display = 'block';
-            document.getElementById('adminContentSection').style.display = 'none';
-            document.getElementById('adminPasswordInput').value = '';
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => {
-                document.getElementById('adminPasswordInput').focus();
-            }, 300);
-        }
-
-        function verifyAdminPassword() {
-            const input = document.getElementById('adminPasswordInput').value.trim();
-            if (input === ADMIN_PASSWORD_HASH) {
-                document.getElementById('adminLoginSection').style.display = 'none';
-                document.getElementById('adminContentSection').style.display = 'block';
-                refreshAdminUploadList();
-                showToast('✅ Admin access granted. Welcome!');
-            } else {
-                showToast('❌ Incorrect password.', 'error');
-                document.getElementById('adminPasswordInput').value = '';
-                document.getElementById('adminPasswordInput').focus();
-            }
-        }
-
-        function closeAdminPanel() {
-            document.getElementById('adminOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-            document.getElementById('adminLoginSection').style.display = 'block';
-            document.getElementById('adminContentSection').style.display = 'none';
-        }
-
-        async function uploadPdfAsAdmin() {
-            const season = parseInt(document.getElementById('adminSeasonSelect').value);
-            const episode = parseInt(document.getElementById('adminEpisodeSelect').value);
-            const fileInput = document.getElementById('adminPdfFile');
-            const file = fileInput.files[0];
-
-            if (!file) {
-                showToast('Please select a PDF file.', 'error');
-                return;
-            }
-            if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
-                showToast('Only PDF files are accepted.', 'error');
-                return;
-            }
-            const globalId = getGlobalEpisodeNumber(season, episode);
-            try {
-                await storePDF(globalId, file);
-                uploadedEpisodeIds.add(globalId);
-                showToast(
-                    `✅ Uploaded: Season ${season}, Episode ${episode} (Global #${globalId})`);
-                fileInput.value = '';
-                refreshAdminUploadList();
-                renderEpisodes();
-                updateCountdown();
-            } catch (err) {
-                console.error('Upload error:', err);
-                showToast('Upload failed. Please try again.', 'error');
-            }
-        }
-
-        async function refreshAdminUploadList() {
-            const list = document.getElementById('adminUploadList');
-            list.innerHTML = '';
-            const uploadedIds = await getAllUploadedIds();
-            uploadedEpisodeIds = new Set(uploadedIds);
-            const sortedIds = [...uploadedIds].sort((a, b) => a - b);
-
-            if (sortedIds.length === 0) {
-                const li = document.createElement('li');
-                li.textContent = 'No PDFs uploaded yet.';
-                li.style.color = '#8a8070';
-                list.appendChild(li);
-            } else {
-                sortedIds.forEach(id => {
-                    const { season, episode } = getSeasonEpisode(id);
-                    const li = document.createElement('li');
-                    li.innerHTML =
-                        `<span>📄 Global #${id} — Season ${season}, Episode ${episode}</span>
-                        <span class="uploaded-badge">Uploaded</span>
-                        <button class="admin-btn-danger" style="padding:4px 10px;font-size:0.7rem;" onclick="deleteSingleUpload(${id})">✕</button>`;
-                    list.appendChild(li);
-                });
-            }
-            renderEpisodes();
-        }
-
-        async function deleteSingleUpload(episodeId) {
-            await deletePDF(episodeId);
-            uploadedEpisodeIds.delete(episodeId);
-            showToast(`Deleted Global #${episodeId}`);
-            refreshAdminUploadList();
-            renderEpisodes();
-        }
-
-        async function clearAllUploads() {
-            if (confirm('Are you sure you want to delete ALL uploaded PDFs? This cannot be undone.')) {
-                await clearAllPDFs();
-                uploadedEpisodeIds.clear();
-                showToast('All uploads cleared.');
-                refreshAdminUploadList();
-                renderEpisodes();
-                if (document.getElementById('pdfModal').classList.contains('active')) {
-                    closePdfViewer();
-                }
-            }
-        }
-        // Make deleteSingleUpload globally accessible
-        window.deleteSingleUpload = deleteSingleUpload;
-
-        // ============ TOAST ============
-        function showToast(message, type = '') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = 'toast ' + (type === 'error' ? 'error' : '');
-            toast.classList.add('show');
-            clearTimeout(toast._timeout);
-            toast._timeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // ============ SCROLL HELPERS ============
-        function scrollToEpisodes() {
-            document.getElementById('episodesSection').scrollIntoView({ behavior: 'smooth' });
-        }
-        window.scrollToEpisodes = scrollToEpisodes;
-        window.promptAdminPassword = promptAdminPassword;
-        window.verifyAdminPassword = verifyAdminPassword;
-        window.uploadPdfAsAdmin = uploadPdfAsAdmin;
-        window.closeAdminPanel = closeAdminPanel;
-        window.clearAllUploads = clearAllUploads;
-        window.closePdfViewer = closePdfViewer;
-        window.changePdfPage = changePdfPage;
-
-        // ============ KEYBOARD NAVIGATION FOR PDF ============
-        document.addEventListener('keydown', function(e) {
-            if (document.getElementById('pdfModal').classList.contains('active')) {
-                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    changePdfPage(1);
-                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    changePdfPage(-1);
-                } else if (e.key === 'Escape') {
-                    e.preventDefault();
-                    closePdfViewer();
-                }
-            }
-            if (document.getElementById('adminOverlay').classList.contains('active') && e.key === 'Escape') {
-                closeAdminPanel();
-            }
-        });
-
-        // Close modals on overlay click
-        document.getElementById('pdfModal').addEventListener('click', function(e) {
-            if (e.target === this) closePdfViewer();
-        });
-        document.getElementById('adminOverlay').addEventListener('click', function(e) {
-            if (e.target === this) closeAdminPanel();
-        });
-
-        // ============ INITIALIZATION ============
-        async function init() {
-            await openDB();
-            const uploadedIds = await getAllUploadedIds();
-            uploadedEpisodeIds = new Set(uploadedIds);
-            initParticles();
-            buildSeasonSelector();
-            renderEpisodes();
-            updateCountdown();
-            setupProtections();
-            // Update countdown every second
-            setInterval(updateCountdown, 1000);
-            // Refresh episode list periodically (check for new releases)
-            setInterval(() => {
-                renderEpisodes();
-                buildSeasonSelector();
-            }, 60000); // every minute
-        }
-
-        init().catch(err => {
-            console.error('Initialization error:', err);
-            showToast('Error initializing app. Please refresh.', 'error');
-        });
-
-        console.log('%c🛡️ The Beg - Graphic Novel Portal %cReady',
-            'color:#d4a853;font-size:1.2em;', 'color:#e0d5c1;');
-        console.log('%cAnti-screenshot & anti-download protections active.',
-            'color:#c0392b;');
-        console.log('%cAdmin password required for uploads.', 'color:#8a8070;');
-    })();
-</script>
-</body>
-</html>
+    

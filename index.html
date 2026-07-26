@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Beg - Graphic Novel</title>
     <meta name="description" content="The Beg - 10 Seasons, 100 Episodes. New episode every Sunday.">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://github.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:;">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         :root {
             --bg-deep: #0a0a0f;
-            --bg-card: rgba(18, 18, 26, 0.85);
+            --bg-card: rgba(18, 18, 26, 0.8);
             --bg-card-hover: rgba(26, 26, 40, 0.9);
             --gold: #d4a853;
             --gold-light: #f0d078;
@@ -45,27 +44,28 @@
             position: relative;
         }
 
-        /* Hero Background Image */
+        /* FIXED: Lighter background image */
         .hero-bg-image {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: url('https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/hero-bg.jpg') center/cover no-repeat;
-            opacity: 0.35;
+            opacity: 0.55;
             z-index: 0;
-            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0) 80%);
-            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.7) 30%, rgba(0,0,0,0) 80%);
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
         }
         .hero-bg-overlay {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at center, rgba(10,10,15,0.4) 0%, rgba(10,10,15,0.9) 80%);
+            background: radial-gradient(ellipse at center, rgba(10,10,15,0.15) 0%, rgba(10,10,15,0.5) 70%, rgba(10,10,15,0.85) 100%);
             z-index: 1;
+            pointer-events: none;
         }
 
         /* Particle Canvas */
@@ -77,7 +77,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.4;
+            opacity: 0.3;
         }
 
         /* Main Container */
@@ -86,7 +86,7 @@
             z-index: 2;
             max-width: 1300px;
             margin: 0 auto;
-            padding: 20px 24px;
+            padding: 20px 24px 40px;
         }
 
         /* Header */
@@ -94,13 +94,15 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            padding: 20px 0 10px;
+            padding: 15px 0 10px;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 15px;
+            position: relative;
+            z-index: 3;
         }
         .nav-logo {
             font-family: 'Georgia', serif;
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: bold;
             background: linear-gradient(135deg, #f0d078 0%, #d4a853 40%, #8b6914 100%);
             -webkit-background-clip: text;
@@ -116,47 +118,47 @@
             display: inline-block;
             text-align: right;
         }
-        .star-top-left, .star-bottom-right {
+        .star-top-left,
+        .star-bottom-right {
             position: absolute;
             color: #f0d078;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             animation: starPulse 2s ease-in-out infinite;
-            text-shadow: 0 0 12px rgba(240,208,120,0.9), 0 0 30px rgba(212,168,83,0.6);
+            text-shadow: 0 0 12px rgba(240, 208, 120, 0.9), 0 0 25px rgba(212, 168, 83, 0.5);
         }
         .star-top-left {
-            top: -18px;
-            left: -22px;
-            animation-delay: 0s;
+            top: -16px;
+            left: -20px;
         }
         .star-bottom-right {
-            bottom: -18px;
-            right: -22px;
+            bottom: -16px;
+            right: -20px;
             animation-delay: 1s;
         }
         @keyframes starPulse {
             0%,
             100% {
                 transform: scale(1);
-                opacity: 0.7;
+                opacity: 0.8;
             }
             50% {
-                transform: scale(1.5);
+                transform: scale(1.4);
                 opacity: 1;
             }
         }
         .golden-quote {
             font-family: 'Georgia', serif;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #f0d078;
             letter-spacing: 2px;
             line-height: 1.6;
-            text-shadow: 0 0 8px rgba(212,168,83,0.4);
+            text-shadow: 0 0 6px rgba(212, 168, 83, 0.3);
         }
 
         /* Hero Section */
         .hero-section {
             text-align: center;
-            padding: 30px 20px 25px;
+            padding: 25px 20px 20px;
             position: relative;
             z-index: 2;
         }
@@ -164,12 +166,12 @@
             display: inline-block;
             background: rgba(212, 168, 83, 0.1);
             border: 1px solid rgba(212, 168, 83, 0.3);
-            padding: 7px 18px;
+            padding: 6px 16px;
             border-radius: 30px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 2px;
             color: var(--gold-light);
-            margin-bottom: 18px;
+            margin-bottom: 15px;
             animation: pulseBadge 3s ease-in-out infinite;
         }
         @keyframes pulseBadge {
@@ -178,12 +180,12 @@
                 box-shadow: 0 0 8px rgba(212, 168, 83, 0.2);
             }
             50% {
-                box-shadow: 0 0 22px rgba(212, 168, 83, 0.5);
+                box-shadow: 0 0 20px rgba(212, 168, 83, 0.5);
             }
         }
         .hero-title {
             font-family: 'Georgia', serif;
-            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: bold;
             background: linear-gradient(180deg, #f5e6c8 0%, #d4a853 50%, #8b6914 100%);
             -webkit-background-clip: text;
@@ -193,44 +195,44 @@
             margin-bottom: 8px;
         }
         .hero-subtitle {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
             letter-spacing: 3px;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
         .countdown-container {
             display: flex;
-            gap: 14px;
+            gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
         }
         .countdown-item {
             background: var(--bg-card);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            border-radius: 18px;
-            padding: 16px 20px;
-            min-width: 75px;
+            border-radius: 16px;
+            padding: 14px 18px;
+            min-width: 70px;
             text-align: center;
-            box-shadow: 0 0 18px rgba(212, 168, 83, 0.15);
+            box-shadow: 0 0 15px rgba(212, 168, 83, 0.1);
         }
         .countdown-value {
             font-family: 'Georgia', serif;
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: bold;
             color: var(--gold-light);
         }
         .countdown-label {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             letter-spacing: 2px;
             color: var(--text-muted);
-            margin-top: 3px;
+            margin-top: 2px;
             text-transform: uppercase;
         }
         .next-episode-info {
-            margin-top: 14px;
+            margin-top: 12px;
             color: var(--gold);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             letter-spacing: 1px;
         }
 
@@ -241,6 +243,8 @@
             scrollbar-width: thin;
             scrollbar-color: rgba(212, 168, 83, 0.3) transparent;
             padding-bottom: 6px;
+            position: relative;
+            z-index: 2;
         }
         .season-selector-wrapper::-webkit-scrollbar {
             height: 3px;
@@ -257,8 +261,8 @@
         }
         .season-tab {
             flex-shrink: 0;
-            padding: 11px 22px;
-            border-radius: 28px;
+            padding: 10px 20px;
+            border-radius: 25px;
             border: 1px solid rgba(255, 255, 255, 0.12);
             background: var(--bg-card);
             color: var(--text-muted);
@@ -266,21 +270,21 @@
             font-weight: 600;
             letter-spacing: 1px;
             transition: var(--transition);
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             white-space: nowrap;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
         }
         .season-tab:hover {
             border-color: var(--gold);
             color: var(--text);
             background: var(--bg-card-hover);
-            box-shadow: 0 4px 18px rgba(212, 168, 83, 0.12);
+            box-shadow: 0 4px 15px rgba(212, 168, 83, 0.1);
         }
         .season-tab.active {
             background: linear-gradient(135deg, rgba(212, 168, 83, 0.2) 0%, rgba(139, 105, 20, 0.3) 100%);
             border-color: var(--gold);
             color: var(--gold-light);
-            box-shadow: 0 0 22px rgba(212, 168, 83, 0.25);
+            box-shadow: 0 0 20px rgba(212, 168, 83, 0.2);
         }
         .season-tab.locked {
             opacity: 0.35;
@@ -291,33 +295,35 @@
         /* Episodes Grid */
         .episodes-section {
             margin-top: 8px;
+            position: relative;
+            z-index: 2;
         }
         .season-title-display {
             font-family: 'Georgia', serif;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--gold-light);
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             letter-spacing: 2px;
             text-align: center;
         }
         .episode-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 12px;
         }
         .episode-card {
             background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: var(--card-radius);
-            padding: 18px;
+            padding: 16px;
             transition: var(--transition);
             position: relative;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
         }
         .episode-card:hover {
             background: var(--bg-card-hover);
             border-color: rgba(212, 168, 83, 0.3);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
             transform: translateY(-2px);
         }
         .episode-card.available {
@@ -325,8 +331,8 @@
             cursor: pointer;
         }
         .episode-card.available:hover {
-            border-color: rgba(46, 204, 113, 0.65);
-            box-shadow: 0 0 30px rgba(46, 204, 113, 0.15);
+            border-color: rgba(46, 204, 113, 0.6);
+            box-shadow: 0 0 28px rgba(46, 204, 113, 0.12);
         }
         .episode-card.next-episode {
             border-color: rgba(240, 208, 120, 0.5);
@@ -335,32 +341,32 @@
         @keyframes nextPulse {
             0%,
             100% {
-                box-shadow: 0 0 15px rgba(240, 208, 120, 0.1);
+                box-shadow: 0 0 12px rgba(240, 208, 120, 0.08);
             }
             50% {
-                box-shadow: 0 0 40px rgba(240, 208, 120, 0.35);
+                box-shadow: 0 0 35px rgba(240, 208, 120, 0.3);
             }
         }
         .episode-number {
             font-family: 'Georgia', serif;
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-weight: bold;
             color: var(--gold);
             letter-spacing: 2px;
         }
         .episode-title-area {
-            margin-top: 3px;
-            font-size: 0.8rem;
+            margin-top: 2px;
+            font-size: 0.78rem;
             color: var(--text-muted);
             letter-spacing: 1px;
         }
         .episode-status {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 18px;
-            font-size: 0.68rem;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 0.65rem;
             letter-spacing: 1.5px;
-            margin-top: 8px;
+            margin-top: 7px;
             font-weight: 600;
         }
         .status-available {
@@ -379,20 +385,20 @@
             border: 1px solid rgba(138, 128, 112, 0.2);
         }
         .episode-date {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             color: var(--text-muted);
-            margin-top: 6px;
+            margin-top: 5px;
             letter-spacing: 1px;
         }
         .read-now-badge {
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 10px;
+            right: 10px;
             background: #2ecc71;
             color: #000;
-            padding: 4px 10px;
-            border-radius: 14px;
-            font-size: 0.65rem;
+            padding: 3px 9px;
+            border-radius: 12px;
+            font-size: 0.62rem;
             letter-spacing: 1.5px;
             font-weight: 700;
             animation: badgeGlow 2s ease-in-out infinite;
@@ -401,10 +407,10 @@
         @keyframes badgeGlow {
             0%,
             100% {
-                box-shadow: 0 0 6px rgba(46, 204, 113, 0.4);
+                box-shadow: 0 0 5px rgba(46, 204, 113, 0.4);
             }
             50% {
-                box-shadow: 0 0 20px rgba(46, 204, 113, 0.8);
+                box-shadow: 0 0 18px rgba(46, 204, 113, 0.8);
             }
         }
 
@@ -432,26 +438,26 @@
             justify-content: space-between;
             width: 95%;
             max-width: 1100px;
-            padding: 12px 18px;
+            padding: 10px 16px;
             background: var(--bg-card);
-            border-radius: 18px 18px 0 0;
+            border-radius: 16px 16px 0 0;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .modal-title {
             font-family: 'Georgia', serif;
             color: var(--gold-light);
             letter-spacing: 2px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .modal-close {
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
-            width: 35px;
-            height: 35px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: var(--transition);
             display: flex;
             align-items: center;
@@ -465,9 +471,9 @@
             position: relative;
             width: 95%;
             max-width: 1100px;
-            height: 65vh;
+            height: 60vh;
             background: #000;
-            border-radius: 0 0 18px 18px;
+            border-radius: 0 0 16px 16px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-top: none;
             overflow: hidden;
@@ -479,11 +485,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 18px;
+            padding: 16px;
         }
         .pdf-canvas-wrapper canvas {
-            margin-bottom: 14px;
-            box-shadow: 0 6px 35px rgba(0, 0, 0, 0.7);
+            margin-bottom: 12px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.7);
             border-radius: 3px;
             max-width: 95%;
         }
@@ -495,7 +501,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 10;
-            background: repeating-linear-gradient(-35deg, transparent, transparent 80px, rgba(212, 168, 83, 0.02) 80px, rgba(212, 168, 83, 0.02) 82px);
+            background: repeating-linear-gradient(-35deg, transparent, transparent 70px, rgba(212, 168, 83, 0.02) 70px, rgba(212, 168, 83, 0.02) 72px);
         }
         .watermark-text-overlay {
             position: absolute;
@@ -505,10 +511,10 @@
             pointer-events: none;
             z-index: 11;
             font-family: 'Georgia', serif;
-            font-size: 4.5rem;
-            color: rgba(212, 168, 83, 0.03);
+            font-size: 4rem;
+            color: rgba(212, 168, 83, 0.025);
             white-space: nowrap;
-            letter-spacing: 14px;
+            letter-spacing: 12px;
             text-transform: uppercase;
         }
         .protection-layer {
@@ -523,23 +529,23 @@
         }
         .pdf-controls {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
-            padding: 8px 18px;
+            padding: 7px 16px;
             background: var(--bg-card);
-            border-radius: 28px;
-            margin-top: 10px;
+            border-radius: 25px;
+            margin-top: 8px;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .pdf-btn {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff;
-            padding: 8px 16px;
-            border-radius: 22px;
+            padding: 7px 14px;
+            border-radius: 20px;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             letter-spacing: 1px;
         }
         .pdf-btn:hover {
@@ -547,26 +553,26 @@
             border-color: var(--gold);
         }
         .pdf-btn:disabled {
-            opacity: 0.35;
+            opacity: 0.3;
             cursor: not-allowed;
         }
         .page-indicator {
             color: var(--gold-light);
             font-weight: 600;
             letter-spacing: 1px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         /* Toast */
         .toast {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            bottom: 20px;
+            right: 20px;
             z-index: 3000;
             background: var(--bg-card);
             border: 1px solid var(--gold);
-            padding: 12px 22px;
-            border-radius: 28px;
+            padding: 10px 20px;
+            border-radius: 25px;
             color: var(--gold-light);
             letter-spacing: 1px;
             font-weight: 600;
@@ -574,8 +580,8 @@
             transform: translateY(20px);
             transition: all 0.4s ease;
             pointer-events: none;
-            font-size: 0.8rem;
-            backdrop-filter: blur(20px);
+            font-size: 0.78rem;
+            backdrop-filter: blur(15px);
         }
         .toast.show {
             opacity: 1;
@@ -586,43 +592,52 @@
             color: #e74c3c;
         }
 
+        /* Loading */
+        .loading-indicator {
+            text-align: center;
+            padding: 25px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            grid-column: 1 / -1;
+        }
+
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 2.2rem;
+                font-size: 2rem;
                 letter-spacing: 3px;
             }
             .countdown-item {
-                min-width: 60px;
-                padding: 12px 14px;
+                min-width: 55px;
+                padding: 10px 12px;
             }
             .countdown-value {
-                font-size: 1.7rem;
+                font-size: 1.5rem;
             }
             .episode-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 10px;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 8px;
             }
             .season-tab {
-                padding: 9px 16px;
-                font-size: 0.72rem;
-            }
-            .golden-quote {
+                padding: 8px 14px;
                 font-size: 0.7rem;
             }
+            .golden-quote {
+                font-size: 0.65rem;
+            }
             .pdf-viewer-container {
-                height: 50vh;
+                height: 45vh;
                 width: 98%;
             }
             .watermark-text-overlay {
-                font-size: 2.5rem;
-                letter-spacing: 8px;
+                font-size: 2rem;
+                letter-spacing: 6px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Image -->
+    <!-- Background Image - FIXED: Lighter opacity -->
     <div class="hero-bg-image"></div>
     <div class="hero-bg-overlay"></div>
 
@@ -644,4 +659,368 @@
                     SOME PEOPLE BEG TO BE SEEN.<br>
                     FEW DARE TO DISAPPEAR.
                 </div>
-    
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-badge">🎬 GRAPHIC NOVEL SERIES</div>
+            <h1 class="hero-title">THE BEG</h1>
+            <p class="hero-subtitle">10 Seasons · 100 Episodes · New Episode Every Sunday</p>
+            <div class="countdown-container" id="countdownContainer">
+                <div class="countdown-item"><div class="countdown-value" id="countDays">--</div><div class="countdown-label">Days</div></div>
+                <div class="countdown-item"><div class="countdown-value" id="countHours">--</div><div class="countdown-label">Hours</div></div>
+                <div class="countdown-item"><div class="countdown-value" id="countMins">--</div><div class="countdown-label">Minutes</div></div>
+                <div class="countdown-item"><div class="countdown-value" id="countSecs">--</div><div class="countdown-label">Seconds</div></div>
+            </div>
+            <p class="next-episode-info" id="nextEpisodeInfo">Loading schedule...</p>
+        </section>
+
+        <!-- Season Selector -->
+        <div class="season-selector-wrapper">
+            <div class="season-selector" id="seasonSelector"></div>
+        </div>
+
+        <!-- Episodes -->
+        <section class="episodes-section" id="episodesSection">
+            <h2 class="season-title-display" id="seasonTitleDisplay">Season 1</h2>
+            <div class="episode-grid" id="episodeGrid">
+                <div class="loading-indicator">⏳ Checking GitHub for episodes...</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PDF Viewer Modal -->
+    <div class="modal-overlay" id="pdfModal">
+        <div class="modal-header">
+            <span class="modal-title" id="pdfModalTitle">📖 Reading Episode</span>
+            <button class="modal-close" onclick="closePdfViewer()">✕</button>
+        </div>
+        <div class="pdf-viewer-container" id="pdfViewerContainer" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+            <div class="watermark-overlay"></div>
+            <div class="watermark-text-overlay">THE BEG</div>
+            <div class="protection-layer" id="protectionLayer"></div>
+            <div class="pdf-canvas-wrapper" id="pdfCanvasWrapper"></div>
+        </div>
+        <div class="pdf-controls">
+            <button class="pdf-btn" id="pdfPrevBtn" onclick="changePdfPage(-1)">◀ Prev</button>
+            <span class="page-indicator" id="pdfPageIndicator">Page 0 / 0</span>
+            <button class="pdf-btn" id="pdfNextBtn" onclick="changePdfPage(1)">Next ▶</button>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const TOTAL_SEASONS = 10;
+            const EPISODES_PER_SEASON = 10;
+            const TOTAL_EPISODES = 100;
+            const START_DATE = new Date(2026, 6, 26);
+            const CURRENT_SEASON = 1;
+            const RELEASE_BASE_URL = 'https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/';
+
+            let currentViewingSeason = CURRENT_SEASON;
+            let availableEpisodes = {};
+            let isCheckingGitHub = false;
+            let pdfDoc = null,
+                currentPdfPage = 0,
+                totalPdfPages = 0;
+
+            function initParticles() {
+                const canvas = document.getElementById('particlesCanvas');
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+
+                function resize() { canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight; }
+                resize();
+                window.addEventListener('resize', resize);
+                class Particle {
+                    constructor() { this.reset(); }
+                    reset() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.size = Math.random() * 1.5 + 0.3;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = (Math.random() - 0.5) * 0.3;
+                        this.opacity = Math.random() * 0.4 + 0.06;
+                        this.fadeSpeed = Math.random() * 0.003 + 0.001;
+                    }
+                    update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        this.opacity += this.fadeSpeed;
+                        if (this.opacity >= 0.5 || this.opacity <= 0.03) this.fadeSpeed *= -1;
+                        if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height +
+                            10) this.reset();
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(212,168,83,${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+                for (let i = 0; i < 40; i++) particles.push(new Particle());
+
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => { p.update();
+                        p.draw(); });
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+
+            function getEpisodeReleaseDate(globalNum) {
+                const d = new Date(START_DATE);
+                d.setDate(d.getDate() + (globalNum - 1) * 7);
+                return d;
+            }
+
+            function getGlobalEpisodeNumber(s, e) { return (s - 1) * EPISODES_PER_SEASON + e; }
+
+            function getSeasonEpisode(globalNum) {
+                return {
+                    season: Math.ceil(globalNum / EPISODES_PER_SEASON),
+                    episode: ((globalNum - 1) % EPISODES_PER_SEASON) + 1
+                };
+            }
+
+            function getFileKey(s, e) { return `S${s}E${String(e).padStart(2,'0')}`; }
+
+            async function checkGitHubForEpisodes() {
+                if (isCheckingGitHub) return;
+                isCheckingGitHub = true;
+                const results = {};
+                const checks = [];
+                for (let s = 1; s <= TOTAL_SEASONS; s++)
+                    for (let e = 1; e <= EPISODES_PER_SEASON; e++)
+                        checks.push({ key: getFileKey(s, e), url: RELEASE_BASE_URL + getFileKey(s, e) + '.pdf' });
+                for (let i = 0; i < checks.length; i += 10) {
+                    const batch = checks.slice(i, i + 10);
+                    await Promise.allSettled(batch.map(item =>
+                        fetch(item.url, { method: 'HEAD', mode: 'cors' })
+                        .then(r => { if (r.ok) results[item.key] = true; })
+                        .catch(() => {})
+                    ));
+                }
+                availableEpisodes = results;
+                isCheckingGitHub = false;
+                console.log('✅ GitHub check complete. Available:', Object.keys(availableEpisodes).length);
+            }
+
+            function updateCountdown() {
+                const now = new Date();
+                let nextGlobal = null;
+                for (let i = 1; i <= TOTAL_EPISODES; i++) {
+                    if (getEpisodeReleaseDate(i) > now) { nextGlobal = i; break; }
+                }
+                if (!nextGlobal) {
+                    ['Days', 'Hours', 'Mins', 'Secs'].forEach(id => document.getElementById('count' + id).textContent =
+                        '--');
+                    document.getElementById('nextEpisodeInfo').textContent = '🎉 All episodes released!';
+                    return;
+                }
+                const diff = getEpisodeReleaseDate(nextGlobal) - now;
+                document.getElementById('countDays').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+                document.getElementById('countHours').textContent = String(Math.floor((diff % 86400000) / 3600000))
+                    .padStart(2, '0');
+                document.getElementById('countMins').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2,
+                    '0');
+                document.getElementById('countSecs').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2,
+                '0');
+                const { season, episode } = getSeasonEpisode(nextGlobal);
+                document.getElementById('nextEpisodeInfo').textContent =
+                    `📅 Next: Season ${season}, Episode ${episode} — ${getEpisodeReleaseDate(nextGlobal).toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}`;
+            }
+
+            function buildSeasonSelector() {
+                const sel = document.getElementById('seasonSelector');
+                sel.innerHTML = '';
+                for (let s = 1; s <= TOTAL_SEASONS; s++) {
+                    const tab = document.createElement('div');
+                    tab.className = 'season-tab';
+                    if (s === currentViewingSeason) tab.classList.add('active');
+                    if (s > CURRENT_SEASON) {
+                        tab.classList.add('locked');
+                        tab.innerHTML = `Season ${s} 🔒`;
+                    } else {
+                        tab.textContent = `Season ${s}`;
+                        tab.addEventListener('click', () => {
+                            currentViewingSeason = s;
+                            buildSeasonSelector();
+                            renderEpisodes();
+                            document.getElementById('seasonTitleDisplay').textContent = `Season ${s}`;
+                        });
+                    }
+                    sel.appendChild(tab);
+                }
+            }
+
+            function renderEpisodes() {
+                const grid = document.getElementById('episodeGrid');
+                grid.innerHTML = '';
+                const now = new Date();
+                let firstUnreleased = null;
+                for (let i = 1; i <= TOTAL_EPISODES; i++) {
+                    if (getEpisodeReleaseDate(i) > now) { firstUnreleased = i; break; }
+                }
+                for (let ep = 1; ep <= EPISODES_PER_SEASON; ep++) {
+                    const globalNum = getGlobalEpisodeNumber(currentViewingSeason, ep);
+                    const releaseDate = getEpisodeReleaseDate(globalNum);
+                    const isReleased = releaseDate <= now;
+                    const fileKey = getFileKey(currentViewingSeason, ep);
+                    const isUploaded = availableEpisodes[fileKey] === true;
+                    const isAvailable = isReleased && isUploaded;
+                    const isNext = (globalNum === firstUnreleased) && !isReleased;
+
+                    const card = document.createElement('div');
+                    card.className = 'episode-card';
+                    if (isAvailable) card.classList.add('available');
+                    if (isNext) card.classList.add('next-episode');
+
+                    card.innerHTML = `
+                        <div class="episode-number">Ep. ${String(ep).padStart(2,'0')}</div>
+                        <div class="episode-title-area">Season ${currentViewingSeason}, Episode ${ep}</div>
+                        <span class="episode-status ${isAvailable?'status-available':isNext?'status-next':'status-coming'}">${isAvailable?'✅ Available Now':isNext?'⏳ Next Release':isReleased?'⏳ Awaiting Upload':'🔒 Coming Soon'}</span>
+                        <div class="episode-date">${releaseDate.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'})}</div>
+                        ${isAvailable ? '<div class="read-now-badge">📖 READ</div>' : ''}
+                    `;
+
+                    if (isAvailable) {
+                        card.addEventListener('click', () => openPdfViewer(fileKey, currentViewingSeason, ep));
+                        card.style.cursor = 'pointer';
+                    }
+                    grid.appendChild(card);
+                }
+                document.getElementById('seasonTitleDisplay').textContent = `Season ${currentViewingSeason}`;
+            }
+
+            async function openPdfViewer(fileKey, season, episode) {
+                const pdfUrl = RELEASE_BASE_URL + fileKey + '.pdf';
+                document.getElementById('pdfModalTitle').textContent =
+                    `📖 The Beg — Season ${season}, Episode ${episode}`;
+                document.getElementById('pdfModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+                document.getElementById('pdfCanvasWrapper').innerHTML =
+                    '<div style="color:#d4a853;text-align:center;padding:40px;">⏳ Loading PDF...</div>';
+                pdfjsLib.GlobalWorkerOptions.workerSrc =
+                    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                try {
+                    pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise;
+                    totalPdfPages = pdfDoc.numPages;
+                    currentPdfPage = 1;
+                    await renderPdfPage(currentPdfPage);
+                    updatePdfControls();
+                } catch (err) {
+                    document.getElementById('pdfCanvasWrapper').innerHTML =
+                        '<div style="color:#e74c3c;text-align:center;padding:40px;">❌ Error loading PDF.</div>';
+                    showToast('Error loading PDF.', 'error');
+                }
+            }
+
+            async function renderPdfPage(pageNum) {
+                if (!pdfDoc) return;
+                const wrapper = document.getElementById('pdfCanvasWrapper');
+                wrapper.innerHTML = '';
+                const page = await pdfDoc.getPage(pageNum);
+                const viewport = page.getViewport({ scale: 1.5 });
+                const canvas = document.createElement('canvas');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                const ctx = canvas.getContext('2d');
+                await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                ctx.save();
+                ctx.globalAlpha = 0.02;
+                ctx.fillStyle = '#d4a853';
+                ctx.font = 'bold 28px Georgia, serif';
+                ctx.fillText('THE BEG', canvas.width / 2 - 80, canvas.height / 2);
+                ctx.restore();
+                wrapper.appendChild(canvas);
+                document.getElementById('pdfViewerContainer').scrollTop = 0;
+            }
+
+            function updatePdfControls() {
+                document.getElementById('pdfPageIndicator').textContent = `Page ${currentPdfPage} / ${totalPdfPages}`;
+                document.getElementById('pdfPrevBtn').disabled = currentPdfPage <= 1;
+                document.getElementById('pdfNextBtn').disabled = currentPdfPage >= totalPdfPages;
+            }
+
+            function changePdfPage(delta) {
+                const np = currentPdfPage + delta;
+                if (np >= 1 && np <= totalPdfPages) { currentPdfPage = np;
+                    renderPdfPage(np);
+                    updatePdfControls(); }
+            }
+
+            function closePdfViewer() {
+                document.getElementById('pdfModal').classList.remove('active');
+                document.body.style.overflow = '';
+                pdfDoc = null;
+                currentPdfPage = 0;
+                totalPdfPages = 0;
+                document.getElementById('pdfCanvasWrapper').innerHTML = '';
+                document.getElementById('pdfPageIndicator').textContent = 'Page 0 / 0';
+                document.getElementById('pdfPrevBtn').disabled = true;
+                document.getElementById('pdfNextBtn').disabled = true;
+            }
+
+            function setupProtections() {
+                document.addEventListener('contextmenu', e => e.preventDefault());
+                document.addEventListener('keydown', function(e) {
+                    if (e.ctrlKey && ['s', 'p', 'u', 'S', 'P', 'U'].includes(e.key)) e.preventDefault();
+                    if (e.ctrlKey && e.shiftKey && ['s', 'S', 'i', 'I', 'c', 'C'].includes(e.key)) e
+                    .preventDefault();
+                    if (e.key === 'F12' || e.key === 'PrintScreen') e.preventDefault();
+                });
+                document.addEventListener('dragstart', e => e.preventDefault());
+            }
+
+            function showToast(msg, type = '') {
+                const t = document.getElementById('toast');
+                t.textContent = msg;
+                t.className = 'toast ' + (type === 'error' ? 'error' : '');
+                t.classList.add('show');
+                clearTimeout(t._t);
+                t._t = setTimeout(() => t.classList.remove('show'), 3000);
+            }
+
+            document.addEventListener('keydown', function(e) {
+                if (document.getElementById('pdfModal').classList.contains('active')) {
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault();
+                        changePdfPage(1); }
+                    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault();
+                        changePdfPage(-1); }
+                    if (e.key === 'Escape') { e.preventDefault();
+                        closePdfViewer(); }
+                }
+            });
+            document.getElementById('pdfModal').addEventListener('click', function(e) {
+                if (e.target === this) closePdfViewer();
+            });
+
+            window.closePdfViewer = closePdfViewer;
+            window.changePdfPage = changePdfPage;
+
+            async function init() {
+                initParticles();
+                buildSeasonSelector();
+                setupProtections();
+                document.getElementById('episodeGrid').innerHTML =
+                    '<div class="loading-indicator">⏳ Checking GitHub for available episodes...</div>';
+                await checkGitHubForEpisodes();
+                renderEpisodes();
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+                setInterval(async () => {
+                    await checkGitHubForEpisodes();
+                    renderEpisodes();
+                    buildSeasonSelector();
+                }, 300000);
+            }
+
+            init().then(() => console.log('🚀 The Beg Portal Ready')).catch(err => console.error(err));
+        })();
+    </script>
+</body>
+</html>

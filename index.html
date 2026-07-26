@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Beg - Graphic Novel</title>
     <meta name="description" content="The Beg - 10 Seasons, 100 Episodes. New episode every Sunday.">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         :root {
             --bg-deep: #0a0a0f;
@@ -141,6 +140,7 @@
         .status-available { background: rgba(46,204,113,0.12); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
         .status-next { background: rgba(240,208,120,0.12); color: #f0d078; border: 1px solid rgba(240,208,120,0.35); }
         .status-coming { background: rgba(138,128,112,0.1); color: #8a8070; border: 1px solid rgba(138,128,112,0.2); }
+        .status-checking { background: rgba(52,152,219,0.1); color: #5dade2; border: 1px solid rgba(52,152,219,0.25); }
         .episode-date { font-size: 0.68rem; color: var(--text-muted); margin-top: 5px; letter-spacing: 1px; }
         .read-now-badge {
             position: absolute; top: 10px; right: 10px; background: #2ecc71; color: #000;
@@ -153,53 +153,31 @@
         }
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.94); z-index: 1000; display: none;
-            align-items: center; justify-content: center; flex-direction: column; backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.95); z-index: 1000; display: none;
+            align-items: center; justify-content: center; flex-direction: column;
         }
         .modal-overlay.active { display: flex; }
         .modal-header {
             display: flex; align-items: center; justify-content: space-between;
-            width: 95%; max-width: 1100px; padding: 10px 16px; background: var(--bg-card);
+            width: 95%; max-width: 1100px; padding: 12px 18px; background: var(--bg-card);
             border-radius: 16px 16px 0 0; border: 1px solid rgba(255,255,255,0.08);
         }
-        .modal-title { font-family: 'Georgia', serif; color: var(--gold-light); letter-spacing: 2px; font-size: 0.85rem; }
+        .modal-title { font-family: 'Georgia', serif; color: var(--gold-light); letter-spacing: 2px; font-size: 0.9rem; }
         .modal-close {
             background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
-            color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
-            font-size: 1rem; transition: var(--transition); display: flex; align-items: center; justify-content: center;
+            color: #fff; width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+            font-size: 1.1rem; transition: var(--transition); display: flex; align-items: center; justify-content: center;
         }
         .modal-close:hover { background: var(--accent); border-color: var(--accent); }
-        .pdf-viewer-container {
-            position: relative; width: 95%; max-width: 1100px; height: 60vh; background: #000;
+        .pdf-iframe-container {
+            position: relative; width: 95%; max-width: 1100px; height: 75vh; background: #525659;
             border-radius: 0 0 16px 16px; border: 1px solid rgba(255,255,255,0.08); border-top: none; overflow: hidden;
         }
-        .pdf-canvas-wrapper {
-            width: 100%; height: 100%; overflow: auto; display: flex;
-            flex-direction: column; align-items: center; padding: 16px;
+        .pdf-iframe-container iframe { width: 100%; height: 100%; border: none; }
+        .iframe-protection {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10; background: transparent; pointer-events: all;
         }
-        .pdf-canvas-wrapper canvas { margin-bottom: 12px; box-shadow: 0 6px 30px rgba(0,0,0,0.7); border-radius: 3px; max-width: 95%; }
-        .watermark-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10;
-            background: repeating-linear-gradient(-35deg, transparent, transparent 70px, rgba(212,168,83,0.02) 70px, rgba(212,168,83,0.02) 72px);
-        }
-        .watermark-text-overlay {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(-25deg);
-            pointer-events: none; z-index: 11; font-family: 'Georgia', serif; font-size: 4rem;
-            color: rgba(212,168,83,0.025); white-space: nowrap; letter-spacing: 12px; text-transform: uppercase;
-        }
-        .protection-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; background: transparent; pointer-events: all; }
-        .pdf-controls {
-            display: flex; gap: 10px; align-items: center; padding: 7px 16px;
-            background: var(--bg-card); border-radius: 25px; margin-top: 8px; border: 1px solid rgba(255,255,255,0.08);
-        }
-        .pdf-btn {
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.15);
-            color: #fff; padding: 7px 14px; border-radius: 20px; cursor: pointer;
-            transition: var(--transition); font-size: 0.78rem; letter-spacing: 1px;
-        }
-        .pdf-btn:hover { background: rgba(212,168,83,0.12); border-color: var(--gold); }
-        .pdf-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-        .page-indicator { color: var(--gold-light); font-weight: 600; letter-spacing: 1px; font-size: 0.8rem; }
         .toast {
             position: fixed; bottom: 20px; right: 20px; z-index: 3000; background: var(--bg-card);
             border: 1px solid var(--gold); padding: 10px 20px; border-radius: 25px;
@@ -207,7 +185,6 @@
             transform: translateY(20px); transition: all 0.4s ease; pointer-events: none; font-size: 0.78rem;
         }
         .toast.show { opacity: 1; transform: translateY(0); }
-        .toast.error { border-color: #e74c3c; color: #e74c3c; }
         .loading-indicator { text-align: center; padding: 25px; color: var(--text-muted); letter-spacing: 1px; grid-column: 1/-1; }
         @media (max-width:768px) {
             .hero-title { font-size: 2rem; letter-spacing: 3px; }
@@ -216,7 +193,7 @@
             .episode-grid { grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 8px; }
             .season-tab { padding: 8px 14px; font-size: 0.7rem; }
             .golden-quote { font-size: 0.65rem; }
-            .pdf-viewer-container { height: 45vh; width: 98%; }
+            .pdf-iframe-container { height: 55vh; width: 98%; }
         }
     </style>
 </head>
@@ -253,7 +230,7 @@
 
         <section class="episodes-section" id="episodesSection">
             <h2 class="season-title-display" id="seasonTitleDisplay">Season 1</h2>
-            <div class="episode-grid" id="episodeGrid"><div class="loading-indicator">⏳ Loading episodes...</div></div>
+            <div class="episode-grid" id="episodeGrid"><div class="loading-indicator">🔍 Auto-detecting episodes from GitHub...</div></div>
         </section>
     </div>
 
@@ -262,16 +239,9 @@
             <span class="modal-title" id="pdfModalTitle">📖 Reading Episode</span>
             <button class="modal-close" onclick="closePdfViewer()">✕</button>
         </div>
-        <div class="pdf-viewer-container" id="pdfViewerContainer" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
-            <div class="watermark-overlay"></div>
-            <div class="watermark-text-overlay">THE BEG</div>
-            <div class="protection-layer" id="protectionLayer"></div>
-            <div class="pdf-canvas-wrapper" id="pdfCanvasWrapper"></div>
-        </div>
-        <div class="pdf-controls">
-            <button class="pdf-btn" id="pdfPrevBtn" onclick="changePdfPage(-1)">◀ Prev</button>
-            <span class="page-indicator" id="pdfPageIndicator">Page 0 / 0</span>
-            <button class="pdf-btn" id="pdfNextBtn" onclick="changePdfPage(1)">Next ▶</button>
+        <div class="pdf-iframe-container" id="pdfIframeContainer" oncontextmenu="return false">
+            <div class="iframe-protection" id="iframeProtection"></div>
+            <iframe id="pdfIframe" src="" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -285,8 +255,8 @@
             const RELEASE_BASE_URL = 'https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/';
 
             let currentViewingSeason = CURRENT_SEASON;
-            let availableEpisodes = { 'S1E01': true };
-            let pdfDoc = null, currentPdfPage = 0, totalPdfPages = 0;
+            let availableEpisodes = {};
+            let isChecking = false;
 
             function initParticles() {
                 const canvas = document.getElementById('particlesCanvas');
@@ -321,6 +291,65 @@
             function getGlobalEpisodeNumber(s, e) { return (s - 1) * EPISODES_PER_SEASON + e; }
             function getSeasonEpisode(n) { return { season: Math.ceil(n / EPISODES_PER_SEASON), episode: ((n - 1) % EPISODES_PER_SEASON) + 1 }; }
             function getFileKey(s, e) { return `S${s}E${String(e).padStart(2, '0')}`; }
+
+            // AUTO-DETECT: Check if PDF exists using iframe trick
+            async function checkEpisode(fileKey) {
+                return new Promise((resolve) => {
+                    const testFrame = document.createElement('iframe');
+                    testFrame.style.display = 'none';
+                    testFrame.src = RELEASE_BASE_URL + fileKey + '.pdf?raw=true';
+                    
+                    let resolved = false;
+                    const timeout = setTimeout(() => { if (!resolved) { resolved = true; resolve(false); } }, 2000);
+                    
+                    testFrame.onload = () => {
+                        try {
+                            // If iframe loads, check if it's actually a PDF (not GitHub error page)
+                            setTimeout(() => {
+                                if (!resolved) {
+                                    resolved = true;
+                                    clearTimeout(timeout);
+                                    resolve(true);
+                                }
+                            }, 500);
+                        } catch(e) {
+                            if (!resolved) { resolved = true; clearTimeout(timeout); resolve(false); }
+                        }
+                    };
+                    testFrame.onerror = () => { if (!resolved) { resolved = true; clearTimeout(timeout); resolve(false); } };
+                    
+                    document.body.appendChild(testFrame);
+                    setTimeout(() => { document.body.removeChild(testFrame); if (!resolved) { resolved = true; resolve(false); } }, 2500);
+                });
+            }
+
+            async function autoDetectEpisodes() {
+                if (isChecking) return;
+                isChecking = true;
+                
+                const checks = [];
+                for (let s = 1; s <= CURRENT_SEASON; s++) {
+                    for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
+                        const fileKey = getFileKey(s, e);
+                        if (!availableEpisodes[fileKey]) {
+                            checks.push({ fileKey, season: s, episode: e });
+                        }
+                    }
+                }
+                
+                // Check in small batches
+                for (let i = 0; i < checks.length; i += 3) {
+                    const batch = checks.slice(i, i + 3);
+                    await Promise.all(batch.map(async (item) => {
+                        const exists = await checkEpisode(item.fileKey);
+                        if (exists) availableEpisodes[item.fileKey] = true;
+                    }));
+                }
+                
+                isChecking = false;
+                renderEpisodes();
+                console.log('✅ Auto-detection complete. Available:', Object.keys(availableEpisodes).sort());
+            }
 
             function updateCountdown() {
                 const now = new Date();
@@ -362,12 +391,22 @@
                     const isUploaded = availableEpisodes[fileKey] === true;
                     const isAvailable = isReleased && isUploaded;
                     const isNext = (globalNum === firstUnreleased) && !isReleased;
+                    const isCheckingNow = isChecking;
+                    
                     const card = document.createElement('div'); card.className = 'episode-card';
                     if (isAvailable) card.classList.add('available');
                     if (isNext) card.classList.add('next-episode');
+                    
+                    let statusText, statusClass;
+                    if (isAvailable) { statusText = '✅ Available Now'; statusClass = 'status-available'; }
+                    else if (isNext) { statusText = '⏳ Next Release'; statusClass = 'status-next'; }
+                    else if (isCheckingNow && isReleased) { statusText = '🔍 Checking...'; statusClass = 'status-checking'; }
+                    else if (isReleased && !isUploaded) { statusText = '⏳ Awaiting Upload'; statusClass = 'status-coming'; }
+                    else { statusText = '🔒 Coming Soon'; statusClass = 'status-coming'; }
+                    
                     card.innerHTML = `<div class="episode-number">Ep. ${String(ep).padStart(2,'0')}</div>
                         <div class="episode-title-area">Season ${currentViewingSeason}, Episode ${ep}</div>
-                        <span class="episode-status ${isAvailable?'status-available':isNext?'status-next':'status-coming'}">${isAvailable?'✅ Available Now':isNext?'⏳ Next Release':isReleased?'⏳ Awaiting Upload':'🔒 Coming Soon'}</span>
+                        <span class="episode-status ${statusClass}">${statusText}</span>
                         <div class="episode-date">${releaseDate.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'})}</div>
                         ${isAvailable?'<div class="read-now-badge">📖 READ</div>':''}`;
                     if (isAvailable) { card.addEventListener('click', () => openPdfViewer(fileKey, currentViewingSeason, ep)); card.style.cursor = 'pointer'; }
@@ -376,85 +415,55 @@
                 document.getElementById('seasonTitleDisplay').textContent = `Season ${currentViewingSeason}`;
             }
 
-            async function openPdfViewer(fileKey, season, episode) {
-                // FIXED: Use ?raw=true URL
+            function openPdfViewer(fileKey, season, episode) {
                 const pdfUrl = RELEASE_BASE_URL + fileKey + '.pdf?raw=true';
                 document.getElementById('pdfModalTitle').textContent = `📖 The Beg — Season ${season}, Episode ${episode}`;
+                document.getElementById('pdfIframe').src = pdfUrl;
                 document.getElementById('pdfModal').classList.add('active');
                 document.body.style.overflow = 'hidden';
-                document.getElementById('pdfCanvasWrapper').innerHTML = '<div style="color:#d4a853;text-align:center;padding:40px;">⏳ Loading PDF...</div>';
-                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-                try {
-                    pdfDoc = await pdfjsLib.getDocument(pdfUrl).promise;
-                    totalPdfPages = pdfDoc.numPages; currentPdfPage = 1;
-                    await renderPdfPage(currentPdfPage); updatePdfControls();
-                } catch (err) {
-                    console.error('PDF error:', err);
-                    document.getElementById('pdfCanvasWrapper').innerHTML = '<div style="color:#e74c3c;text-align:center;padding:40px;">❌ Error loading PDF.<br><small>Please try again.</small></div>';
-                    showToast('Error loading PDF.', 'error');
-                }
             }
-
-            async function renderPdfPage(pageNum) {
-                if (!pdfDoc) return;
-                const wrapper = document.getElementById('pdfCanvasWrapper'); wrapper.innerHTML = '';
-                const page = await pdfDoc.getPage(pageNum);
-                const viewport = page.getViewport({ scale: 1.5 });
-                const canvas = document.createElement('canvas');
-                canvas.width = viewport.width; canvas.height = viewport.height;
-                await page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise;
-                wrapper.appendChild(canvas);
-                document.getElementById('pdfViewerContainer').scrollTop = 0;
-            }
-
-            function updatePdfControls() {
-                document.getElementById('pdfPageIndicator').textContent = `Page ${currentPdfPage} / ${totalPdfPages}`;
-                document.getElementById('pdfPrevBtn').disabled = currentPdfPage <= 1;
-                document.getElementById('pdfNextBtn').disabled = currentPdfPage >= totalPdfPages;
-            }
-
-            function changePdfPage(d) { const np = currentPdfPage + d; if (np >= 1 && np <= totalPdfPages) { currentPdfPage = np; renderPdfPage(np); updatePdfControls(); } }
 
             function closePdfViewer() {
-                document.getElementById('pdfModal').classList.remove('active'); document.body.style.overflow = '';
-                pdfDoc = null; currentPdfPage = 0; totalPdfPages = 0;
-                document.getElementById('pdfCanvasWrapper').innerHTML = '';
-                document.getElementById('pdfPageIndicator').textContent = 'Page 0 / 0';
-                document.getElementById('pdfPrevBtn').disabled = true;
-                document.getElementById('pdfNextBtn').disabled = true;
+                document.getElementById('pdfModal').classList.remove('active');
+                document.body.style.overflow = '';
+                document.getElementById('pdfIframe').src = '';
             }
 
             function setupProtections() {
                 document.addEventListener('contextmenu', e => e.preventDefault());
                 document.addEventListener('keydown', function(e) {
                     if (e.ctrlKey && ['s','p','u','S','P','U'].includes(e.key)) e.preventDefault();
-                    if (e.ctrlKey && e.shiftKey && ['s','S','i','I','c','C'].includes(e.key)) e.preventDefault();
+                    if (e.ctrlKey && e.shiftKey && ['s','S','i','I'].includes(e.key)) e.preventDefault();
                     if (e.key === 'F12' || e.key === 'PrintScreen') e.preventDefault();
                 });
                 document.addEventListener('dragstart', e => e.preventDefault());
             }
 
-            function showToast(m, t) { const el = document.getElementById('toast'); el.textContent = m; el.className = 'toast ' + (t==='error'?'error':''); el.classList.add('show'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 3000); }
-
             document.addEventListener('keydown', function(e) {
-                if (document.getElementById('pdfModal').classList.contains('active')) {
-                    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); changePdfPage(1); }
-                    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); changePdfPage(-1); }
-                    if (e.key === 'Escape') { e.preventDefault(); closePdfViewer(); }
+                if (document.getElementById('pdfModal').classList.contains('active') && e.key === 'Escape') {
+                    e.preventDefault(); closePdfViewer();
                 }
             });
             document.getElementById('pdfModal').addEventListener('click', function(e) { if (e.target === this) closePdfViewer(); });
 
             window.closePdfViewer = closePdfViewer;
-            window.changePdfPage = changePdfPage;
 
-            function init() {
-                initParticles(); buildSeasonSelector(); setupProtections();
-                renderEpisodes(); updateCountdown();
+            async function init() {
+                initParticles();
+                buildSeasonSelector();
+                setupProtections();
+                renderEpisodes();
+                updateCountdown();
                 setInterval(updateCountdown, 1000);
+                
+                // Auto-detect episodes on load
+                await autoDetectEpisodes();
+                
+                // Re-check every 5 minutes for new uploads
+                setInterval(() => autoDetectEpisodes(), 300000);
             }
             init();
-            console.log('🚀 The Beg Portal Ready - S1E01 Available Now');
+            console.log('🚀 The Beg Portal Ready - Auto-detection active');
         })();
     </script>
 </body>

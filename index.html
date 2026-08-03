@@ -239,14 +239,22 @@
         (function() {
             const TOTAL_SEASONS = 10;
             const EPISODES_PER_SEASON = 10;
-            const START_DATE = new Date(2026, 6, 26);
+            const START_DATE = new Date(2026, 6, 26); // July 26, 2026
             const RELEASE_BASE_URL = 'https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/';
 
             let currentViewingSeason = 1;
-            // Auto-detect which seasons are available
-            let availableSeasons = new Set([1]);
-            let checkedFiles = {};
-            let isChecking = false;
+
+            // ⭐ THE ONLY THING YOU EVER EDIT ⭐
+            // Add the file key of each PDF you upload (e.g., 'S1E02', 'S2E05')
+            // The site will automatically show it as "Available Now".
+            const uploadedEpisodes = [
+                'S1E01',   // ← Already uploaded
+                'S1E02'    // ← Just added! (Remove this comment after adding)
+            ];
+
+            function isEpisodeAvailable(fileKey) {
+                return uploadedEpisodes.includes(fileKey);
+            }
 
             function initParticles() {
                 const canvas = document.getElementById('particlesCanvas');
@@ -287,55 +295,9 @@
 
             function getFileKey(s, e) { return `S${s}E${String(e).padStart(2, '0')}`; }
 
-            // Auto-detect available seasons based on episode 1
-            async function checkSeasonAvailability(season) {
-                if (availableSeasons.has(season)) return true;
-                const fileKey = getFileKey(season, 1);
-                if (checkedFiles[fileKey] !== undefined) return checkedFiles[fileKey];
-                
-                return new Promise((resolve) => {
-                    const testFrame = document.createElement('iframe');
-                    testFrame.style.cssText = 'position:absolute;width:0;height:0;border:0;visibility:hidden;';
-                    testFrame.src = RELEASE_BASE_URL + fileKey + '.pdf?raw=true';
-                    
-                    const timeout = setTimeout(() => {
-                        cleanup(false);
-                    }, 3000);
-                    
-                    const cleanup = (result) => {
-                        clearTimeout(timeout);
-                        if (testFrame.parentNode) testFrame.parentNode.removeChild(testFrame);
-                        checkedFiles[fileKey] = result;
-                        if (result) availableSeasons.add(season);
-                        resolve(result);
-                    };
-                    
-                    testFrame.onload = () => {
-                        setTimeout(() => cleanup(true), 500);
-                    };
-                    testFrame.onerror = () => cleanup(false);
-                    
-                    document.body.appendChild(testFrame);
-                });
-            }
-
-            async function autoDetectSeasons() {
-                if (isChecking) return;
-                isChecking = true;
-                
-                // Check seasons 1 through 10
-                for (let s = 1; s <= TOTAL_SEASONS; s++) {
-                    if (s === 1) { availableSeasons.add(1); continue; }
-                    const prevSeasonEp1 = getFileKey(s - 1, 1);
-                    // Only check next season if previous season Ep1 exists
-                    if (checkedFiles[prevSeasonEp1] === true || availableSeasons.has(s - 1)) {
-                        await checkSeasonAvailability(s);
-                    }
-                }
-                
-                isChecking = false;
-                buildSeasonSelector();
-                renderEpisodes();
+            // Automatically unlock seasons based on release date of their first episode
+            function isSeasonUnlocked(season) {
+                return getEpisodeDate(season, 1) <= new Date();
             }
 
             function updateCountdown() {
@@ -375,14 +337,13 @@
             function buildSeasonSelector() {
                 const sel = document.getElementById('seasonSelector'); 
                 sel.innerHTML = '';
-                const maxAvailable = Math.max(...availableSeasons, 1);
                 
                 for (let s = 1; s <= TOTAL_SEASONS; s++) {
                     const tab = document.createElement('div'); 
                     tab.className = 'season-tab';
                     if (s === currentViewingSeason) tab.classList.add('active');
                     
-                    if (s <= maxAvailable) {
+                    if (isSeasonUnlocked(s)) {
                         tab.textContent = `Season ${s}`;
                         tab.addEventListener('click', () => { 
                             currentViewingSeason = s; 
@@ -392,110 +353,4 @@
                         });
                     } else {
                         tab.classList.add('locked');
-                        tab.innerHTML = `Season ${s} 🔒`;
-                    }
-                    sel.appendChild(tab);
-                }
-            }
-
-            function renderEpisodes() {
-                const grid = document.getElementById('episodeGrid'); 
-                grid.innerHTML = '';
-                const now = new Date();
-                let firstUnreleased = null;
-                
-                for (let s = 1; s <= TOTAL_SEASONS; s++) {
-                    for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
-                        if (getEpisodeDate(s, e) > now) { firstUnreleased = { season: s, episode: e }; break; }
-                    }
-                    if (firstUnreleased) break;
-                }
-                
-                for (let ep = 1; ep <= EPISODES_PER_SEASON; ep++) {
-                    const releaseDate = getEpisodeDate(currentViewingSeason, ep);
-                    const isReleased = releaseDate <= now;
-                    const fileKey = getFileKey(currentViewingSeason, ep);
-                    const isUploaded = checkedFiles[fileKey] === true;
-                    const isAvailable = isReleased && isUploaded;
-                    const isNext = firstUnreleased && 
-                        firstUnreleased.season === currentViewingSeason && 
-                        firstUnreleased.episode === ep;
-                    
-                    const card = document.createElement('div'); 
-                    card.className = 'episode-card';
-                    if (isAvailable) card.classList.add('available');
-                    if (isNext) card.classList.add('next-episode');
-                    
-                    card.innerHTML = `
-                        <div class="episode-number">Ep. ${String(ep).padStart(2,'0')}</div>
-                        <div class="episode-title-area">Season ${currentViewingSeason}, Episode ${ep}</div>
-                        <span class="episode-status ${isAvailable?'status-available':isNext?'status-next':'status-coming'}">${isAvailable?'✅ Available Now':isNext?'⏳ Next Release':isReleased?'⏳ Awaiting Upload':'🔒 Coming Soon'}</span>
-                        <div class="episode-date">${releaseDate.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'})}</div>
-                        ${isAvailable?'<div class="read-now-badge">📖 READ</div>':''}
-                    `;
-                    
-                    if (isAvailable) { 
-                        card.addEventListener('click', () => openPdfViewer(fileKey, currentViewingSeason, ep)); 
-                        card.style.cursor = 'pointer'; 
-                    }
-                    grid.appendChild(card);
-                }
-                document.getElementById('seasonTitleDisplay').textContent = `Season ${currentViewingSeason}`;
-            }
-
-            function openPdfViewer(fileKey, season, episode) {
-                const pdfUrl = RELEASE_BASE_URL + fileKey + '.pdf?raw=true';
-                document.getElementById('pdfModalTitle').textContent = `📖 The Beg — Season ${season}, Episode ${episode}`;
-                document.getElementById('pdfIframe').src = pdfUrl;
-                document.getElementById('pdfModal').classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closePdfViewer() {
-                document.getElementById('pdfModal').classList.remove('active');
-                document.body.style.overflow = '';
-                document.getElementById('pdfIframe').src = '';
-            }
-
-            // Protections
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && ['s','p','u','S','P','U'].includes(e.key)) e.preventDefault();
-                if (e.ctrlKey && e.shiftKey && ['s','S','i','I'].includes(e.key)) e.preventDefault();
-                if (e.key === 'F12' || e.key === 'PrintScreen') e.preventDefault();
-            });
-            document.addEventListener('dragstart', e => e.preventDefault());
-            document.addEventListener('keydown', function(e) {
-                if (document.getElementById('pdfModal').classList.contains('active') && e.key === 'Escape') {
-                    e.preventDefault(); closePdfViewer();
-                }
-            });
-            document.getElementById('pdfModal').addEventListener('click', function(e) { 
-                if (e.target === this) closePdfViewer(); 
-            });
-
-            window.closePdfViewer = closePdfViewer;
-
-            async function init() {
-                initParticles();
-                buildSeasonSelector();
-                renderEpisodes();
-                updateCountdown();
-                setInterval(updateCountdown, 1000);
-                
-                // Auto-detect: check if S1E01 exists (your already uploaded file)
-                checkedFiles['S1E01'] = true;
-                availableSeasons.add(1);
-                renderEpisodes();
-                
-                // Then check for more in background
-                setTimeout(() => autoDetectSeasons(), 2000);
-                // Re-check every 10 minutes
-                setInterval(() => autoDetectSeasons(), 600000);
-            }
-            init();
-            console.log('🚀 The Beg - Fully Automatic Portal Ready');
-        })();
-    </script>
-</body>
-</html>
+                        tab.innerHTML = `Se

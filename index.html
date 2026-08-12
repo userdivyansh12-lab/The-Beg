@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Beg - Graphic Novel</title>
+    <title>The Beg - Graphic Novel Series</title>
     <meta name="description" content="The Beg - 10 Seasons, 100 Episodes. New episode every Sunday.">
     <style>
         :root {
             --bg-deep: #0a0a0f;
-            --bg-card: rgba(18, 18, 26, 0.8);
-            --bg-card-hover: rgba(26, 26, 40, 0.92);
+            --bg-card: rgba(18, 18, 26, 0.85);
+            --bg-card-hover: rgba(28, 28, 42, 0.95);
             --gold: #d4a853;
             --gold-light: #f0d078;
+            --gold-dim: rgba(212, 168, 83, 0.15);
             --accent: #c0392b;
             --text: #e0d5c1;
             --text-muted: #8a8070;
             --glass-border: rgba(212, 168, 83, 0.2);
             --card-radius: 16px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --success: #2ecc71;
+            --success-dim: rgba(46, 204, 113, 0.15);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; -webkit-user-select: none; user-select: none; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
             background: var(--bg-deep);
@@ -30,26 +33,66 @@
             -webkit-user-select: none;
             user-select: none;
         }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: rgba(212,168,83,0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(212,168,83,0.5); }
+
+        .custom-cursor {
+            width: 24px; height: 24px;
+            border: 2px solid rgba(212,168,83,0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, border-color 0.2s;
+            mix-blend-mode: difference;
+        }
+        .custom-cursor.hover {
+            width: 40px; height: 40px;
+            border-color: rgba(212,168,83,0.8);
+            background: rgba(212,168,83,0.05);
+        }
+        @media (pointer: coarse) { .custom-cursor { display: none; } }
+
+        .global-progress-bar {
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            z-index: 9999;
+            width: 0%;
+            transition: width 0.6s ease;
+            box-shadow: 0 0 10px rgba(212,168,83,0.5);
+        }
+
         .hero-bg-image {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/hero-bg.jpg?raw=true') center/cover no-repeat;
-            opacity: 0.5; z-index: 0;
-            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
-            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
+            opacity: 0.45; z-index: 0;
+            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+            animation: bgPulse 10s ease-in-out infinite;
+        }
+        @keyframes bgPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
         }
         .hero-bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(ellipse at center, rgba(10,10,15,0.2) 0%, rgba(10,10,15,0.5) 70%, rgba(10,10,15,0.85) 100%);
+            background: radial-gradient(ellipse at center, rgba(10,10,15,0.3) 0%, rgba(10,10,15,0.6) 60%, rgba(10,10,15,0.9) 100%);
             z-index: 1; pointer-events: none;
         }
-        #particlesCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.35; }
+        #particlesCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.5; }
+
         .main-container { position: relative; z-index: 2; max-width: 1300px; margin: 0 auto; padding: 20px 24px 40px; }
+
         .header-area { display: flex; justify-content: space-between; align-items: flex-start; padding: 15px 0 10px; flex-wrap: wrap; gap: 15px; }
         .nav-logo {
             font-family: 'Georgia', serif; font-size: 2rem; font-weight: bold;
             background: linear-gradient(135deg, #f0d078 0%, #d4a853 40%, #8b6914 100%);
             -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
             letter-spacing: 4px; text-transform: uppercase;
+            cursor: default;
         }
         .golden-quote-wrapper { position: relative; display: inline-block; text-align: right; }
         .star-top-left, .star-bottom-right {
@@ -67,6 +110,7 @@
             font-family: 'Georgia', serif; font-size: 0.8rem; color: #f0d078;
             letter-spacing: 2px; line-height: 1.6; text-shadow: 0 0 6px rgba(212,168,83,0.3);
         }
+
         .hero-section { text-align: center; padding: 25px 20px 20px; }
         .hero-badge {
             display: inline-block; background: rgba(212,168,83,0.1); border: 1px solid rgba(212,168,83,0.3);
@@ -84,65 +128,152 @@
             letter-spacing: 6px; margin-bottom: 8px;
         }
         .hero-subtitle { font-size: 0.9rem; color: var(--text-muted); letter-spacing: 3px; margin-bottom: 20px; }
+
+        .stats-row {
+            display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            text-align: center; padding: 8px 16px;
+            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px; backdrop-filter: blur(10px);
+        }
+        .stat-value {
+            font-family: 'Georgia', serif; font-size: 1.4rem; color: var(--gold-light);
+            font-weight: bold;
+        }
+        .stat-label {
+            font-size: 0.65rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase;
+        }
+
         .countdown-container { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
         .countdown-item {
             background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border);
             border-radius: 16px; padding: 14px 18px; min-width: 70px; text-align: center;
             box-shadow: 0 0 15px rgba(212,168,83,0.1);
+            transition: transform 0.3s;
         }
+        .countdown-item:hover { transform: translateY(-3px); }
         .countdown-value { font-family: 'Georgia', serif; font-size: 2rem; font-weight: bold; color: var(--gold-light); }
         .countdown-label { font-size: 0.6rem; letter-spacing: 2px; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; }
         .next-episode-info { margin-top: 12px; color: var(--gold); font-size: 0.8rem; letter-spacing: 1px; }
+
+        .continue-banner {
+            display: none; align-items: center; justify-content: center; gap: 15px;
+            background: linear-gradient(135deg, rgba(212,168,83,0.15), rgba(139,105,20,0.1));
+            border: 1px solid var(--glass-border); border-radius: var(--card-radius);
+            padding: 14px 24px; margin: 20px auto; max-width: 600px;
+            backdrop-filter: blur(10px); cursor: pointer;
+            transition: var(--transition); animation: slideDown 0.5s ease;
+        }
+        .continue-banner.active { display: flex; }
+        .continue-banner:hover {
+            border-color: var(--gold); box-shadow: 0 0 25px rgba(212,168,83,0.15);
+            transform: translateY(-1px);
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .continue-text { font-size: 0.85rem; color: var(--text); }
+        .continue-text strong { color: var(--gold-light); }
+        .continue-btn {
+            background: var(--gold); color: #000; border: none;
+            padding: 6px 14px; border-radius: 20px; font-size: 0.75rem;
+            font-weight: 700; cursor: pointer; letter-spacing: 1px;
+            transition: var(--transition);
+        }
+        .continue-btn:hover { background: var(--gold-light); box-shadow: 0 0 15px rgba(212,168,83,0.4); }
+
+        .search-wrapper {
+            max-width: 400px; margin: 0 auto 20px; position: relative;
+        }
+        .search-input {
+            width: 100%; padding: 10px 16px 10px 40px;
+            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 25px; color: var(--text); font-size: 0.85rem;
+            outline: none; transition: var(--transition); backdrop-filter: blur(10px);
+        }
+        .search-input:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(212,168,83,0.1); }
+        .search-input::placeholder { color: var(--text-muted); }
+        .search-icon {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+            color: var(--text-muted); font-size: 0.9rem;
+        }
+
         .season-selector-wrapper {
             margin: 20px 0 10px; overflow-x: auto; scrollbar-width: thin;
             scrollbar-color: rgba(212,168,83,0.3) transparent; padding-bottom: 6px;
         }
         .season-selector-wrapper::-webkit-scrollbar { height: 3px; }
         .season-selector-wrapper::-webkit-scrollbar-thumb { background: rgba(212,168,83,0.3); border-radius: 10px; }
-        .season-selector { display: flex; gap: 8px; padding: 4px 6px; min-width: max-content; }
+        .season-selector { display: flex; gap: 10px; padding: 4px 6px; min-width: max-content; }
         .season-tab {
             flex-shrink: 0; padding: 10px 20px; border-radius: 25px;
             border: 1px solid rgba(255,255,255,0.12); background: var(--bg-card);
             color: var(--text-muted); cursor: pointer; font-weight: 600; letter-spacing: 1px;
             transition: var(--transition); font-size: 0.78rem; white-space: nowrap; backdrop-filter: blur(10px);
+            position: relative; overflow: hidden;
         }
         .season-tab:hover { border-color: var(--gold); color: var(--text); background: var(--bg-card-hover); }
         .season-tab.active {
             background: linear-gradient(135deg, rgba(212,168,83,0.2) 0%, rgba(139,105,20,0.3) 100%);
             border-color: var(--gold); color: var(--gold-light); box-shadow: 0 0 20px rgba(212,168,83,0.2);
         }
-        .season-tab.locked { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+        .season-tab.locked { opacity: 0.4; cursor: not-allowed; }
+        .season-tab.locked:hover { border-color: rgba(255,255,255,0.12); color: var(--text-muted); background: var(--bg-card); }
+        .season-progress {
+            position: absolute; bottom: 0; left: 0; height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 0 0 0 2px;
+            transition: width 0.5s ease;
+        }
+        .lock-icon { margin-left: 4px; font-size: 0.7rem; }
+
         .episodes-section { margin-top: 8px; }
         .season-title-display {
             font-family: 'Georgia', serif; font-size: 1.3rem; color: var(--gold-light);
-            margin-bottom: 16px; letter-spacing: 2px; text-align: center;
+            margin-bottom: 6px; letter-spacing: 2px; text-align: center;
         }
-        .episode-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+        .season-arc-subtitle {
+            text-align: center; font-size: 0.8rem; color: var(--text-muted);
+            margin-bottom: 16px; letter-spacing: 3px; text-transform: uppercase;
+        }
+        .episode-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
         .episode-card {
             background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
-            border-radius: var(--card-radius); padding: 16px; transition: var(--transition);
+            border-radius: var(--card-radius); padding: 18px; transition: var(--transition);
             position: relative; backdrop-filter: blur(10px);
+            opacity: 0; transform: translateY(20px);
         }
-        .episode-card:hover { background: var(--bg-card-hover); border-color: rgba(212,168,83,0.3); transform: translateY(-2px); }
+        .episode-card.revealed { opacity: 1; transform: translateY(0); }
+        .episode-card:hover { background: var(--bg-card-hover); border-color: rgba(212,168,83,0.3); transform: translateY(-3px); }
         .episode-card.available { border-color: rgba(46,204,113,0.4); cursor: pointer; }
         .episode-card.available:hover { border-color: rgba(46,204,113,0.7); box-shadow: 0 0 28px rgba(46,204,113,0.15); }
         .episode-card.next-episode { border-color: rgba(240,208,120,0.5); animation: nextPulse 2.5s ease-in-out infinite; }
+        .episode-card.read { border-color: rgba(100,149,237,0.3); }
         @keyframes nextPulse {
             0%, 100% { box-shadow: 0 0 12px rgba(240,208,120,0.08); }
             50% { box-shadow: 0 0 35px rgba(240,208,120,0.3); }
         }
         .episode-number { font-family: 'Georgia', serif; font-size: 1.7rem; font-weight: bold; color: var(--gold); letter-spacing: 2px; }
-        .episode-title-area { margin-top: 2px; font-size: 0.78rem; color: var(--text-muted); letter-spacing: 1px; }
+        .episode-title-area { margin-top: 4px; font-size: 0.85rem; color: var(--text); letter-spacing: 0.5px; font-weight: 500; }
+        .episode-desc {
+            font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;
+            line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
         .episode-status {
             display: inline-block; padding: 4px 10px; border-radius: 16px;
-            font-size: 0.65rem; letter-spacing: 1.5px; margin-top: 7px; font-weight: 600;
+            font-size: 0.65rem; letter-spacing: 1.5px; margin-top: 10px; font-weight: 600;
         }
         .status-available { background: rgba(46,204,113,0.12); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
         .status-next { background: rgba(240,208,120,0.12); color: #f0d078; border: 1px solid rgba(240,208,120,0.35); }
         .status-coming { background: rgba(138,128,112,0.1); color: #8a8070; border: 1px solid rgba(138,128,112,0.2); }
-        .episode-date { font-size: 0.68rem; color: var(--text-muted); margin-top: 5px; letter-spacing: 1px; }
+        .status-read { background: rgba(100,149,237,0.12); color: #6495ed; border: 1px solid rgba(100,149,237,0.3); }
+        .episode-date { font-size: 0.68rem; color: var(--text-muted); margin-top: 6px; letter-spacing: 1px; }
         .read-now-badge {
-            position: absolute; top: 10px; right: 10px; background: #2ecc71; color: #000;
+            position: absolute; top: 12px; right: 12px; background: #2ecc71; color: #000;
             padding: 3px 9px; border-radius: 12px; font-size: 0.62rem; letter-spacing: 1.5px;
             font-weight: 700; animation: badgeGlow 2s ease-in-out infinite; pointer-events: none;
         }
@@ -150,45 +281,150 @@
             0%, 100% { box-shadow: 0 0 5px rgba(46,204,113,0.4); }
             50% { box-shadow: 0 0 18px rgba(46,204,113,0.8); }
         }
+        .read-check {
+            position: absolute; top: 12px; right: 12px;
+            width: 22px; height: 22px; border-radius: 50%;
+            background: rgba(100,149,237,0.2); border: 1px solid rgba(100,149,237,0.5);
+            color: #6495ed; display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; pointer-events: none;
+        }
+
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 1000; display: none;
+            background: rgba(0,0,0,0.92); z-index: 1000; display: none;
             align-items: center; justify-content: center; flex-direction: column;
+            opacity: 0; transition: opacity 0.3s;
         }
-        .modal-overlay.active { display: flex; }
+        .modal-overlay.active { display: flex; opacity: 1; }
         .modal-header {
             display: flex; align-items: center; justify-content: space-between;
-            width: 95%; max-width: 1100px; padding: 12px 18px; background: var(--bg-card);
+            width: 95%; max-width: 1100px; padding: 14px 20px; background: var(--bg-card);
             border-radius: 16px 16px 0 0; border: 1px solid rgba(255,255,255,0.08);
         }
-        .modal-title { font-family: 'Georgia', serif; color: var(--gold-light); letter-spacing: 2px; font-size: 0.9rem; }
+        .modal-title { font-family: 'Georgia', serif; color: var(--gold-light); letter-spacing: 2px; font-size: 0.95rem; }
         .modal-close {
             background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
             color: #fff; width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
             font-size: 1.1rem; transition: var(--transition); display: flex; align-items: center; justify-content: center;
         }
         .modal-close:hover { background: var(--accent); border-color: var(--accent); }
+
+        .detail-modal-content {
+            width: 95%; max-width: 600px; background: var(--bg-card);
+            border-radius: 0 0 16px 16px; border: 1px solid rgba(255,255,255,0.08);
+            border-top: none; padding: 30px; text-align: center;
+            backdrop-filter: blur(20px);
+        }
+        .detail-cover {
+            width: 120px; height: 170px; background: linear-gradient(135deg, rgba(212,168,83,0.2), rgba(139,105,20,0.1));
+            border: 1px solid var(--glass-border); border-radius: 12px;
+            margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; color: var(--gold); box-shadow: 0 0 30px rgba(212,168,83,0.1);
+        }
+        .detail-ep-title { font-family: 'Georgia', serif; font-size: 1.4rem; color: var(--gold-light); margin-bottom: 6px; }
+        .detail-ep-meta { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 16px; }
+        .detail-desc { font-size: 0.9rem; color: var(--text); line-height: 1.6; margin-bottom: 24px; max-width: 480px; margin-left: auto; margin-right: auto; }
+        .detail-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), #8b6914); color: #000;
+            border: none; padding: 10px 28px; border-radius: 25px; font-size: 0.85rem;
+            font-weight: 700; cursor: pointer; letter-spacing: 1px;
+            transition: var(--transition); box-shadow: 0 4px 15px rgba(212,168,83,0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(212,168,83,0.5); }
+        .btn-secondary {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+            color: var(--text); padding: 10px 24px; border-radius: 25px; font-size: 0.85rem;
+            cursor: pointer; transition: var(--transition); letter-spacing: 1px;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); }
+
         .pdf-iframe-container {
-            position: relative; width: 95%; max-width: 1100px; height: 75vh; background: #525659;
+            position: relative; width: 95%; max-width: 1100px; height: 75vh; background: #1a1a1a;
             border-radius: 0 0 16px 16px; border: 1px solid rgba(255,255,255,0.08); border-top: none; overflow: hidden;
         }
         .pdf-iframe-container iframe { width: 100%; height: 100%; border: none; }
-        .iframe-protection {
+        .pdf-loader {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; background: transparent; pointer-events: all;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: var(--bg-deep); z-index: 5; transition: opacity 0.3s;
         }
+        .pdf-loader.hidden { opacity: 0; pointer-events: none; }
+        .spinner {
+            width: 40px; height: 40px; border: 3px solid rgba(212,168,83,0.2);
+            border-top-color: var(--gold); border-radius: 50%;
+            animation: spin 1s linear infinite; margin-bottom: 12px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .pdf-error {
+            display: none; flex-direction: column; align-items: center; gap: 10px;
+            color: var(--text-muted); font-size: 0.85rem;
+        }
+        .pdf-error.active { display: flex; }
+
+        .toast-container {
+            position: fixed; bottom: 24px; right: 24px; z-index: 10001;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .toast {
+            background: var(--bg-card-hover); border: 1px solid var(--glass-border);
+            color: var(--text); padding: 12px 18px; border-radius: 12px;
+            font-size: 0.85rem; backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            animation: toastIn 0.4s ease, toastOut 0.4s ease 2.6s forwards;
+            max-width: 300px; line-height: 1.4;
+        }
+        @keyframes toastIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes toastOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        .back-to-top {
+            position: fixed; bottom: 24px; left: 24px; z-index: 999;
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--bg-card); border: 1px solid var(--glass-border);
+            color: var(--gold-light); font-size: 1.2rem; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: translateY(20px); transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); }
+        .back-to-top:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(212,168,83,0.4); }
+
+        .keyboard-hint {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.08);
+            padding: 6px 14px; border-radius: 20px; font-size: 0.7rem;
+            color: var(--text-muted); letter-spacing: 1px; z-index: 99;
+            backdrop-filter: blur(10px); opacity: 0; transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .keyboard-hint.visible { opacity: 1; }
+
         @media (max-width:768px) {
             .hero-title { font-size: 2rem; letter-spacing: 3px; }
             .countdown-item { min-width: 55px; padding: 10px 12px; }
             .countdown-value { font-size: 1.5rem; }
-            .episode-grid { grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 8px; }
+            .episode-grid { grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 10px; }
             .season-tab { padding: 8px 14px; font-size: 0.7rem; }
             .golden-quote { font-size: 0.65rem; }
             .pdf-iframe-container { height: 55vh; width: 98%; }
+            .detail-modal-content { padding: 20px; }
+            .stats-row { gap: 10px; }
+            .stat-item { padding: 6px 10px; }
+            .custom-cursor { display: none; }
+            .keyboard-hint { display: none; }
         }
     </style>
 </head>
 <body>
+    <div class="custom-cursor" id="customCursor"></div>
+    <div class="global-progress-bar" id="globalProgress"></div>
+
     <div class="hero-bg-image"></div>
     <div class="hero-bg-overlay"></div>
     <canvas id="particlesCanvas"></canvas>
@@ -197,16 +433,24 @@
         <div class="header-area">
             <span class="nav-logo">The Beg</span>
             <div class="golden-quote-wrapper">
-                <span class="star-top-left">✦</span>
-                <span class="star-bottom-right">✦</span>
+                <span class="star-top-left">&#10022;</span>
+                <span class="star-bottom-right">&#10022;</span>
                 <div class="golden-quote">SOME PEOPLE BEG TO BE SEEN.<br>FEW DARE TO DISAPPEAR.</div>
             </div>
         </div>
 
         <section class="hero-section">
-            <div class="hero-badge">🎬 GRAPHIC NOVEL SERIES</div>
+            <div class="hero-badge">&#127916; GRAPHIC NOVEL SERIES</div>
             <h1 class="hero-title">THE BEG</h1>
-            <p class="hero-subtitle">10 Seasons · 100 Episodes · New Episode Every Sunday</p>
+            <p class="hero-subtitle">10 Seasons &middot; 100 Episodes &middot; New Episode Every Sunday</p>
+
+            <div class="stats-row" id="statsRow">
+                <div class="stat-item"><div class="stat-value" id="statTotal">100</div><div class="stat-label">Total</div></div>
+                <div class="stat-item"><div class="stat-value" id="statAvailable">0</div><div class="stat-label">Available</div></div>
+                <div class="stat-item"><div class="stat-value" id="statRead">0</div><div class="stat-label">Read</div></div>
+                <div class="stat-item"><div class="stat-value" id="statNext">--</div><div class="stat-label">Next In</div></div>
+            </div>
+
             <div class="countdown-container" id="countdownContainer">
                 <div class="countdown-item"><div class="countdown-value" id="countDays">--</div><div class="countdown-label">Days</div></div>
                 <div class="countdown-item"><div class="countdown-value" id="countHours">--</div><div class="countdown-label">Hours</div></div>
@@ -216,26 +460,65 @@
             <p class="next-episode-info" id="nextEpisodeInfo">Loading schedule...</p>
         </section>
 
+        <div class="continue-banner" id="continueBanner" onclick="continueReading()">
+            <div class="continue-text">Continue reading <strong id="continueText">Season 1, Episode 1</strong></div>
+            <button class="continue-btn">RESUME &#9654;</button>
+        </div>
+
+        <div class="search-wrapper">
+            <span class="search-icon">&#128269;</span>
+            <input type="text" class="search-input" id="episodeSearch" placeholder="Search episodes..." autocomplete="off">
+        </div>
+
         <div class="season-selector-wrapper">
             <div class="season-selector" id="seasonSelector"></div>
         </div>
 
         <section class="episodes-section" id="episodesSection">
             <h2 class="season-title-display" id="seasonTitleDisplay">Season 1</h2>
+            <p class="season-arc-subtitle" id="seasonArcSubtitle">The Disappearance</p>
             <div class="episode-grid" id="episodeGrid"></div>
         </section>
     </div>
 
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal-header">
+            <span class="modal-title" id="detailModalTitle">Episode Details</span>
+            <button class="modal-close" onclick="closeDetailModal()">&#10005;</button>
+        </div>
+        <div class="detail-modal-content">
+            <div class="detail-cover" id="detailCover">&#128214;</div>
+            <div class="detail-ep-title" id="detailEpTitle">Episode Title</div>
+            <div class="detail-ep-meta" id="detailEpMeta">Season 1 &middot; Episode 1</div>
+            <div class="detail-desc" id="detailDesc">Episode description goes here.</div>
+            <div class="detail-actions">
+                <button class="btn-primary" id="detailReadBtn" onclick="readFromDetail()">&#128214; Start Reading</button>
+                <button class="btn-secondary" onclick="copyEpisodeLink()">&#128279; Copy Link</button>
+                <button class="btn-secondary" onclick="closeDetailModal()">Close</button>
+            </div>
+        </div>
+    </div>
     <div class="modal-overlay" id="pdfModal">
         <div class="modal-header">
-            <span class="modal-title" id="pdfModalTitle">📖 Reading Episode</span>
-            <button class="modal-close" onclick="closePdfViewer()">✕</button>
+            <span class="modal-title" id="pdfModalTitle">&#128214; Reading Episode</span>
+            <button class="modal-close" onclick="closePdfViewer()">&#10005;</button>
         </div>
         <div class="pdf-iframe-container" oncontextmenu="return false">
-            <div class="iframe-protection"></div>
+            <div class="pdf-loader" id="pdfLoader">
+                <div class="spinner"></div>
+                <div style="color: var(--text-muted); font-size: 0.85rem;">Loading episode...</div>
+                <div class="pdf-error" id="pdfError">
+                    <div>Failed to load PDF</div>
+                    <button class="btn-secondary" onclick="retryPdf()" style="margin-top:8px;">Retry</button>
+                </div>
+            </div>
             <iframe id="pdfIframe" src="" allowfullscreen></iframe>
         </div>
     </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
+    <div class="keyboard-hint" id="keyboardHint">Use &#8592; &#8594; to switch seasons &middot; ESC to close</div>
 
     <script>
         (function() {
@@ -245,172 +528,175 @@
             const RELEASE_BASE_URL = 'https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/';
 
             const uploadedEpisodes = [
-    'S1E01',
-    'S1E02',
-    'S1E03', 
-    'S1E04',
-    'S1E05',
-    'S1E06',
-    'S1E07',
-    'S1E08',
-    'S1E09',
-    'S1E10',
-    'S2E01',
-    'S2E02',
-    'S2E03',
-    'S2E04',
-    'S2E05',
-    'S2E06',
-    'S2E07',
-    'S2E08',
-    'S2E09',
-    'S2E10',
-    'S3E01',
-    'S3E02',
-    'S3E03',
-    'S3E04',
-    'S3E05',
-    'S3E06',
-    'S3E07',
-    'S3E08',
-    'S3E09',
-    'S3E10',
-    'S4E01',
-    'S4E02',
-    'S4E03',
-    'S4E04',
-    'S4E05',
-    'S4E06',
-    'S4E07',
-    'S4E08',
-    'S4E09',
-    'S4E10',
-    'S5E01',
-    'S5E02',
-    'S5E03',
-    'S5E04',
-    'S5E05',
-    'S5E06',
-    'S5E07',
-    'S5E08',
-    'S5E09',
-    'S5E10',
-    'S6E01',
-    'S6E02',
-    'S6E03',
-    'S6E04',
-    'S6E05',
-    'S6E06',
-    'S6E07',
-    'S6E08',
-    'S6E09',
-    'S6E10',
-    'S7E01',
-    'S7E02',
-    'S7E03',
-    'S7E04',
-    'S7E05',
-    'S7E06',
-    'S7E07',
-    'S7E08',
-    'S7E09',
-    'S7E10',
-    'S8E01',
-    'S8E02',
-    'S8E03',
-    'S8E04',
-    'S8E05',
-    'S8E06',
-    'S8E07',
-    'S8E08',
-    'S8E09',
-    'S8E10',
-    'S9E01',
-    'S9E02',
-    'S9E03',
-    'S9E04',
-    'S9E05',
-    'S9E06',
-    'S9E07',
-    'S9E08',
-    'S9E09',
-    'S9E10',
-    'S10E01',
-    'S10E02',
-    'S10E03',
-    'S10E04',
-    'S10E05',
-    'S10E06',
-    'S10E07',
-    'S10E08',
-    'S10E09',
-    'S10E10'.
-                
+                'S1E01','S1E02','S1E03','S1E04','S1E05','S1E06','S1E07','S1E08','S1E09','S1E10',
+                'S2E01','S2E02','S2E03','S2E04','S2E05','S2E06','S2E07','S2E08','S2E09','S2E10',
+                'S3E01','S3E02','S3E03','S3E04','S3E05','S3E06','S3E07','S3E08','S3E09','S3E10',
+                'S4E01','S4E02','S4E03','S4E04','S4E05','S4E06','S4E07','S4E08','S4E09','S4E10',
+                'S5E01','S5E02','S5E03','S5E04','S5E05','S5E06','S5E07','S5E08','S5E09','S5E10',
+                'S6E01','S6E02','S6E03','S6E04','S6E05','S6E06','S6E07','S6E08','S6E09','S6E10',
+                'S7E01','S7E02','S7E03','S7E04','S7E05','S7E06','S7E07','S7E08','S7E09','S7E10',
+                'S8E01','S8E02','S8E03','S8E04','S8E05','S8E06','S8E07','S8E08','S8E09','S8E10',
+                'S9E01','S9E02','S9E03','S9E04','S9E05','S9E06','S9E07','S9E08','S9E09','S9E10',
+                'S10E01','S10E02','S10E03','S10E04','S10E05','S10E06','S10E07','S10E08','S10E09','S10E10'
             ];
 
-            console.log('📚 Uploaded episodes list:', uploadedEpisodes);
+            const SEASON_ARCS = [
+                "The Disappearance", "The Hunt", "Revelations", "The Underground",
+                "False Faces", "The Collective", "Memory Lane", "The Inversion",
+                "Endgame", "The New Dawn"
+            ];
+            const EP_ADJ = ["Silent","Broken","Hidden","Last","False","Cold","Empty","Dead","Raw","Dark"];
+            const EP_NOUN = ["Signal","Ghost","Trail","Mirror","Hour","Door","Witness","Shadow","Truth","Threshold"];
+            const EP_DESC_TEMPLATES = [
+                "The mystery deepens as new evidence comes to light.",
+                "An unexpected alliance forms in the shadows.",
+                "The past catches up with those who tried to bury it.",
+                "A single photograph changes everything they believed.",
+                "Someone is watching. Someone always is.",
+                "The city holds its breath as tensions rise.",
+                "What was lost may never be found, unless someone begs.",
+                "Trust is a currency few can afford to spend.",
+                "Every answer leads to a darker question.",
+                "The line between hunter and prey begins to blur."
+            ];
 
-            let currentViewingSeason = 1;
+         let currentViewingSeason = 1;
+            let currentDetailEpisode = null;
+            let searchQuery = '';
+
+            function getEpisodeMeta(s, e) {
+                const arc = SEASON_ARCS[s-1] || "Unknown Arc";
+                const idx = ((s-1)*10 + (e-1)) % 100;
+                const title = EP_ADJ[Math.floor(idx/10)] + " " + EP_NOUN[idx%10];
+                const desc = EP_DESC_TEMPLATES[idx % EP_DESC_TEMPLATES.length];
+                return { arc, title, desc };
+            }
 
             function isEpisodeAvailable(fileKey) {
                 return uploadedEpisodes.includes(fileKey);
+            }
+
+            function getReadEpisodes() {
+                try { return JSON.parse(localStorage.getItem('beg_read_eps') || '[]'); }
+                catch(e) { return []; }
+            }
+            function markEpisodeRead(fileKey) {
+                const read = getReadEpisodes();
+                if (!read.includes(fileKey)) {
+                    read.push(fileKey);
+                    localStorage.setItem('beg_read_eps', JSON.stringify(read));
+                }
+            }
+            function getLastRead() {
+                try { return JSON.parse(localStorage.getItem('beg_last_read') || 'null'); }
+                catch(e) { return null; }
+            }
+            function setLastRead(s, e) {
+                localStorage.setItem('beg_last_read', JSON.stringify({season:s, episode:e, time:Date.now()}));
+            }
+            function getStoredSeason() {
+                const s = parseInt(localStorage.getItem('beg_last_season'));
+                return (s >= 1 && s <= TOTAL_SEASONS) ? s : 1;
+            }
+            function storeSeason(s) {
+                localStorage.setItem('beg_last_season', s);
             }
 
             function initParticles() {
                 const canvas = document.getElementById('particlesCanvas');
                 if (!canvas) return;
                 const ctx = canvas.getContext('2d');
-                let particles = [];
+                let particles = [], mouse = {x:null,y:null};
                 function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
                 resize(); window.addEventListener('resize', resize);
-                for (let i = 0; i < 40; i++) {
+                window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+                window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+
+                for (let i = 0; i < 50; i++) {
                     particles.push({
-                        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                        size: Math.random() * 1.5 + 0.3,
-                        speedX: (Math.random() - 0.5) * 0.3, speedY: (Math.random() - 0.5) * 0.3,
-                        opacity: Math.random() * 0.4 + 0.06, fadeSpeed: Math.random() * 0.003 + 0.001
+                        x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+                        size: Math.random()*1.5+0.3,
+                        speedX: (Math.random()-0.5)*0.3, speedY: (Math.random()-0.5)*0.3,
+                        opacity: Math.random()*0.4+0.06, fadeSpeed: Math.random()*0.003+0.001
                     });
                 }
                 function animate() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.clearRect(0,0,canvas.width,canvas.height);
                     particles.forEach(p => {
                         p.x += p.speedX; p.y += p.speedY; p.opacity += p.fadeSpeed;
                         if (p.opacity >= 0.5 || p.opacity <= 0.03) p.fadeSpeed *= -1;
-                        if (p.x < -10 || p.x > canvas.width + 10 || p.y < -10 || p.y > canvas.height + 10) {
-                            p.x = Math.random() * canvas.width; p.y = Math.random() * canvas.height;
+                        if (p.x < -10 || p.x > canvas.width+10 || p.y < -10 || p.y > canvas.height+10) {
+                            p.x = Math.random()*canvas.width; p.y = Math.random()*canvas.height;
                         }
-                        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(212,168,83,${p.opacity})`; ctx.fill();
+                        if (mouse.x !== null) {
+                            const dx = p.x - mouse.x, dy = p.y - mouse.y, dist = Math.sqrt(dx*dx+dy*dy);
+                            if (dist < 120) {
+                                const force = (120-dist)/120;
+                                p.x += dx*force*0.02; p.y += dy*force*0.02;
+                            }
+                        }
+                        ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+                        ctx.fillStyle = 'rgba(212,168,83,'+p.opacity+')'; ctx.fill();
                     });
+                    for (let i=0;i<particles.length;i++) {
+                        for (let j=i+1;j<particles.length;j++) {
+                            const dx = particles[i].x-particles[j].x, dy = particles[i].y-particles[j].y;
+                            const dist = Math.sqrt(dx*dx+dy*dy);
+                            if (dist < 100) {
+                                ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y);
+                                ctx.strokeStyle = 'rgba(212,168,83,'+(0.08*(1-dist/100))+')'; ctx.lineWidth = 0.5; ctx.stroke();
+                            }
+                        }
+                    }
                     requestAnimationFrame(animate);
                 }
                 animate();
             }
+            function initCursor() {
+                const cursor = document.getElementById('customCursor');
+                if (!cursor || window.matchMedia('(pointer: coarse)').matches) return;
+                let cx=0, cy=0, tx=0, ty=0;
+                document.addEventListener('mousemove', e => { tx=e.clientX; ty=e.clientY; });
+                function loop() {
+                    cx += (tx-cx)*0.15; cy += (ty-cy)*0.15;
+                    cursor.style.left=cx+'px'; cursor.style.top=cy+'px';
+                    requestAnimationFrame(loop);
+                }
+                loop();
+                document.querySelectorAll('button, .episode-card, .season-tab, a').forEach(el => {
+                    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+                });
+            }
 
             function getEpisodeDate(season, episode) {
-                const globalNum = (season - 1) * EPISODES_PER_SEASON + episode;
+                const globalNum = (season-1)*EPISODES_PER_SEASON + episode;
                 const d = new Date(START_DATE);
-                d.setDate(d.getDate() + (globalNum - 1) * 7);
+                d.setDate(d.getDate() + (globalNum-1)*7);
                 return d;
             }
-            function getFileKey(s, e) { return `S${s}E${String(e).padStart(2, '0')}`; }
-            function isSeasonUnlocked(season) { return getEpisodeDate(season, 1) <= new Date(); }
+            function getFileKey(s,e) { return 'S'+s+'E'+String(e).padStart(2,'0'); }
+            function isSeasonUnlocked(season) { return getEpisodeDate(season,1) <= new Date(); }
 
             function updateCountdown() {
                 const now = new Date();
-                let nextDate = null, nextSeason, nextEpisode;
-                for (let s = 1; s <= TOTAL_SEASONS; s++) {
-                    for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
-                        const date = getEpisodeDate(s, e);
-                        if (date > now) { if (!nextDate || date < nextDate) { nextDate = date; nextSeason = s; nextEpisode = e; } break; }
+                let nextDate=null, nextSeason, nextEpisode;
+                for (let s=1; s<=TOTAL_SEASONS; s++) {
+                    for (let e=1; e<=EPISODES_PER_SEASON; e++) {
+                        const date = getEpisodeDate(s,e);
+                        if (date > now) { nextDate=date; nextSeason=s; nextEpisode=e; break; }
                     }
                     if (nextDate) break;
                 }
                 const daysEl = document.getElementById('countDays');
                 if (!daysEl) return;
                 if (!nextDate) {
-                    ['Days','Hours','Mins','Secs'].forEach(id => document.getElementById('count'+id).textContent = '--');
-                    document.getElementById('nextEpisodeInfo').textContent = '🎉 All episodes released!';
+                    document.getElementById('countDays').textContent='--';
+                    document.getElementById('countHours').textContent='--';
+                    document.getElementById('countMins').textContent='--';
+                    document.getElementById('countSecs').textContent='--';
+                    document.getElementById('nextEpisodeInfo').textContent = 'All episodes released!';
+                    document.getElementById('statNext').textContent = 'Done';
                     return;
                 }
                 const diff = nextDate - now;
@@ -418,25 +704,72 @@
                 document.getElementById('countHours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
                 document.getElementById('countMins').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
                 document.getElementById('countSecs').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
-                document.getElementById('nextEpisodeInfo').textContent = `📅 Next: Season ${nextSeason}, Episode ${nextEpisode} — ${nextDate.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}`;
+                document.getElementById('nextEpisodeInfo').textContent = 'Next: Season '+nextSeason+', Episode '+nextEpisode+' - '+nextDate.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+                document.getElementById('statNext').textContent = Math.floor(diff/86400000)+'d';
             }
+            function updateStats() {
+                const now = new Date();
+                let available = 0;
+                for (let s=1; s<=TOTAL_SEASONS; s++) {
+                    for (let e=1; e<=EPISODES_PER_SEASON; e++) {
+                        if (getEpisodeDate(s,e) <= now && isEpisodeAvailable(getFileKey(s,e))) available++;
+                    }
+                }
+                document.getElementById('statAvailable').textContent = available;
+                document.getElementById('statRead').textContent = getReadEpisodes().length;
+                const progress = (getReadEpisodes().length / 100) * 100;
+                document.getElementById('globalProgress').style.width = progress + '%';
+            }
+
+            function updateContinueBanner() {
+                const last = getLastRead();
+                const banner = document.getElementById('continueBanner');
+                if (last) {
+                    const meta = getEpisodeMeta(last.season, last.episode);
+                    document.getElementById('continueText').textContent = 'S'+last.season+'E'+String(last.episode).padStart(2,'0')+' - '+meta.title;
+                    banner.classList.add('active');
+                } else {
+                    banner.classList.remove('active');
+                }
+            }
+            window.continueReading = function() {
+                const last = getLastRead();
+                if (last) { switchSeason(last.season); setTimeout(function(){ openPdfViewer(getFileKey(last.season,last.episode), last.season, last.episode); }, 300); }
+            };
 
             function buildSeasonSelector() {
                 const sel = document.getElementById('seasonSelector');
                 if (!sel) return;
                 sel.innerHTML = '';
-                for (let s = 1; s <= TOTAL_SEASONS; s++) {
-                    const tab = document.createElement('div'); tab.className = 'season-tab';
+                const now = new Date();
+                for (let s=1; s<=TOTAL_SEASONS; s++) {
+                    const tab = document.createElement('div'); tab.className='season-tab';
+                    const unlocked = isSeasonUnlocked(s);
+                    let availableCount = 0;
+                    for (let e=1; e<=EPISODES_PER_SEASON; e++) {
+                        if (getEpisodeDate(s,e)<=now && isEpisodeAvailable(getFileKey(s,e))) availableCount++;
+                    }
+                    const progressPct = (availableCount/EPISODES_PER_SEASON)*100;
+
                     if (s === currentViewingSeason) tab.classList.add('active');
-                    if (isSeasonUnlocked(s)) {
-                        tab.textContent = `Season ${s}`;
-                        tab.addEventListener('click', () => { currentViewingSeason = s; buildSeasonSelector(); renderEpisodes(); document.getElementById('seasonTitleDisplay').textContent = `Season ${s}`; });
-                    } else {
-                        tab.classList.add('locked');
-                        tab.innerHTML = `Season ${s} 🔒`;
+                    if (!unlocked) tab.classList.add('locked');
+
+                    tab.innerHTML = 'Season '+s+(!unlocked?'<span class="lock-icon">&#128274;</span>':'')+'<div class="season-progress" style="width:'+(unlocked?progressPct:0)+'%"></div>';
+
+                    if (unlocked) {
+                        tab.addEventListener('click', function() { switchSeason(s); });
                     }
                     sel.appendChild(tab);
                 }
+            }
+            function switchSeason(s) {
+                currentViewingSeason = s;
+                storeSeason(s);
+                buildSeasonSelector();
+                renderEpisodes();
+                document.getElementById('seasonTitleDisplay').textContent = 'Season '+s;
+                document.getElementById('seasonArcSubtitle').textContent = SEASON_ARCS[s-1] || '';
+                showToast('Switched to Season '+s+': '+SEASON_ARCS[s-1]);
             }
 
             function renderEpisodes() {
@@ -444,74 +777,188 @@
                 if (!grid) return;
                 grid.innerHTML = '';
                 const now = new Date();
+                const readEps = getReadEpisodes();
                 let firstUnreleased = null;
-                for (let s = 1; s <= TOTAL_SEASONS; s++) {
-                    for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
-                        if (getEpisodeDate(s, e) > now) { firstUnreleased = { season: s, episode: e }; break; }
+                for (let s=1; s<=TOTAL_SEASONS; s++) {
+                    for (let e=1; e<=EPISODES_PER_SEASON; e++) {
+                        if (getEpisodeDate(s,e) > now) { firstUnreleased={season:s,episode:e}; break; }
                     }
                     if (firstUnreleased) break;
                 }
-                for (let ep = 1; ep <= EPISODES_PER_SEASON; ep++) {
+                for (let ep=1; ep<=EPISODES_PER_SEASON; ep++) {
                     const releaseDate = getEpisodeDate(currentViewingSeason, ep);
                     const isReleased = releaseDate <= now;
                     const fileKey = getFileKey(currentViewingSeason, ep);
                     const isUploaded = isEpisodeAvailable(fileKey);
                     const isAvailable = isReleased && isUploaded;
-                    const isNext = firstUnreleased && firstUnreleased.season === currentViewingSeason && firstUnreleased.episode === ep && !isReleased;
-                    
-                    console.log(`Ep. ${ep}: ${fileKey} | Released: ${isReleased} | Uploaded: ${isUploaded} | Status: ${isAvailable?'Available':isNext?'Next':'Coming'}`);
+                    const isNext = firstUnreleased && firstUnreleased.season===currentViewingSeason && firstUnreleased.episode===ep && !isReleased;
+                    const isRead = readEps.includes(fileKey);
+                    const meta = getEpisodeMeta(currentViewingSeason, ep);
 
-                    const card = document.createElement('div'); card.className = 'episode-card';
+                    if (searchQuery) {
+                        const q = searchQuery.toLowerCase();
+                        const match = fileKey.toLowerCase().includes(q) || meta.title.toLowerCase().includes(q) || meta.arc.toLowerCase().includes(q);
+                        if (!match) continue;
+                    }
+
+                    const card = document.createElement('div'); card.className='episode-card';
                     if (isAvailable) card.classList.add('available');
                     if (isNext) card.classList.add('next-episode');
-                    card.innerHTML = `
-                        <div class="episode-number">Ep. ${String(ep).padStart(2,'0')}</div>
-                        <div class="episode-title-area">Season ${currentViewingSeason}, Episode ${ep}</div>
-                        <span class="episode-status ${isAvailable?'status-available':isNext?'status-next':'status-coming'}">${isAvailable?'✅ Available Now':isNext?'⏳ Next Release':isReleased?'⏳ Awaiting Upload':'🔒 Coming Soon'}</span>
-                        <div class="episode-date">${releaseDate.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'})}</div>
-                        ${isAvailable?'<div class="read-now-badge">📖 READ</div>':''}
-                    `;
-                    if (isAvailable) { card.addEventListener('click', () => openPdfViewer(fileKey, currentViewingSeason, ep)); card.style.cursor = 'pointer'; }
+                    if (isRead) card.classList.add('read');
+                    card.style.transitionDelay = ((ep-1)*40)+'ms';
+
+                    var statusClass = isAvailable?'status-available':isNext?'status-next':isReleased?'status-coming':'status-coming';
+                    var statusText = isAvailable?'Available Now':isNext?'Next Release':isReleased?'Awaiting Upload':'Coming Soon';
+                    if (isRead) { statusClass='status-read'; statusText='Read'; }
+
+                    card.innerHTML = '<div class="episode-number">Ep. '+String(ep).padStart(2,'0')+'</div>'+
+                        '<div class="episode-title-area">'+meta.title+'</div>'+
+                        '<div class="episode-desc">'+meta.desc+'</div>'+
+                        '<span class="episode-status '+statusClass+'">'+statusText+'</span>'+
+                        '<div class="episode-date">'+releaseDate.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'})+'</div>'+
+                        (isAvailable && !isRead?'<div class="read-now-badge">READ</div>':'')+
+                        (isRead?'<div class="read-check">&#10003;</div>':'');
+                    if (isAvailable) {
+                        card.addEventListener('click', function() { openDetailModal(fileKey, currentViewingSeason, ep); });
+                        card.style.cursor = 'pointer';
+                    } else if (isNext || isReleased) {
+                        card.addEventListener('click', function() { showToast('This episode is not yet available for reading.', 'info'); });
+                        card.style.cursor = 'help';
+                    }
                     grid.appendChild(card);
                 }
-                document.getElementById('seasonTitleDisplay').textContent = `Season ${currentViewingSeason}`;
+
+                setTimeout(function() {
+                    document.querySelectorAll('.episode-card').forEach(function(card) {
+                        card.classList.add('revealed');
+                    });
+                }, 50);
             }
 
-            function openPdfViewer(fileKey, season, episode) {
-                const pdfUrl = RELEASE_BASE_URL + fileKey + '.pdf?raw=true';
-                document.getElementById('pdfModalTitle').textContent = `📖 The Beg — Season ${season}, Episode ${episode}`;
-                document.getElementById('pdfIframe').src = pdfUrl;
-                document.getElementById('pdfModal').classList.add('active');
+            function openDetailModal(fileKey, season, episode) {
+                const meta = getEpisodeMeta(season, episode);
+                currentDetailEpisode = {fileKey:fileKey, season:season, episode:episode};
+                document.getElementById('detailModalTitle').textContent = 'Episode Details';
+                document.getElementById('detailEpTitle').textContent = meta.title;
+                document.getElementById('detailEpMeta').textContent = meta.arc+' - Season '+season+', Episode '+episode;
+                document.getElementById('detailDesc').textContent = meta.desc+' '+getEpisodeDate(season,episode).toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'.';
+                document.getElementById('detailModal').classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
+            window.closeDetailModal = function() {
+                document.getElementById('detailModal').classList.remove('active');
+                document.body.style.overflow = '';
+                currentDetailEpisode = null;
+            };
+            window.readFromDetail = function() {
+                if (!currentDetailEpisode) return;
+                closeDetailModal();
+                setTimeout(function() {
+                    openPdfViewer(currentDetailEpisode.fileKey, currentDetailEpisode.season, currentDetailEpisode.episode);
+                }, 300);
+            };
+            window.copyEpisodeLink = function() {
+                if (!currentDetailEpisode) return;
+                const url = RELEASE_BASE_URL + currentDetailEpisode.fileKey + '.pdf?raw=true';
+                navigator.clipboard.writeText(url).then(function() { showToast('Episode link copied to clipboard!'); });
+            };
+            function openPdfViewer(fileKey, season, episode) {
+                const pdfUrl = RELEASE_BASE_URL + fileKey + '.pdf?raw=true';
+                document.getElementById('pdfModalTitle').textContent = 'The Beg - S'+season+'E'+String(episode).padStart(2,'0');
+                document.getElementById('pdfIframe').src = pdfUrl;
+                document.getElementById('pdfModal').classList.add('active');
+                document.getElementById('pdfLoader').classList.remove('hidden');
+                document.getElementById('pdfError').classList.remove('active');
+                document.body.style.overflow = 'hidden';
 
-            function closePdfViewer() {
+                markEpisodeRead(fileKey);
+                setLastRead(season, episode);
+                updateStats();
+                updateContinueBanner();
+                renderEpisodes();
+
+                setTimeout(function() {
+                    if (document.getElementById('pdfModal').classList.contains('active')) {
+                        document.getElementById('pdfLoader').classList.add('hidden');
+                    }
+                }, 2500);
+            }
+            window.closePdfViewer = function() {
                 document.getElementById('pdfModal').classList.remove('active');
                 document.body.style.overflow = '';
                 document.getElementById('pdfIframe').src = '';
+            };
+            window.retryPdf = function() {
+                const iframe = document.getElementById('pdfIframe');
+                const src = iframe.src;
+                document.getElementById('pdfLoader').classList.remove('hidden');
+                document.getElementById('pdfError').classList.remove('active');
+                iframe.src = '';
+                setTimeout(function() { iframe.src = src; }, 200);
+                setTimeout(function() { document.getElementById('pdfLoader').classList.add('hidden'); }, 2500);
+            };
+
+            function showToast(message, type) {
+                type = type || 'success';
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div'); toast.className='toast';
+                toast.textContent = message;
+                if (type==='info') toast.style.borderColor = 'rgba(100,149,237,0.4)';
+                container.appendChild(toast);
+                setTimeout(function() { toast.remove(); }, 3000);
             }
 
-            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.getElementById('episodeSearch').addEventListener('input', function(e) {
+                searchQuery = e.target.value.trim();
+                renderEpisodes();
+            });
+
             document.addEventListener('keydown', function(e) {
+                if (e.key==='ArrowLeft' && currentViewingSeason>1) { e.preventDefault(); switchSeason(currentViewingSeason-1); }
+                if (e.key==='ArrowRight' && currentViewingSeason<TOTAL_SEASONS) { e.preventDefault(); switchSeason(currentViewingSeason+1); }
+                if (e.key==='Escape') {
+                    if (document.getElementById('pdfModal').classList.contains('active')) { e.preventDefault(); closePdfViewer(); }
+                    else if (document.getElementById('detailModal').classList.contains('active')) { closeDetailModal(); }
+                }
                 if (e.ctrlKey && ['s','p','u','S','P','U'].includes(e.key)) e.preventDefault();
                 if (e.ctrlKey && e.shiftKey && ['s','S','i','I'].includes(e.key)) e.preventDefault();
-                if (e.key === 'F12' || e.key === 'PrintScreen') e.preventDefault();
+                if (e.key==='F12' || e.key==='PrintScreen') e.preventDefault();
             });
-            document.addEventListener('dragstart', e => e.preventDefault());
-            document.addEventListener('keydown', function(e) {
-                if (document.getElementById('pdfModal').classList.contains('active') && e.key === 'Escape') { e.preventDefault(); closePdfViewer(); }
-            });
-            document.getElementById('pdfModal').addEventListener('click', function(e) { if (e.target === this) closePdfViewer(); });
 
-            window.closePdfViewer = closePdfViewer;
+            document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+            document.addEventListener('dragstart', function(e) { e.preventDefault(); });
+
+            document.getElementById('pdfModal').addEventListener('click', function(e) { if (e.target===this) closePdfViewer(); });
+            document.getElementById('detailModal').addEventListener('click', function(e) { if (e.target===this) closeDetailModal(); });
+
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 500) backToTop.classList.add('visible');
+                else backToTop.classList.remove('visible');
+            });
+
+            const hint = document.getElementById('keyboardHint');
+            var hintTimeout;
+            function showHint() {
+                hint.classList.add('visible');
+                clearTimeout(hintTimeout);
+                hintTimeout = setTimeout(function() { hint.classList.remove('visible'); }, 4000);
+            }
+            document.addEventListener('keydown', function(e) { if (['ArrowLeft','ArrowRight'].includes(e.key)) showHint(); });
 
             function init() {
+                const stored = getStoredSeason();
+                if (isSeasonUnlocked(stored)) currentViewingSeason = stored;
                 initParticles();
+                initCursor();
                 buildSeasonSelector();
                 renderEpisodes();
                 updateCountdown();
+                updateStats();
+                updateContinueBanner();
                 setInterval(updateCountdown, 1000);
-                setInterval(() => { buildSeasonSelector(); renderEpisodes(); }, 3600000);
+                setInterval(function() { buildSeasonSelector(); renderEpisodes(); updateStats(); }, 3600000);
+                document.getElementById('seasonArcSubtitle').textContent = SEASON_ARCS[currentViewingSeason-1] || '';
             }
             init();
         })();

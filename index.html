@@ -3,461 +3,1053 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Beg – 3D Graphic Novel Series</title>
+    <title>The Beg – Graphic Novel Series</title>
     <meta name="description" content="The Beg – 10 Seasons, 100 Episodes. New episode every Sunday." />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
     <style>
-        /* ── reset ── */
-        * { margin:0; padding:0; box-sizing:border-box; }
-        html { scroll-behavior:smooth; }
+        /* ── reset & base ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
         body {
-            font-family:'Inter',sans-serif;
-            background:#0a0a0f;
-            color:#e0d5c1;
-            min-height:100vh;
-            overflow-x:hidden;
-            user-select:none;
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #0a0a0f;
+            color: #e0d5c1;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-user-select: none;
+            user-select: none;
         }
-        ::-webkit-scrollbar { width:6px; }
-        ::-webkit-scrollbar-track { background:#0a0a0f; }
-        ::-webkit-scrollbar-thumb { background:rgba(212,168,83,0.4); border-radius:10px; }
-        ::-webkit-scrollbar-thumb:hover { background:rgba(212,168,83,0.7); }
-
-        /* ── background image (restored) ── */
-        .hero-bg-image {
-            position:fixed; top:0; left:0; width:100%; height:100%;
-            background:url('https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/hero-bg.jpg?raw=true') center/cover no-repeat;
-            opacity:0.7; z-index:0; animation:bgPulse 10s ease-in-out infinite;
+        ::-webkit-scrollbar {
+            width: 6px;
         }
-        @keyframes bgPulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.03);} }
-        .hero-bg-overlay {
-            position:fixed; top:0; left:0; width:100%; height:100%;
-            background:radial-gradient(ellipse at center, rgba(10,10,15,0.2) 0%, rgba(10,10,15,0.5) 60%, rgba(10,10,15,0.8) 100%);
-            z-index:1; pointer-events:none;
+        ::-webkit-scrollbar-track {
+            background: #0a0a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(212, 168, 83, 0.3);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 168, 83, 0.5);
         }
 
-        /* ── 3D canvas (transparent) ── */
-        #three-container {
-            position:fixed; top:0; left:0; width:100%; height:100%;
-            z-index:1; pointer-events:none;
+        /* ── vars ── */
+        :root {
+            --bg-deep: #0a0a0f;
+            --bg-card: rgba(18, 18, 26, 0.85);
+            --bg-card-hover: rgba(28, 28, 42, 0.95);
+            --gold: #d4a853;
+            --gold-light: #f0d078;
+            --gold-dim: rgba(212, 168, 83, 0.15);
+            --text: #e0d5c1;
+            --text-muted: #8a8070;
+            --glass-border: rgba(212, 168, 83, 0.2);
+            --card-radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --success: #2ecc71;
+            --success-dim: rgba(46, 204, 113, 0.15);
         }
 
-        /* ── global progress ── */
+        /* ── cursor ── */
+        .custom-cursor {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(212, 168, 83, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, border-color 0.2s;
+            mix-blend-mode: difference;
+        }
+        .custom-cursor.hover {
+            width: 40px;
+            height: 40px;
+            border-color: rgba(212, 168, 83, 0.8);
+            background: rgba(212, 168, 83, 0.05);
+        }
+        @media (pointer: coarse) {
+            .custom-cursor {
+                display: none;
+            }
+        }
+
+        /* ── progress bar ── */
         .global-progress-bar {
-            position:fixed; top:0; left:0; height:3px;
-            background:linear-gradient(90deg,#d4a853,#f0d078);
-            z-index:9999; width:0%;
-            transition:width 0.6s ease;
-            box-shadow:0 0 15px rgba(212,168,83,0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            z-index: 9999;
+            width: 0%;
+            transition: width 0.6s ease;
+            box-shadow: 0 0 10px rgba(212, 168, 83, 0.5);
         }
 
-        /* ── UI overlay ── */
-        .ui-overlay {
-            position:relative; z-index:2;
-            max-width:1300px; margin:0 auto; padding:20px 24px 40px;
+        /* ── hero background ── */
+        .hero-bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/hero-bg.jpg?raw=true') center/cover no-repeat;
+            opacity: 0.45;
+            z-index: 0;
+            mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%);
+            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%);
+            animation: bgPulse 10s ease-in-out infinite;
+        }
+        @keyframes bgPulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+        }
+        .hero-bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(10, 10, 15, 0.3) 0%, rgba(10, 10, 15, 0.6) 60%, rgba(10, 10, 15, 0.9) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+        #particlesCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        /* ── main container ── */
+        .main-container {
+            position: relative;
+            z-index: 2;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 24px 40px;
         }
 
         /* ── header ── */
         .header-area {
-            display:flex; justify-content:space-between; align-items:flex-start;
-            padding:15px 0 10px; flex-wrap:wrap; gap:15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 15px 0 10px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         .nav-logo {
-            font-family:'Cinzel',serif; font-size:2.4rem; font-weight:900;
-            background:linear-gradient(135deg,#f0d078 0%,#d4a853 40%,#8b6914 100%);
-            -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-            letter-spacing:6px; text-transform:uppercase;
-            text-shadow:0 0 30px rgba(212,168,83,0.3); cursor:default;
+            font-family: 'Georgia', serif;
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #f0d078 0%, #d4a853 40%, #8b6914 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            cursor: default;
         }
         .golden-quote-wrapper {
-            position:relative; display:inline-block; text-align:right;
+            position: relative;
+            display: inline-block;
+            text-align: right;
         }
-        .star-top-left, .star-bottom-right {
-            position:absolute; color:#f0d078; font-size:1.2rem;
-            animation:starPulse 2s ease-in-out infinite;
-            text-shadow:0 0 20px rgba(240,208,120,0.9),0 0 40px rgba(212,168,83,0.5);
+        .star-top-left,
+        .star-bottom-right {
+            position: absolute;
+            color: #f0d078;
+            font-size: 1.2rem;
+            animation: starPulse 2s ease-in-out infinite;
+            text-shadow: 0 0 12px rgba(240, 208, 120, 0.9), 0 0 25px rgba(212, 168, 83, 0.5);
         }
-        .star-top-left { top:-18px; left:-24px; }
-        .star-bottom-right { bottom:-18px; right:-24px; animation-delay:1s; }
-        @keyframes starPulse { 0%,100%{transform:scale(1) rotate(0deg);opacity:0.8;} 50%{transform:scale(1.4) rotate(20deg);opacity:1;} }
+        .star-top-left {
+            top: -16px;
+            left: -20px;
+        }
+        .star-bottom-right {
+            bottom: -16px;
+            right: -20px;
+            animation-delay: 1s;
+        }
+        @keyframes starPulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.4);
+                opacity: 1;
+            }
+        }
         .golden-quote {
-            font-family:'Cinzel',serif; font-size:0.8rem; color:#f0d078;
-            letter-spacing:3px; line-height:1.6; text-shadow:0 0 10px rgba(212,168,83,0.4);
+            font-family: 'Georgia', serif;
+            font-size: 0.8rem;
+            color: #f0d078;
+            letter-spacing: 2px;
+            line-height: 1.6;
+            text-shadow: 0 0 6px rgba(212, 168, 83, 0.3);
         }
 
         /* ── hero ── */
-        .hero-section { text-align:center; padding:30px 20px 20px; }
+        .hero-section {
+            text-align: center;
+            padding: 25px 20px 20px;
+        }
         .hero-badge {
-            display:inline-block; background:rgba(212,168,83,0.15); border:1px solid rgba(212,168,83,0.4);
-            padding:8px 20px; border-radius:40px; font-size:0.7rem; letter-spacing:3px;
-            color:#f0d078; margin-bottom:15px; backdrop-filter:blur(10px);
-            box-shadow:0 0 20px rgba(212,168,83,0.1);
+            display: inline-block;
+            background: rgba(212, 168, 83, 0.1);
+            border: 1px solid rgba(212, 168, 83, 0.3);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--gold-light);
+            margin-bottom: 15px;
+            animation: pulseBadge 3s ease-in-out infinite;
+        }
+        @keyframes pulseBadge {
+            0%,
+            100% {
+                box-shadow: 0 0 8px rgba(212, 168, 83, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(212, 168, 83, 0.5);
+            }
         }
         .hero-title {
-            font-family:'Cinzel',serif; font-size:clamp(3rem,8vw,5.5rem); font-weight:900;
-            background:linear-gradient(180deg,#f5e6c8 0%,#d4a853 50%,#8b6914 100%);
-            -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-            letter-spacing:8px; margin-bottom:8px; text-shadow:0 0 60px rgba(212,168,83,0.2);
+            font-family: 'Georgia', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: bold;
+            background: linear-gradient(180deg, #f5e6c8 0%, #d4a853 50%, #8b6914 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 6px;
+            margin-bottom: 8px;
         }
         .hero-subtitle {
-            font-size:1rem; color:#b0a090; letter-spacing:4px; font-weight:300; margin-bottom:20px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 3px;
+            margin-bottom: 20px;
         }
 
         /* ── stats ── */
         .stats-row {
-            display:flex; justify-content:center; gap:24px; flex-wrap:wrap; margin-bottom:20px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
         .stat-item {
-            text-align:center; padding:10px 22px;
-            background:rgba(18,18,26,0.7); backdrop-filter:blur(15px);
-            border:1px solid rgba(255,255,255,0.08); border-radius:16px;
-            box-shadow:0 8px 32px rgba(0,0,0,0.4);
-            transition:transform 0.3s ease,box-shadow 0.3s ease;
+            text-align: center;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
         }
-        .stat-item:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(212,168,83,0.15); }
         .stat-value {
-            font-family:'Cinzel',serif; font-size:1.8rem; color:#f0d078; font-weight:700;
+            font-family: 'Georgia', serif;
+            font-size: 1.4rem;
+            color: var(--gold-light);
+            font-weight: bold;
         }
         .stat-label {
-            font-size:0.65rem; color:#a09080; letter-spacing:2px; text-transform:uppercase;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
 
         /* ── countdown ── */
         .countdown-container {
-            display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         .countdown-item {
-            background:rgba(18,18,26,0.7); backdrop-filter:blur(15px);
-            border:1px solid rgba(212,168,83,0.2); border-radius:20px;
-            padding:16px 24px; min-width:80px; text-align:center;
-            box-shadow:0 8px 32px rgba(0,0,0,0.3);
-            transition:transform 0.3s ease;
+            background: var(--bg-card);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 14px 18px;
+            min-width: 70px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(212, 168, 83, 0.1);
+            transition: transform 0.3s;
         }
-        .countdown-item:hover { transform:translateY(-5px); }
+        .countdown-item:hover {
+            transform: translateY(-3px);
+        }
         .countdown-value {
-            font-family:'Cinzel',serif; font-size:2.4rem; font-weight:700;
-            color:#f0d078; text-shadow:0 0 20px rgba(212,168,83,0.3);
+            font-family: 'Georgia', serif;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--gold-light);
         }
         .countdown-label {
-            font-size:0.6rem; letter-spacing:2px; color:#a09080; margin-top:4px; text-transform:uppercase;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            text-transform: uppercase;
         }
         .next-episode-info {
-            margin-top:14px; color:#d4a853; font-size:0.85rem; letter-spacing:2px; font-weight:300;
+            margin-top: 12px;
+            color: var(--gold);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* ── continue banner ── */
+        .continue-banner {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: linear-gradient(135deg, rgba(212, 168, 83, 0.15), rgba(139, 105, 20, 0.1));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            padding: 14px 24px;
+            margin: 20px auto;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: var(--transition);
+            animation: slideDown 0.5s ease;
+        }
+        .continue-banner.active {
+            display: flex;
+        }
+        .continue-banner:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 25px rgba(212, 168, 83, 0.15);
+            transform: translateY(-1px);
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .continue-text {
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+        .continue-text strong {
+            color: var(--gold-light);
+        }
+        .continue-btn {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+        .continue-btn:hover {
+            background: var(--gold-light);
+            box-shadow: 0 0 15px rgba(212, 168, 83, 0.4);
         }
 
         /* ── search ── */
         .search-wrapper {
-            max-width:420px; margin:0 auto 25px; position:relative;
+            max-width: 400px;
+            margin: 0 auto 20px;
+            position: relative;
         }
         .search-input {
-            width:100%; padding:14px 20px 14px 48px;
-            background:rgba(18,18,26,0.7); backdrop-filter:blur(15px);
-            border:1px solid rgba(255,255,255,0.08); border-radius:40px;
-            color:#e0d5c1; font-size:0.9rem; outline:none;
-            transition:all 0.4s ease; font-weight:300; letter-spacing:0.5px;
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 25px;
+            color: var(--text);
+            font-size: 0.85rem;
+            outline: none;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
         .search-input:focus {
-            border-color:#d4a853; box-shadow:0 0 30px rgba(212,168,83,0.15);
-            background:rgba(18,18,26,0.9);
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 168, 83, 0.1);
         }
-        .search-input::placeholder { color:#7a7060; }
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
         .search-icon {
-            position:absolute; left:18px; top:50%; transform:translateY(-50%);
-            color:#7a7060; font-size:1rem;
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         /* ── season selector ── */
         .season-selector-wrapper {
-            margin:20px 0 10px; overflow-x:auto; scrollbar-width:thin;
-            scrollbar-color:rgba(212,168,83,0.3) transparent; padding-bottom:8px;
+            margin: 20px 0 10px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(212, 168, 83, 0.3) transparent;
+            padding-bottom: 6px;
         }
-        .season-selector-wrapper::-webkit-scrollbar { height:3px; }
-        .season-selector-wrapper::-webkit-scrollbar-thumb { background:rgba(212,168,83,0.4); border-radius:10px; }
+        .season-selector-wrapper::-webkit-scrollbar {
+            height: 3px;
+        }
+        .season-selector-wrapper::-webkit-scrollbar-thumb {
+            background: rgba(212, 168, 83, 0.3);
+            border-radius: 10px;
+        }
         .season-selector {
-            display:flex; gap:12px; padding:4px 6px; min-width:max-content;
+            display: flex;
+            gap: 10px;
+            padding: 4px 6px;
+            min-width: max-content;
         }
         .season-tab {
-            flex-shrink:0; padding:12px 24px; border-radius:30px;
-            border:1px solid rgba(255,255,255,0.08);
-            background:rgba(18,18,26,0.6); backdrop-filter:blur(10px);
-            color:#8a8070; cursor:pointer; font-weight:600; letter-spacing:1.5px;
-            transition:all 0.3s ease; font-size:0.8rem; white-space:nowrap;
-            position:relative; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            font-size: 0.78rem;
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
         }
         .season-tab:hover {
-            border-color:#d4a853; color:#e0d5c1; background:rgba(28,28,42,0.8);
-            transform:translateY(-2px);
+            border-color: var(--gold);
+            color: var(--text);
+            background: var(--bg-card-hover);
         }
         .season-tab.active {
-            background:linear-gradient(135deg, rgba(212,168,83,0.25), rgba(139,105,20,0.35));
-            border-color:#d4a853; color:#f0d078; box-shadow:0 0 30px rgba(212,168,83,0.25);
+            background: linear-gradient(135deg, rgba(212, 168, 83, 0.2) 0%, rgba(139, 105, 20, 0.3) 100%);
+            border-color: var(--gold);
+            color: var(--gold-light);
+            box-shadow: 0 0 20px rgba(212, 168, 83, 0.2);
         }
-        .season-tab.locked { opacity:0.4; cursor:not-allowed; }
+        .season-tab.locked {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
         .season-tab.locked:hover {
-            border-color:rgba(255,255,255,0.08); color:#8a8070;
-            background:rgba(18,18,26,0.6); transform:none;
+            border-color: rgba(255, 255, 255, 0.12);
+            color: var(--text-muted);
+            background: var(--bg-card);
         }
         .season-progress {
-            position:absolute; bottom:0; left:0; height:2px;
-            background:linear-gradient(90deg,#d4a853,#f0d078);
-            border-radius:0 0 0 2px; transition:width 0.5s ease;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            border-radius: 0 0 0 2px;
+            transition: width 0.5s ease;
         }
-        .lock-icon { margin-left:6px; font-size:0.7rem; }
+        .lock-icon {
+            margin-left: 4px;
+            font-size: 0.7rem;
+        }
 
-        /* ── episodes ── */
-        .episodes-section { margin-top:8px; }
+                /* ── episodes ── */
+        .episodes-section {
+            margin-top: 8px;
+        }
         .season-title-display {
-            font-family:'Cinzel',serif; font-size:1.6rem; color:#f0d078;
-            margin-bottom:4px; letter-spacing:4px; text-align:center;
-            text-shadow:0 0 30px rgba(212,168,83,0.2);
+            font-family: 'Georgia', serif;
+            font-size: 1.3rem;
+            color: var(--gold-light);
+            margin-bottom: 6px;
+            letter-spacing: 2px;
+            text-align: center;
         }
         .season-arc-subtitle {
-            text-align:center; font-size:0.85rem; color:#a09080;
-            margin-bottom:20px; letter-spacing:4px; text-transform:uppercase; font-weight:300;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
         .episode-grid {
-            display:grid; grid-template-columns:repeat(auto-fill, minmax(270px,1fr)); gap:20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 14px;
         }
         .episode-card {
-            background:rgba(18,18,26,0.7); backdrop-filter:blur(15px);
-            border:1px solid rgba(255,255,255,0.06); border-radius:20px;
-            padding:22px; transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
-            position:relative; box-shadow:0 8px 30px rgba(0,0,0,0.3);
-            opacity:0; transform:translateY(30px);
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--card-radius);
+            padding: 18px;
+            transition: var(--transition);
+            position: relative;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(20px);
         }
-        .episode-card.revealed { opacity:1; transform:translateY(0); }
+        .episode-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
         .episode-card:hover {
-            background:rgba(28,28,42,0.9); border-color:rgba(212,168,83,0.3);
-            transform:translateY(-6px) scale(1.01); box-shadow:0 16px 50px rgba(0,0,0,0.5);
+            background: var(--bg-card-hover);
+            border-color: rgba(212, 168, 83, 0.3);
+            transform: translateY(-3px);
         }
-        .episode-card.available { border-color:rgba(46,204,113,0.3); cursor:pointer; }
+        .episode-card.available {
+            border-color: rgba(46, 204, 113, 0.4);
+            cursor: pointer;
+        }
         .episode-card.available:hover {
-            border-color:rgba(46,204,113,0.7); box-shadow:0 0 40px rgba(46,204,113,0.15);
+            border-color: rgba(46, 204, 113, 0.7);
+            box-shadow: 0 0 28px rgba(46, 204, 113, 0.15);
         }
         .episode-card.next-episode {
-            border-color:rgba(240,208,120,0.5); animation:nextPulse 2.5s ease-in-out infinite;
+            border-color: rgba(240, 208, 120, 0.5);
+            animation: nextPulse 2.5s ease-in-out infinite;
+        }
+        .episode-card.read {
+            border-color: rgba(100, 149, 237, 0.3);
         }
         @keyframes nextPulse {
-            0%,100%{box-shadow:0 0 15px rgba(240,208,120,0.05);}
-            50%{box-shadow:0 0 40px rgba(240,208,120,0.25);}
+            0%,
+            100% {
+                box-shadow: 0 0 12px rgba(240, 208, 120, 0.08);
+            }
+            50% {
+                box-shadow: 0 0 35px rgba(240, 208, 120, 0.3);
+            }
         }
         .episode-number {
-            font-family:'Cinzel',serif; font-size:2rem; font-weight:700;
-            color:#d4a853; letter-spacing:2px;
+            font-family: 'Georgia', serif;
+            font-size: 1.7rem;
+            font-weight: bold;
+            color: var(--gold);
+            letter-spacing: 2px;
         }
         .episode-title-area {
-            margin-top:4px; font-size:0.95rem; color:#e0d5c1; letter-spacing:0.5px; font-weight:500;
+            margin-top: 4px;
+            font-size: 0.85rem;
+            color: var(--text);
+            letter-spacing: 0.5px;
+            font-weight: 500;
         }
         .episode-desc {
-            font-size:0.78rem; color:#8a8070; margin-top:8px; line-height:1.5;
-            display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         .episode-status {
-            display:inline-block; padding:5px 14px; border-radius:20px;
-            font-size:0.65rem; letter-spacing:1.5px; margin-top:12px;
-            font-weight:600; text-transform:uppercase;
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            margin-top: 10px;
+            font-weight: 600;
         }
         .status-available {
-            background:rgba(46,204,113,0.15); color:#2ecc71; border:1px solid rgba(46,204,113,0.3);
+            background: rgba(46, 204, 113, 0.12);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.3);
         }
         .status-next {
-            background:rgba(240,208,120,0.15); color:#f0d078; border:1px solid rgba(240,208,120,0.35);
+            background: rgba(240, 208, 120, 0.12);
+            color: #f0d078;
+            border: 1px solid rgba(240, 208, 120, 0.35);
         }
         .status-coming {
-            background:rgba(138,128,112,0.1); color:#8a8070; border:1px solid rgba(138,128,112,0.2);
+            background: rgba(138, 128, 112, 0.1);
+            color: #8a8070;
+            border: 1px solid rgba(138, 128, 112, 0.2);
+        }
+        .status-read {
+            background: rgba(100, 149, 237, 0.12);
+            color: #6495ed;
+            border: 1px solid rgba(100, 149, 237, 0.3);
         }
         .episode-date {
-            font-size:0.7rem; color:#6a6050; margin-top:8px; letter-spacing:1px;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+        .read-now-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #2ecc71;
+            color: #000;
+            padding: 3px 9px;
+            border-radius: 12px;
+            font-size: 0.62rem;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            animation: badgeGlow 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes badgeGlow {
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(46, 204, 113, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 18px rgba(46, 204, 113, 0.8);
+            }
+        }
+        .read-check {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(100, 149, 237, 0.2);
+            border: 1px solid rgba(100, 149, 237, 0.5);
+            color: #6495ed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            pointer-events: none;
         }
 
-        /* ── modals ── */
+        /* ── modal overlay ── */
         .modal-overlay {
-            position:fixed; top:0; left:0; width:100%; height:100%;
-            background:rgba(0,0,0,0.92); z-index:1000; display:none;
-            align-items:center; justify-content:center; flex-direction:column;
-            opacity:0; transition:opacity 0.4s ease; backdrop-filter:blur(4px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        .modal-overlay.active { display:flex; opacity:1; }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
         .modal-header {
-            display:flex; align-items:center; justify-content:space-between;
-            width:95%; max-width:1100px; padding:16px 24px;
-            background:rgba(18,18,26,0.9); backdrop-filter:blur(20px);
-            border-radius:20px 20px 0 0;
-            border:1px solid rgba(255,255,255,0.06); border-bottom:none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 95%;
+            max-width: 1100px;
+            padding: 14px 20px;
+            background: var(--bg-card);
+            border-radius: 16px 16px 0 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: none;
         }
         .modal-title {
-            font-family:'Cinzel',serif; color:#f0d078; letter-spacing:2px; font-size:1rem;
+            font-family: 'Georgia', serif;
+            color: var(--gold-light);
+            letter-spacing: 2px;
+            font-size: 0.95rem;
         }
         .modal-close {
-            background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
-            color:#fff; width:38px; height:38px; border-radius:50%; cursor:pointer;
-            font-size:1.2rem; transition:all 0.3s ease;
-            display:flex; align-items:center; justify-content:center;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .modal-close:hover { background:#c0392b; border-color:#c0392b; transform:rotate(90deg); }
+        .modal-close:hover {
+            background: #c0392b;
+            border-color: #c0392b;
+        }
 
+        /* ── detail modal ── */
         .detail-modal-content {
-            width:95%; max-width:600px;
-            background:rgba(18,18,26,0.95); backdrop-filter:blur(20px);
-            border-radius:0 0 20px 20px;
-            border:1px solid rgba(255,255,255,0.06); border-top:none;
-            padding:40px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.8);
+            width: 95%;
+            max-width: 600px;
+            background: var(--bg-card);
+            border-radius: 0 0 16px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: none;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(20px);
         }
         .detail-cover {
-            width:130px; height:180px;
-            background:linear-gradient(135deg, rgba(212,168,83,0.2), rgba(139,105,20,0.1));
-            border:1px solid rgba(212,168,83,0.2); border-radius:16px;
-            margin:0 auto 20px; display:flex; align-items:center; justify-content:center;
-            font-size:3rem; color:#d4a853; box-shadow:0 0 40px rgba(212,168,83,0.1);
+            width: 120px;
+            height: 170px;
+            background: linear-gradient(135deg, rgba(212, 168, 83, 0.2), rgba(139, 105, 20, 0.1));
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--gold);
+            box-shadow: 0 0 30px rgba(212, 168, 83, 0.1);
         }
         .detail-ep-title {
-            font-family:'Cinzel',serif; font-size:1.6rem; color:#f0d078; margin-bottom:6px;
+            font-family: 'Georgia', serif;
+            font-size: 1.4rem;
+            color: var(--gold-light);
+            margin-bottom: 6px;
         }
         .detail-ep-meta {
-            font-size:0.85rem; color:#a09080; letter-spacing:2px; margin-bottom:18px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
         }
         .detail-desc {
-            font-size:0.95rem; color:#d0c8b0; line-height:1.7; margin-bottom:28px;
-            max-width:480px; margin-left:auto; margin-right:auto;
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .detail-actions {
-            display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         .btn-primary {
-            background:linear-gradient(135deg,#d4a853,#b8922f); color:#000; border:none;
-            padding:12px 32px; border-radius:30px; font-size:0.9rem; font-weight:700;
-            cursor:pointer; letter-spacing:1.5px; transition:all 0.3s ease;
-            box-shadow:0 4px 20px rgba(212,168,83,0.3);
+            background: linear-gradient(135deg, var(--gold), #8b6914);
+            color: #000;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(212, 168, 83, 0.3);
         }
         .btn-primary:hover {
-            transform:translateY(-3px); box-shadow:0 8px 35px rgba(212,168,83,0.5);
-            background:#f0d078;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 168, 83, 0.5);
         }
         .btn-secondary {
-            background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
-            color:#e0d5c1; padding:12px 26px; border-radius:30px; font-size:0.85rem;
-            cursor:pointer; transition:all 0.3s ease; letter-spacing:1px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text);
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 1px;
         }
         .btn-secondary:hover {
-            background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.25);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
         }
 
-        /* ── PDF viewer ── */
+        /* ── PDF viewer (EMBED instead of IFRAME) ── */
         .pdf-embed-container {
-            position:relative; width:95%; max-width:1100px; height:75vh;
-            background:#0a0a0f; border-radius:0 0 20px 20px;
-            border:1px solid rgba(255,255,255,0.06); border-top:none; overflow:hidden;
+            position: relative;
+            width: 95%;
+            max-width: 1100px;
+            height: 75vh;
+            background: #1a1a1a;
+            border-radius: 0 0 16px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: none;
+            overflow: hidden;
         }
-        .pdf-embed-container embed { width:100%; height:100%; border:none; display:block; }
+        .pdf-embed-container embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
         .pdf-loader {
-            position:absolute; top:0; left:0; width:100%; height:100%;
-            display:flex; flex-direction:column; align-items:center; justify-content:center;
-            background:#0a0a0f; z-index:5; transition:opacity 0.4s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-deep);
+            z-index: 5;
+            transition: opacity 0.3s;
         }
-        .pdf-loader.hidden { opacity:0; pointer-events:none; }
+        .pdf-loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
         .spinner {
-            width:50px; height:50px; border:3px solid rgba(212,168,83,0.2);
-            border-top-color:#d4a853; border-radius:50%;
-            animation:spin 1s linear infinite; margin-bottom:15px;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(212, 168, 83, 0.2);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 12px;
         }
-        @keyframes spin { to { transform:rotate(360deg); } }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
         .pdf-error {
-            display:none; flex-direction:column; align-items:center; gap:12px;
-            color:#a09080; font-size:0.9rem;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
-        .pdf-error.active { display:flex; }
+        .pdf-error.active {
+            display: flex;
+        }
         .pdf-fallback-download {
-            margin-top:10px; background:#d4a853; color:#000; border:none;
-            padding:10px 24px; border-radius:30px; font-weight:700; cursor:pointer;
-            font-size:0.85rem; transition:all 0.3s ease; letter-spacing:1px;
+            margin-top: 12px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            letter-spacing: 1px;
         }
         .pdf-fallback-download:hover {
-            background:#f0d078; box-shadow:0 0 30px rgba(212,168,83,0.4);
-            transform:scale(1.05);
+            background: var(--gold-light);
+            box-shadow: 0 0 20px rgba(212, 168, 83, 0.4);
+        }
+        .pdf-manual-link {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            word-break: break-all;
+            color: var(--text-muted);
+        }
+        .pdf-manual-link a {
+            color: var(--gold-light);
+            text-decoration: underline;
+            cursor: pointer;
         }
 
         /* ── toast ── */
         .toast-container {
-            position:fixed; bottom:30px; right:30px; z-index:10001;
-            display:flex; flex-direction:column; gap:12px;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         .toast {
-            background:rgba(18,18,26,0.95); backdrop-filter:blur(20px);
-            border:1px solid rgba(212,168,83,0.2); color:#e0d5c1;
-            padding:14px 22px; border-radius:16px; font-size:0.9rem;
-            box-shadow:0 8px 40px rgba(0,0,0,0.6);
-            animation:toastIn 0.5s ease, toastOut 0.5s ease 3s forwards;
-            max-width:320px; line-height:1.4;
+            background: var(--bg-card-hover);
+            border: 1px solid var(--glass-border);
+            color: var(--text);
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            animation: toastIn 0.4s ease, toastOut 0.4s ease 2.6s forwards;
+            max-width: 300px;
+            line-height: 1.4;
         }
         @keyframes toastIn {
-            from { transform:translateX(100%); opacity:0; }
-            to { transform:translateX(0); opacity:1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         @keyframes toastOut {
-            from { transform:translateX(0); opacity:1; }
-            to { transform:translateX(100%); opacity:0; }
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
         }
 
-        /* ── back to top ── */
+                /* ── back to top ── */
         .back-to-top {
-            position:fixed; bottom:30px; left:30px; z-index:999;
-            width:50px; height:50px; border-radius:50%;
-            background:rgba(18,18,26,0.8); backdrop-filter:blur(10px);
-            border:1px solid rgba(212,168,83,0.2); color:#f0d078; font-size:1.3rem;
-            cursor:pointer; display:flex; align-items:center; justify-content:center;
-            opacity:0; transform:translateY(20px); transition:all 0.4s ease;
-            box-shadow:0 4px 20px rgba(0,0,0,0.3);
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 999;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            color: var(--gold-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
         }
-        .back-to-top.visible { opacity:1; transform:translateY(0); }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
         .back-to-top:hover {
-            background:#d4a853; color:#000; box-shadow:0 0 40px rgba(212,168,83,0.5);
-            transform:scale(1.1);
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 20px rgba(212, 168, 83, 0.4);
         }
 
         /* ── keyboard hint ── */
         .keyboard-hint {
-            position:fixed; bottom:30px; left:50%; transform:translateX(-50%);
-            background:rgba(0,0,0,0.7); backdrop-filter:blur(10px);
-            border:1px solid rgba(255,255,255,0.06); padding:8px 20px; border-radius:30px;
-            font-size:0.7rem; color:#8a8070; letter-spacing:1.5px; z-index:99;
-            opacity:0; transition:opacity 0.5s ease; pointer-events:none;
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            z-index: 99;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
         }
-        .keyboard-hint.visible { opacity:1; }
+        .keyboard-hint.visible {
+            opacity: 1;
+        }
 
-        @media (max-width:768px) {
-            .ui-overlay { padding:12px 16px 30px; }
-            .hero-title { font-size:2.4rem; letter-spacing:4px; }
-            .countdown-item { min-width:60px; padding:12px 16px; }
-            .countdown-value { font-size:1.8rem; }
-            .episode-grid { grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:14px; }
-            .season-tab { padding:8px 16px; font-size:0.7rem; }
-            .golden-quote { font-size:0.6rem; }
-            .pdf-embed-container { height:55vh; width:98%; }
-            .detail-modal-content { padding:24px; }
-            .stats-row { gap:12px; }
-            .stat-item { padding:6px 14px; }
-            .back-to-top { width:40px; height:40px; font-size:1rem; bottom:20px; left:20px; }
-            .toast-container { bottom:20px; right:20px; }
-            .keyboard-hint { display:none; }
+        /* ── responsive ── */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+                letter-spacing: 3px;
+            }
+            .countdown-item {
+                min-width: 55px;
+                padding: 10px 12px;
+            }
+            .countdown-value {
+                font-size: 1.5rem;
+            }
+            .episode-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 10px;
+            }
+            .season-tab {
+                padding: 8px 14px;
+                font-size: 0.7rem;
+            }
+            .golden-quote {
+                font-size: 0.65rem;
+            }
+            .pdf-embed-container {
+                height: 55vh;
+                width: 98%;
+            }
+            .detail-modal-content {
+                padding: 20px;
+            }
+            .stats-row {
+                gap: 10px;
+            }
+            .stat-item {
+                padding: 6px 10px;
+            }
+            .custom-cursor {
+                display: none;
+            }
+            .keyboard-hint {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Background image -->
-    <div class="hero-bg-image"></div>
-    <div class="hero-bg-overlay"></div>
-
-    <!-- 3D Canvas -->
-    <div id="three-container"></div>
-
-    <!-- Progress Bar -->
+    <!-- cursor -->
+    <div class="custom-cursor" id="customCursor"></div>
+    <!-- progress -->
     <div class="global-progress-bar" id="globalProgress"></div>
 
-    <!-- UI Overlay -->
-    <div class="ui-overlay">
+    <!-- bg -->
+    <div class="hero-bg-image"></div>
+    <div class="hero-bg-overlay"></div>
+    <canvas id="particlesCanvas"></canvas>
 
-        <!-- Header -->
+    <!-- main -->
+    <div class="main-container">
+
+        <!-- header -->
         <div class="header-area">
             <span class="nav-logo">The Beg</span>
             <div class="golden-quote-wrapper">
@@ -467,16 +1059,16 @@
             </div>
         </div>
 
-        <!-- Hero -->
+        <!-- hero -->
         <section class="hero-section">
             <div class="hero-badge">&#127916; GRAPHIC NOVEL SERIES</div>
             <h1 class="hero-title">THE BEG</h1>
-            <p class="hero-subtitle">10 Seasons · 100 Episodes · New Episode Every Sunday</p>
+            <p class="hero-subtitle">10 Seasons &middot; 100 Episodes &middot; New Episode Every Sunday</p>
 
-            <!-- Stats: Total, Available, Next In (no Read) -->
             <div class="stats-row" id="statsRow">
                 <div class="stat-item"><div class="stat-value" id="statTotal">100</div><div class="stat-label">Total</div></div>
                 <div class="stat-item"><div class="stat-value" id="statAvailable">0</div><div class="stat-label">Available</div></div>
+                <div class="stat-item"><div class="stat-value" id="statRead">0</div><div class="stat-label">Read</div></div>
                 <div class="stat-item"><div class="stat-value" id="statNext">--</div><div class="stat-label">Next In</div></div>
             </div>
 
@@ -489,18 +1081,24 @@
             <p class="next-episode-info" id="nextEpisodeInfo">Loading schedule…</p>
         </section>
 
-        <!-- Search -->
+        <!-- continue banner -->
+        <div class="continue-banner" id="continueBanner" onclick="window.continueReading()">
+            <div class="continue-text">Continue reading <strong id="continueText">Season 1, Episode 1</strong></div>
+            <button class="continue-btn">RESUME &#9654;</button>
+        </div>
+
+        <!-- search -->
         <div class="search-wrapper">
             <span class="search-icon">&#128269;</span>
             <input type="text" class="search-input" id="episodeSearch" placeholder="Search episodes…" autocomplete="off" />
         </div>
 
-                <!-- Season Selector -->
+        <!-- season selector -->
         <div class="season-selector-wrapper">
             <div class="season-selector" id="seasonSelector"></div>
         </div>
 
-        <!-- Episodes -->
+        <!-- episodes -->
         <section class="episodes-section" id="episodesSection">
             <h2 class="season-title-display" id="seasonTitleDisplay">Season 1</h2>
             <p class="season-arc-subtitle" id="seasonArcSubtitle">The Disappearance</p>
@@ -509,7 +1107,7 @@
 
     </div>
 
-    <!-- Detail Modal -->
+    <!-- detail modal -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal-header">
             <span class="modal-title" id="detailModalTitle">Episode Details</span>
@@ -518,7 +1116,7 @@
         <div class="detail-modal-content">
             <div class="detail-cover" id="detailCover">&#128214;</div>
             <div class="detail-ep-title" id="detailEpTitle">Episode Title</div>
-            <div class="detail-ep-meta" id="detailEpMeta">Season 1 · Episode 1</div>
+            <div class="detail-ep-meta" id="detailEpMeta">Season 1 &middot; Episode 1</div>
             <div class="detail-desc" id="detailDesc">Episode description goes here.</div>
             <div class="detail-actions">
                 <button class="btn-primary" id="detailReadBtn" onclick="window.readFromDetail()">&#128214; Start Reading</button>
@@ -528,7 +1126,7 @@
         </div>
     </div>
 
-    <!-- PDF Modal -->
+    <!-- PDF modal -->
     <div class="modal-overlay" id="pdfModal">
         <div class="modal-header">
             <span class="modal-title" id="pdfModalTitle">&#128214; Reading Episode</span>
@@ -537,65 +1135,67 @@
         <div class="pdf-embed-container" oncontextmenu="return false">
             <div class="pdf-loader" id="pdfLoader">
                 <div class="spinner"></div>
-                <div style="color:#a09080;font-size:0.9rem;">Loading episode…</div>
+                <div style="color:var(--text-muted);font-size:0.85rem;">Loading episode…</div>
                 <div class="pdf-error" id="pdfError">
                     <div>Failed to load PDF – try downloading it directly.</div>
-                    <button class="pdf-fallback-download" id="pdfFallbackDownload" onclick="window.downloadPdfFallback()">&#11015; Download PDF</button>
                     <button class="btn-secondary" onclick="window.retryPdf()" style="margin-top:8px;">Retry</button>
+                    <button class="pdf-fallback-download" onclick="window.downloadPdfFallback()">&#11015; Download PDF</button>
+                    <div class="pdf-manual-link">
+                        <span style="color:var(--text-muted);">Direct link:</span>
+                        <a href="#" id="pdfManualLink" target="_blank">Click here to open PDF</a>
+                    </div>
+                    <div style="font-size:0.7rem;color:#6a6050;margin-top:4px;">
+                        If the link doesn't work, check the console (F12) for the full URL.
+                    </div>
                 </div>
             </div>
+            <!-- EMBED tag -->
             <embed id="pdfEmbed" type="application/pdf" />
         </div>
     </div>
 
-    <!-- Toast -->
+    <!-- toast -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Back to Top -->
+    <!-- back to top -->
     <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593;</button>
 
-    <!-- Keyboard Hint -->
-    <div class="keyboard-hint" id="keyboardHint">Use &#8592; &#8594; to switch seasons · ESC to close</div>
-
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- keyboard hint -->
+    <div class="keyboard-hint" id="keyboardHint">Use &#8592; &#8594; to switch seasons &middot; ESC to close</div>
 
     <script>
         (function() {
             'use strict';
 
-            // ─── CONFIGURATION – EDIT THESE IF YOUR URL CHANGES ──────
-            // For embedding attempt (may be blocked by X-Frame-Options)
-            const EMBED_BASE_URL = 'https://raw.githubusercontent.com/userdivyansh12-lab/The-Beg/v2.0/';
-            // For direct download – this must point to the actual release assets
-            const DOWNLOAD_BASE_URL = 'https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/';
-
-                     // ─── REST OF SCRIPT ──────────────────────────────────────
-
+                     // ─── CONFIG ──────────────────────────────────────────────
             const TOTAL_SEASONS = 10;
             const EPISODES_PER_SEASON = 10;
-            const START_DATE = new Date(2026, 6, 26);
+            const START_DATE = new Date(2026, 6, 26); // July 26, 2026
+
+            // ─── FIXED: Use the release asset URL for both embed and download ──
+            // This is the correct base for files attached to the release.
+            const RELEASE_BASE_URL = 'https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/';
 
             const uploadedEpisodes = [
-                'S1E01','S1E02','S1E03','S1E04','S1E05','S1E06','S1E07','S1E08','S1E09','S1E10',
-                'S2E01','S2E02','S2E03','S2E04','S2E05','S2E06','S2E07','S2E08','S2E09','S2E10',
-                'S3E01','S3E02','S3E03','S3E04','S3E05','S3E06','S3E07','S3E08','S3E09','S3E10',
-                'S4E01','S4E02','S4E03','S4E04','S4E05','S4E06','S4E07','S4E08','S4E09','S4E10',
-                'S5E01','S5E02','S5E03','S5E04','S5E05','S5E06','S5E07','S5E08','S5E09','S5E10',
-                'S6E01','S6E02','S6E03','S6E04','S6E05','S6E06','S6E07','S6E08','S6E09','S6E10',
-                'S7E01','S7E02','S7E03','S7E04','S7E05','S7E06','S7E07','S7E08','S7E09','S7E10',
-                'S8E01','S8E02','S8E03','S8E04','S8E05','S8E06','S8E07','S8E08','S8E09','S8E10',
-                'S9E01','S9E02','S9E03','S9E04','S9E05','S9E06','S9E07','S9E08','S9E09','S9E10',
-                'S10E01','S10E02','S10E03','S10E04','S10E05','S10E06','S10E07','S10E08','S10E09','S10E10'
+                'S1E01', 'S1E02', 'S1E03', 'S1E04', 'S1E05', 'S1E06', 'S1E07', 'S1E08', 'S1E09', 'S1E10',
+                'S2E01', 'S2E02', 'S2E03', 'S2E04', 'S2E05', 'S2E06', 'S2E07', 'S2E08', 'S2E09', 'S2E10',
+                'S3E01', 'S3E02', 'S3E03', 'S3E04', 'S3E05', 'S3E06', 'S3E07', 'S3E08', 'S3E09', 'S3E10',
+                'S4E01', 'S4E02', 'S4E03', 'S4E04', 'S4E05', 'S4E06', 'S4E07', 'S4E08', 'S4E09', 'S4E10',
+                'S5E01', 'S5E02', 'S5E03', 'S5E04', 'S5E05', 'S5E06', 'S5E07', 'S5E08', 'S5E09', 'S5E10',
+                'S6E01', 'S6E02', 'S6E03', 'S6E04', 'S6E05', 'S6E06', 'S6E07', 'S6E08', 'S6E09', 'S6E10',
+                'S7E01', 'S7E02', 'S7E03', 'S7E04', 'S7E05', 'S7E06', 'S7E07', 'S7E08', 'S7E09', 'S7E10',
+                'S8E01', 'S8E02', 'S8E03', 'S8E04', 'S8E05', 'S8E06', 'S8E07', 'S8E08', 'S8E09', 'S8E10',
+                'S9E01', 'S9E02', 'S9E03', 'S9E04', 'S9E05', 'S9E06', 'S9E07', 'S9E08', 'S9E09', 'S9E10',
+                'S10E01', 'S10E02', 'S10E03', 'S10E04', 'S10E05', 'S10E06', 'S10E07', 'S10E08', 'S10E09', 'S10E10'
             ];
 
             const SEASON_ARCS = [
-                "The Disappearance","The Hunt","Revelations","The Underground",
-                "False Faces","The Collective","Memory Lane","The Inversion",
-                "Endgame","The New Dawn"
+                "The Disappearance", "The Hunt", "Revelations", "The Underground",
+                "False Faces", "The Collective", "Memory Lane", "The Inversion",
+                "Endgame", "The New Dawn"
             ];
-            const EP_ADJ = ["Silent","Broken","Hidden","Last","False","Cold","Empty","Dead","Raw","Dark"];
-            const EP_NOUN = ["Signal","Ghost","Trail","Mirror","Hour","Door","Witness","Shadow","Truth","Threshold"];
+            const EP_ADJ = ["Silent", "Broken", "Hidden", "Last", "False", "Cold", "Empty", "Dead", "Raw", "Dark"];
+            const EP_NOUN = ["Signal", "Ghost", "Trail", "Mirror", "Hour", "Door", "Witness", "Shadow", "Truth", "Threshold"];
             const EP_DESC_TEMPLATES = [
                 "The mystery deepens as new evidence comes to light.",
                 "An unexpected alliance forms in the shadows.",
@@ -609,15 +1209,17 @@
                 "The line between hunter and prey begins to blur."
             ];
 
+            // ─── state ──────────────────────────────────────────────
             let currentViewingSeason = 1;
             let currentDetailEpisode = null;
             let searchQuery = '';
-            let currentPdfUrl = ''; // stores the download URL
+            let currentPdfUrl = '';
 
+            // ─── helpers ──────────────────────────────────────────────
             function getEpisodeMeta(s, e) {
-                const arc = SEASON_ARCS[s-1] || "Unknown Arc";
-                const idx = ((s-1)*10 + (e-1)) % 100;
-                const title = EP_ADJ[Math.floor(idx/10)] + " " + EP_NOUN[idx%10];
+                const arc = SEASON_ARCS[s - 1] || "Unknown Arc";
+                const idx = ((s - 1) * 10 + (e - 1)) % 100;
+                const title = EP_ADJ[Math.floor(idx / 10)] + " " + EP_NOUN[idx % 10];
                 const desc = EP_DESC_TEMPLATES[idx % EP_DESC_TEMPLATES.length];
                 return { arc, title, desc };
             }
@@ -626,10 +1228,41 @@
                 return uploadedEpisodes.includes(fileKey);
             }
 
+            function getReadEpisodes() {
+                try { return JSON.parse(localStorage.getItem('beg_read_eps') || '[]'); } catch (e) { return []; }
+            }
+
+            function markEpisodeRead(fileKey) {
+                const read = getReadEpisodes();
+                if (!read.includes(fileKey)) {
+                    read.push(fileKey);
+                    localStorage.setItem('beg_read_eps', JSON.stringify(read));
+                }
+            }
+
+            function getLastRead() {
+                try { return JSON.parse(localStorage.getItem('beg_last_read') || 'null'); } catch (e) { return null; }
+            }
+
+            function setLastRead(s, e) {
+                localStorage.setItem('beg_last_read', JSON.stringify({ season: s, episode: e, time: Date.now() }));
+            }
+
+            function getStoredSeason() {
+                const s = parseInt(localStorage.getItem('beg_last_season'));
+                return (s >= 1 && s <= TOTAL_SEASONS) ? s : 1;
+            }
+
+            function storeSeason(s) {
+                localStorage.setItem('beg_last_season', s);
+            }
+
+            function getFileKey(s, e) { return 'S' + s + 'E' + String(e).padStart(2, '0'); }
+
             function getEpisodeDate(season, episode) {
-                const globalNum = (season-1)*EPISODES_PER_SEASON + episode;
+                const globalNum = (season - 1) * EPISODES_PER_SEASON + episode;
                 const d = new Date(START_DATE);
-                d.setDate(d.getDate() + (globalNum-1)*7);
+                d.setDate(d.getDate() + (globalNum - 1) * 7);
                 return d;
             }
 
@@ -637,188 +1270,217 @@
                 return getEpisodeDate(season, 1) <= new Date();
             }
 
-            function getFileKey(s, e) { return 'S'+s+'E'+String(e).padStart(2,'0'); }
-
-            function getStoredSeason() {
-                const s = parseInt(localStorage.getItem('beg_last_season'));
-                return (s>=1 && s<=TOTAL_SEASONS) ? s : 1;
-            }
-            function storeSeason(s) {
-                localStorage.setItem('beg_last_season', s);
-            }
-
-            function showToast(msg) {
+            // ─── toast ──────────────────────────────────────────────
+            function showToast(message, type) {
+                type = type || 'success';
                 const container = document.getElementById('toastContainer');
-                const t = document.createElement('div');
-                t.className = 'toast';
-                t.textContent = msg;
-                container.appendChild(t);
-                setTimeout(() => t.remove(), 3500);
+                const toast = document.createElement('div');
+                toast.className = 'toast';
+                toast.textContent = message;
+                if (type === 'info') toast.style.borderColor = 'rgba(100,149,237,0.4)';
+                container.appendChild(toast);
+                setTimeout(function() { toast.remove(); }, 3000);
             }
 
-                     // ─── THREE.JS ──────────────────────────────────────────
+            // ─── particles ──────────────────────────────────────────
+            function initParticles() {
+                const canvas = document.getElementById('particlesCanvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                let particles = [],
+                    mouse = { x: null, y: null };
 
-            function initThree() {
-                const container = document.getElementById('three-container');
-                const scene = new THREE.Scene();
-                const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-                renderer.setClearColor(0x000000, 0);
-                container.appendChild(renderer.domElement);
+                function resize() { canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight; }
+                resize();
+                window.addEventListener('resize', resize);
+                window.addEventListener('mousemove', function(e) { mouse.x = e.clientX;
+                    mouse.y = e.clientY; });
+                window.addEventListener('mouseleave', function() { mouse.x = null;
+                    mouse.y = null; });
 
-                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                camera.position.set(0, 0, 12);
-
-                const particlesGeometry = new THREE.BufferGeometry();
-                const count = 600;
-                const positions = new Float32Array(count * 3);
-                for (let i = 0; i < count * 3; i++) {
-                    positions[i] = (Math.random() - 0.5) * 60;
+                for (let i = 0; i < 50; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        size: Math.random() * 1.5 + 0.3,
+                        speedX: (Math.random() - 0.5) * 0.3,
+                        speedY: (Math.random() - 0.5) * 0.3,
+                        opacity: Math.random() * 0.4 + 0.06,
+                        fadeSpeed: Math.random() * 0.003 + 0.001
+                    });
                 }
-                particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-                const particlesMaterial = new THREE.PointsMaterial({
-                    color: 0xd4a853,
-                    size: 0.08,
-                    transparent: true,
-                    opacity: 0.5,
-                    blending: THREE.AdditiveBlending,
-                });
-                const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-                scene.add(particles);
-
-                const ringGeometry = new THREE.TorusGeometry(2.2, 0.04, 16, 100);
-                const ringMaterial = new THREE.MeshStandardMaterial({
-                    color: 0xd4a853,
-                    emissive: 0x8b6914,
-                    emissiveIntensity: 0.15,
-                    metalness: 0.7,
-                    roughness: 0.3,
-                    transparent: true,
-                    opacity: 0.4,
-                });
-                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-                ring.rotation.x = Math.PI / 3;
-                ring.rotation.z = Math.PI / 6;
-                scene.add(ring);
-
-                const ring2Geometry = new THREE.TorusGeometry(1.6, 0.03, 16, 100);
-                const ring2Material = new THREE.MeshStandardMaterial({
-                    color: 0xf0d078,
-                    emissive: 0x8b6914,
-                    emissiveIntensity: 0.1,
-                    metalness: 0.5,
-                    roughness: 0.4,
-                    transparent: true,
-                    opacity: 0.3,
-                });
-                const ring2 = new THREE.Mesh(ring2Geometry, ring2Material);
-                ring2.rotation.x = -Math.PI / 4;
-                ring2.rotation.y = Math.PI / 5;
-                scene.add(ring2);
-
-                const ambientLight = new THREE.AmbientLight(0x404060);
-                scene.add(ambientLight);
-                const pointLight = new THREE.PointLight(0xd4a853, 0.6, 20);
-                pointLight.position.set(5, 5, 5);
-                scene.add(pointLight);
-                const pointLight2 = new THREE.PointLight(0x8b6914, 0.4, 20);
-                pointLight2.position.set(-5, -3, 5);
-                scene.add(pointLight2);
-
-                let mouseX = 0, mouseY = 0;
-                document.addEventListener('mousemove', (event) => {
-                    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-                    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-                });
-
-                window.addEventListener('resize', () => {
-                    camera.aspect = window.innerWidth / window.innerHeight;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(window.innerWidth, window.innerHeight);
-                });
 
                 function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(function(p) {
+                        p.x += p.speedX;
+                        p.y += p.speedY;
+                        p.opacity += p.fadeSpeed;
+                        if (p.opacity >= 0.5 || p.opacity <= 0.03) p.fadeSpeed *= -1;
+                        if (p.x < -10 || p.x > canvas.width + 10 || p.y < -10 || p.y > canvas.height + 10) {
+                            p.x = Math.random() * canvas.width;
+                            p.y = Math.random() * canvas.height;
+                        }
+                        if (mouse.x !== null) {
+                            var dx = p.x - mouse.x,
+                                dy = p.y - mouse.y,
+                                dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist < 120) {
+                                var force = (120 - dist) / 120;
+                                p.x += dx * force * 0.02;
+                                p.y += dy * force * 0.02;
+                            }
+                        }
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(212,168,83,' + p.opacity + ')';
+                        ctx.fill();
+                    });
+                    for (var i = 0; i < particles.length; i++) {
+                        for (var j = i + 1; j < particles.length; j++) {
+                            var dx = particles[i].x - particles[j].x,
+                                dy = particles[i].y - particles[j].y;
+                            var dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist < 100) {
+                                ctx.beginPath();
+                                ctx.moveTo(particles[i].x, particles[i].y);
+                                ctx.lineTo(particles[j].x, particles[j].y);
+                                ctx.strokeStyle = 'rgba(212,168,83,' + (0.08 * (1 - dist / 100)) + ')';
+                                ctx.lineWidth = 0.5;
+                                ctx.stroke();
+                            }
+                        }
+                    }
                     requestAnimationFrame(animate);
-                    ring.rotation.y += 0.002;
-                    ring2.rotation.y -= 0.003;
-                    particles.rotation.y += 0.0003;
-                    particles.rotation.x += 0.0001;
-
-                    camera.position.x += (mouseX * 0.6 - camera.position.x) * 0.02;
-                    camera.position.y += (mouseY * 0.4 - camera.position.y) * 0.02;
-                    camera.lookAt(0, 0, 0);
-
-                    renderer.render(scene, camera);
                 }
                 animate();
             }
 
-                     // ─── UI FUNCTIONS ──────────────────────────────────────
+            // ─── cursor ──────────────────────────────────────────────
+            function initCursor() {
+                var cursor = document.getElementById('customCursor');
+                if (!cursor || window.matchMedia('(pointer: coarse)').matches) return;
+                var cx = 0,
+                    cy = 0,
+                    tx = 0,
+                    ty = 0;
+                document.addEventListener('mousemove', function(e) { tx = e.clientX;
+                    ty = e.clientY; });
 
+                function loop() {
+                    cx += (tx - cx) * 0.15;
+                    cy += (ty - cy) * 0.15;
+                    cursor.style.left = cx + 'px';
+                    cursor.style.top = cy + 'px';
+                    requestAnimationFrame(loop);
+                }
+                loop();
+                document.querySelectorAll('button, .episode-card, .season-tab, a').forEach(function(el) {
+                    el.addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
+                    el.addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
+                });
+            }
+
+            // ─── countdown ──────────────────────────────────────────
             function updateCountdown() {
-                const now = new Date();
-                let nextDate=null, nextSeason, nextEpisode;
-                for (let s=1; s<=TOTAL_SEASONS; s++) {
-                    for (let e=1; e<=EPISODES_PER_SEASON; e++) {
-                        const d = getEpisodeDate(s, e);
-                        if (d > now) { nextDate=d; nextSeason=s; nextEpisode=e; break; }
+                var now = new Date();
+                var nextDate = null,
+                    nextSeason, nextEpisode;
+                for (var s = 1; s <= TOTAL_SEASONS; s++) {
+                    for (var e = 1; e <= EPISODES_PER_SEASON; e++) {
+                        var date = getEpisodeDate(s, e);
+                        if (date > now) { nextDate = date;
+                            nextSeason = s;
+                            nextEpisode = e; break; }
                     }
                     if (nextDate) break;
                 }
                 if (!nextDate) {
-                    document.getElementById('countDays').textContent='--';
-                    document.getElementById('countHours').textContent='--';
-                    document.getElementById('countMins').textContent='--';
-                    document.getElementById('countSecs').textContent='--';
-                    document.getElementById('nextEpisodeInfo').textContent='All episodes released!';
-                    document.getElementById('statNext').textContent='Done';
+                    document.getElementById('countDays').textContent = '--';
+                    document.getElementById('countHours').textContent = '--';
+                    document.getElementById('countMins').textContent = '--';
+                    document.getElementById('countSecs').textContent = '--';
+                    document.getElementById('nextEpisodeInfo').textContent = 'All episodes released!';
+                    document.getElementById('statNext').textContent = 'Done';
                     return;
                 }
-                const diff = nextDate - now;
-                document.getElementById('countDays').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
-                document.getElementById('countHours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
-                document.getElementById('countMins').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
-                document.getElementById('countSecs').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
-                document.getElementById('nextEpisodeInfo').textContent = 'Next: Season '+nextSeason+', Episode '+nextEpisode+' – '+nextDate.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-                document.getElementById('statNext').textContent = Math.floor(diff/86400000)+'d';
+                var diff = nextDate - now;
+                document.getElementById('countDays').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+                document.getElementById('countHours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+                document.getElementById('countMins').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+                document.getElementById('countSecs').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+                document.getElementById('nextEpisodeInfo').textContent = 'Next: Season ' + nextSeason + ', Episode ' +
+                    nextEpisode + ' – ' + nextDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric',
+                        month: 'long', day: 'numeric' });
+                document.getElementById('statNext').textContent = Math.floor(diff / 86400000) + 'd';
             }
 
+            // ─── stats ──────────────────────────────────────────────
             function updateStats() {
-                const now = new Date();
-                let available = 0;
-                for (let s=1; s<=TOTAL_SEASONS; s++) {
-                    for (let e=1; e<=EPISODES_PER_SEASON; e++) {
-                        if (getEpisodeDate(s,e) <= now && isEpisodeAvailable(getFileKey(s,e))) available++;
+                var now = new Date();
+                var available = 0;
+                for (var s = 1; s <= TOTAL_SEASONS; s++) {
+                    for (var e = 1; e <= EPISODES_PER_SEASON; e++) {
+                        if (getEpisodeDate(s, e) <= now && isEpisodeAvailable(getFileKey(s, e))) available++;
                     }
                 }
                 document.getElementById('statAvailable').textContent = available;
-                const progress = (available / 100) * 100;
+                document.getElementById('statRead').textContent = getReadEpisodes().length;
+                var progress = (getReadEpisodes().length / 100) * 100;
                 document.getElementById('globalProgress').style.width = progress + '%';
             }
 
+            // ─── continue banner ──────────────────────────────────
+            function updateContinueBanner() {
+                var last = getLastRead();
+                var banner = document.getElementById('continueBanner');
+                if (last) {
+                    var meta = getEpisodeMeta(last.season, last.episode);
+                    document.getElementById('continueText').textContent = 'S' + last.season + 'E' + String(last.episode)
+                        .padStart(2, '0') + ' – ' + meta.title;
+                    banner.classList.add('active');
+                } else {
+                    banner.classList.remove('active');
+                }
+            }
+
+            window.continueReading = function() {
+                var last = getLastRead();
+                if (last) {
+                    switchSeason(last.season);
+                    setTimeout(function() {
+                        openPdfViewer(getFileKey(last.season, last.episode), last.season, last.episode);
+                    }, 300);
+                }
+            };
+
+            // ─── season selector ──────────────────────────────────
             function buildSeasonSelector() {
-                const sel = document.getElementById('seasonSelector');
+                var sel = document.getElementById('seasonSelector');
                 if (!sel) return;
                 sel.innerHTML = '';
-                const now = new Date();
-                for (let s=1; s<=TOTAL_SEASONS; s++) {
-                    const tab = document.createElement('div');
+                var now = new Date();
+                for (var s = 1; s <= TOTAL_SEASONS; s++) {
+                    var tab = document.createElement('div');
                     tab.className = 'season-tab';
-                    const unlocked = isSeasonUnlocked(s);
-                    let availCount = 0;
-                    for (let e=1; e<=EPISODES_PER_SEASON; e++) {
-                        if (getEpisodeDate(s,e) <= now && isEpisodeAvailable(getFileKey(s,e))) availCount++;
+                    var unlocked = isSeasonUnlocked(s);
+                    var availableCount = 0;
+                    for (var e = 1; e <= EPISODES_PER_SEASON; e++) {
+                        if (getEpisodeDate(s, e) <= now && isEpisodeAvailable(getFileKey(s, e))) availableCount++;
                     }
-                    const pct = (availCount / EPISODES_PER_SEASON) * 100;
+                    var progressPct = (availableCount / EPISODES_PER_SEASON) * 100;
+
                     if (s === currentViewingSeason) tab.classList.add('active');
                     if (!unlocked) tab.classList.add('locked');
-                    tab.innerHTML = 'Season '+s+(!unlocked?'<span class="lock-icon">&#128274;</span>':'')+
-                        '<div class="season-progress" style="width:'+(unlocked?pct:0)+'%"></div>';
+
+                    tab.innerHTML = 'Season ' + s + (!unlocked ? '<span class="lock-icon">&#128274;</span>' : '') +
+                        '<div class="season-progress" style="width:' + (unlocked ? progressPct : 0) + '%"></div>';
+
                     if (unlocked) {
-                        tab.addEventListener('click', (function(season) {
-                            return () => switchSeason(season);
-                        })(s));
+                        tab.addEventListener('click', function(season) {
+                            return function() { switchSeason(season); };
+                        }(s));
                     }
                     sel.appendChild(tab);
                 }
@@ -829,83 +1491,107 @@
                 storeSeason(s);
                 buildSeasonSelector();
                 renderEpisodes();
-                document.getElementById('seasonTitleDisplay').textContent = 'Season '+s;
-                document.getElementById('seasonArcSubtitle').textContent = SEASON_ARCS[s-1] || '';
+                document.getElementById('seasonTitleDisplay').textContent = 'Season ' + s;
+                document.getElementById('seasonArcSubtitle').textContent = SEASON_ARCS[s - 1] || '';
+                showToast('Switched to Season ' + s + ': ' + SEASON_ARCS[s - 1]);
             }
 
+            // ─── render episodes ──────────────────────────────────
             function renderEpisodes() {
-                const grid = document.getElementById('episodeGrid');
+                var grid = document.getElementById('episodeGrid');
                 if (!grid) return;
                 grid.innerHTML = '';
-                const now = new Date();
-                let firstUnreleased = null;
-                for (let s=1; s<=TOTAL_SEASONS; s++) {
-                    for (let e=1; e<=EPISODES_PER_SEASON; e++) {
-                        if (getEpisodeDate(s,e) > now) { firstUnreleased={season:s, episode:e}; break; }
+                var now = new Date();
+                var readEps = getReadEpisodes();
+                var firstUnreleased = null;
+                for (var s = 1; s <= TOTAL_SEASONS; s++) {
+                    for (var e = 1; e <= EPISODES_PER_SEASON; e++) {
+                        if (getEpisodeDate(s, e) > now) { firstUnreleased = { season: s, episode: e }; break; }
                     }
                     if (firstUnreleased) break;
                 }
 
-                for (let ep=1; ep<=EPISODES_PER_SEASON; ep++) {
-                    const releaseDate = getEpisodeDate(currentViewingSeason, ep);
-                    const isReleased = releaseDate <= now;
-                    const fileKey = getFileKey(currentViewingSeason, ep);
-                    const isUploaded = isEpisodeAvailable(fileKey);
-                    const isAvailable = isReleased && isUploaded;
-                    const isNext = firstUnreleased && firstUnreleased.season===currentViewingSeason && firstUnreleased.episode===ep && !isReleased;
-                    const meta = getEpisodeMeta(currentViewingSeason, ep);
+                for (var ep = 1; ep <= EPISODES_PER_SEASON; ep++) {
+                    var releaseDate = getEpisodeDate(currentViewingSeason, ep);
+                    var isReleased = releaseDate <= now;
+                    var fileKey = getFileKey(currentViewingSeason, ep);
+                    var isUploaded = isEpisodeAvailable(fileKey);
+                    var isAvailable = isReleased && isUploaded;
+                    var isNext = firstUnreleased && firstUnreleased.season === currentViewingSeason &&
+                        firstUnreleased.episode === ep && !isReleased;
+                    var isRead = readEps.includes(fileKey);
+                    var meta = getEpisodeMeta(currentViewingSeason, ep);
 
                     if (searchQuery) {
-                        const q = searchQuery.toLowerCase();
-                        const match = fileKey.toLowerCase().includes(q) || meta.title.toLowerCase().includes(q) || meta.arc.toLowerCase().includes(q);
+                        var q = searchQuery.toLowerCase();
+                        var match = fileKey.toLowerCase().includes(q) || meta.title.toLowerCase().includes(q) ||
+                            meta.arc.toLowerCase().includes(q);
                         if (!match) continue;
                     }
 
-                    const card = document.createElement('div');
+                    var card = document.createElement('div');
                     card.className = 'episode-card';
                     if (isAvailable) card.classList.add('available');
                     if (isNext) card.classList.add('next-episode');
-                    card.style.transitionDelay = ((ep-1)*40)+'ms';
+                    if (isRead) card.classList.add('read');
+                    card.style.transitionDelay = ((ep - 1) * 40) + 'ms';
 
-                    let statusClass = isAvailable ? 'status-available' : isNext ? 'status-next' : isReleased ? 'status-coming' : 'status-coming';
-                    let statusText = isAvailable ? 'Available Now' : isNext ? 'Next Release' : isReleased ? 'Awaiting Upload' : 'Coming Soon';
+                    var statusClass = isAvailable ? 'status-available' : isNext ? 'status-next' : isReleased ?
+                        'status-coming' : 'status-coming';
+                    var statusText = isAvailable ? 'Available Now' : isNext ? 'Next Release' : isReleased ?
+                        'Awaiting Upload' : 'Coming Soon';
+                    if (isRead) { statusClass = 'status-read';
+                        statusText = 'Read'; }
 
                     card.innerHTML =
-                        '<div class="episode-number">Ep. '+String(ep).padStart(2,'0')+'</div>'+
-                        '<div class="episode-title-area">'+meta.title+'</div>'+
-                        '<div class="episode-desc">'+meta.desc+'</div>'+
-                        '<span class="episode-status '+statusClass+'">'+statusText+'</span>'+
-                        '<div class="episode-date">'+releaseDate.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'})+'</div>';
+                        '<div class="episode-number">Ep. ' + String(ep).padStart(2, '0') + '</div>' +
+                        '<div class="episode-title-area">' + meta.title + '</div>' +
+                        '<div class="episode-desc">' + meta.desc + '</div>' +
+                        '<span class="episode-status ' + statusClass + '">' + statusText + '</span>' +
+                        '<div class="episode-date">' + releaseDate.toLocaleDateString('en-US', { weekday: 'short',
+                            year: 'numeric', month: 'short', day: 'numeric' }) + '</div>' +
+                        (isAvailable && !isRead ? '<div class="read-now-badge">READ</div>' : '') +
+                        (isRead ? '<div class="read-check">&#10003;</div>' : '');
 
                     if (isAvailable) {
-                        card.addEventListener('click', (function(season, epNum) {
-                            return () => openDetailModal(getFileKey(season, epNum), season, epNum);
-                        })(currentViewingSeason, ep));
+                        card.addEventListener('click', function(season, episode) {
+                            return function() {
+                                openDetailModal(getFileKey(season, episode), season, episode);
+                            };
+                        }(currentViewingSeason, ep));
                         card.style.cursor = 'pointer';
                     } else if (isNext || isReleased) {
-                        card.addEventListener('click', () => showToast('This episode is not yet available.'));
+                        card.addEventListener('click', function() {
+                            showToast('This episode is not yet available for reading.', 'info');
+                        });
                         card.style.cursor = 'help';
                     }
                     grid.appendChild(card);
                 }
 
-                setTimeout(() => {
-                    document.querySelectorAll('.episode-card').forEach(c => c.classList.add('revealed'));
+                setTimeout(function() {
+                    document.querySelectorAll('.episode-card').forEach(function(card) {
+                        card.classList.add('revealed');
+                    });
                 }, 50);
             }
 
+                     // ─── detail modal ──────────────────────────────────────
             function openDetailModal(fileKey, season, episode) {
-                const meta = getEpisodeMeta(season, episode);
-                currentDetailEpisode = { fileKey, season, episode };
+                var meta = getEpisodeMeta(season, episode);
+                currentDetailEpisode = { fileKey: fileKey, season: season, episode: episode };
                 document.getElementById('detailModalTitle').textContent = 'Episode Details';
                 document.getElementById('detailEpTitle').textContent = meta.title;
-                document.getElementById('detailEpMeta').textContent = meta.arc+' – Season '+season+', Episode '+episode;
-                document.getElementById('detailDesc').textContent = meta.desc+' '+getEpisodeDate(season,episode).toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'.';
+                document.getElementById('detailEpMeta').textContent = meta.arc + ' – Season ' + season + ', Episode ' +
+                    episode;
+                document.getElementById('detailDesc').textContent = meta.desc + ' ' + getEpisodeDate(season, episode)
+                    .toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) +
+                    '.';
                 document.getElementById('detailModal').classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
 
-         window.closeDetailModal = function() {
+            window.closeDetailModal = function() {
                 document.getElementById('detailModal').classList.remove('active');
                 document.body.style.overflow = '';
                 currentDetailEpisode = null;
@@ -914,40 +1600,56 @@
             window.readFromDetail = function() {
                 if (!currentDetailEpisode) return;
                 closeDetailModal();
-                setTimeout(() => {
-                    openPdfViewer(currentDetailEpisode.fileKey, currentDetailEpisode.season, currentDetailEpisode.episode);
+                setTimeout(function() {
+                    openPdfViewer(currentDetailEpisode.fileKey, currentDetailEpisode.season, currentDetailEpisode
+                        .episode);
                 }, 300);
             };
 
             window.copyEpisodeLink = function() {
                 if (!currentDetailEpisode) return;
-                const url = DOWNLOAD_BASE_URL + currentDetailEpisode.fileKey + '.pdf';
-                navigator.clipboard.writeText(url).then(() => showToast('Link copied!'));
+                var url = RELEASE_BASE_URL + currentDetailEpisode.fileKey + '.pdf';
+                navigator.clipboard.writeText(url).then(function() {
+                    showToast('Episode link copied to clipboard!');
+                });
             };
 
-            // ─── PDF VIEWER ──────────────────────────────────────
-
+            // ─── PDF viewer ──────────────────────────────────────
             function openPdfViewer(fileKey, season, episode) {
-                const embedUrl = EMBED_BASE_URL + fileKey + '.pdf';
-                const downloadUrl = DOWNLOAD_BASE_URL + fileKey + '.pdf';
-                currentPdfUrl = downloadUrl; // for download button
+                // Use the release asset URL directly
+                var pdfUrl = RELEASE_BASE_URL + fileKey + '.pdf';
+                currentPdfUrl = pdfUrl;
 
-                document.getElementById('pdfModalTitle').textContent = 'The Beg – S'+season+'E'+String(episode).padStart(2,'0');
+                document.getElementById('pdfModalTitle').textContent = 'The Beg – S' + season + 'E' + String(episode)
+                    .padStart(2, '0');
 
-                const embed = document.getElementById('pdfEmbed');
-                embed.src = embedUrl;
+                var embed = document.getElementById('pdfEmbed');
+                embed.src = pdfUrl;
 
                 document.getElementById('pdfModal').classList.add('active');
                 document.getElementById('pdfLoader').classList.remove('hidden');
                 document.getElementById('pdfError').classList.remove('active');
                 document.body.style.overflow = 'hidden';
 
-                setTimeout(() => {
+                // Set the manual link
+                var manualLink = document.getElementById('pdfManualLink');
+                if (manualLink) {
+                    manualLink.href = pdfUrl;
+                    manualLink.textContent = pdfUrl;
+                }
+
+                markEpisodeRead(fileKey);
+                setLastRead(season, episode);
+                updateStats();
+                updateContinueBanner();
+                renderEpisodes();
+
+                setTimeout(function() {
                     document.getElementById('pdfLoader').classList.add('hidden');
                 }, 2000);
 
                 if (window.embedErrorTimer) clearTimeout(window.embedErrorTimer);
-                window.embedErrorTimer = setTimeout(() => {
+                window.embedErrorTimer = setTimeout(function() {
                     if (document.getElementById('pdfModal').classList.contains('active') &&
                         !document.getElementById('pdfLoader').classList.contains('hidden')) {
                         document.getElementById('pdfError').classList.add('active');
@@ -958,22 +1660,25 @@
             window.closePdfViewer = function() {
                 document.getElementById('pdfModal').classList.remove('active');
                 document.body.style.overflow = '';
-                document.getElementById('pdfEmbed').src = '';
+                var embed = document.getElementById('pdfEmbed');
+                embed.src = '';
                 if (window.embedErrorTimer) clearTimeout(window.embedErrorTimer);
                 document.getElementById('pdfError').classList.remove('active');
                 document.getElementById('pdfLoader').classList.add('hidden');
             };
 
             window.retryPdf = function() {
-                const embed = document.getElementById('pdfEmbed');
-                const src = embed.src;
+                var embed = document.getElementById('pdfEmbed');
+                var src = embed.src;
                 document.getElementById('pdfLoader').classList.remove('hidden');
                 document.getElementById('pdfError').classList.remove('active');
                 embed.src = '';
-                setTimeout(() => { embed.src = src; }, 200);
-                setTimeout(() => { document.getElementById('pdfLoader').classList.add('hidden'); }, 2000);
+                setTimeout(function() { embed.src = src; }, 200);
+                setTimeout(function() {
+                    document.getElementById('pdfLoader').classList.add('hidden');
+                }, 2000);
                 if (window.embedErrorTimer) clearTimeout(window.embedErrorTimer);
-                window.embedErrorTimer = setTimeout(() => {
+                window.embedErrorTimer = setTimeout(function() {
                     if (document.getElementById('pdfModal').classList.contains('active') &&
                         !document.getElementById('pdfLoader').classList.contains('hidden')) {
                         document.getElementById('pdfError').classList.add('active');
@@ -983,23 +1688,31 @@
 
             window.downloadPdfFallback = function() {
                 if (currentPdfUrl) {
-                    const a = document.createElement('a');
-                    a.href = currentPdfUrl; // already the download URL
-                    a.download = currentPdfUrl.split('/').pop();
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    showToast('Downloading PDF…');
+                    console.log('⬇️ Downloading PDF from:', currentPdfUrl);
+                    // Try opening in a new tab (bypasses some popup blockers)
+                    var win = window.open(currentPdfUrl, '_blank');
+                    if (!win || win.closed || typeof win.closed == 'undefined') {
+                        // Fallback to anchor click
+                        var a = document.createElement('a');
+                        a.href = currentPdfUrl;
+                        a.download = currentPdfUrl.split('/').pop();
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }
+                    showToast('Opening PDF…');
+                } else {
+                    showToast('No PDF URL available.');
                 }
             };
 
-                     // ── Search ──
+            // ─── search ──────────────────────────────────────────────
             document.getElementById('episodeSearch').addEventListener('input', function(e) {
                 searchQuery = e.target.value.trim();
                 renderEpisodes();
             });
 
-            // ── Keyboard ──
+            // ─── keyboard shortcuts ──────────────────────────────────
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'ArrowLeft' && currentViewingSeason > 1) {
                     e.preventDefault();
@@ -1017,13 +1730,13 @@
                         closeDetailModal();
                     }
                 }
-                if (e.ctrlKey && ['s','p','u','S','P','U'].includes(e.key)) e.preventDefault();
-                if (e.ctrlKey && e.shiftKey && ['s','S','i','I'].includes(e.key)) e.preventDefault();
+                if (e.ctrlKey && ['s', 'p', 'u', 'S', 'P', 'U'].includes(e.key)) e.preventDefault();
+                if (e.ctrlKey && e.shiftKey && ['s', 'S', 'i', 'I'].includes(e.key)) e.preventDefault();
                 if (e.key === 'F12' || e.key === 'PrintScreen') e.preventDefault();
             });
 
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            document.addEventListener('dragstart', e => e.preventDefault());
+            document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+            document.addEventListener('dragstart', function(e) { e.preventDefault(); });
 
             document.getElementById('pdfModal').addEventListener('click', function(e) {
                 if (e.target === this) closePdfViewer();
@@ -1032,45 +1745,48 @@
                 if (e.target === this) closeDetailModal();
             });
 
-            const backToTop = document.getElementById('backToTop');
+            var backToTop = document.getElementById('backToTop');
             window.addEventListener('scroll', function() {
                 if (window.scrollY > 500) backToTop.classList.add('visible');
                 else backToTop.classList.remove('visible');
             });
 
-            const hint = document.getElementById('keyboardHint');
-            let hintTimeout;
+            var hint = document.getElementById('keyboardHint');
+            var hintTimeout;
+
             function showHint() {
                 hint.classList.add('visible');
                 clearTimeout(hintTimeout);
-                hintTimeout = setTimeout(() => hint.classList.remove('visible'), 4000);
+                hintTimeout = setTimeout(function() { hint.classList.remove('visible'); }, 4000);
             }
             document.addEventListener('keydown', function(e) {
-                if (['ArrowLeft','ArrowRight'].includes(e.key)) showHint();
+                if (['ArrowLeft', 'ArrowRight'].includes(e.key)) showHint();
             });
 
-            // ── Init ──
-            function initApp() {
-                const stored = getStoredSeason();
+            // ─── init ──────────────────────────────────────────────
+            function init() {
+                var stored = getStoredSeason();
                 if (isSeasonUnlocked(stored)) currentViewingSeason = stored;
+                initParticles();
+                initCursor();
                 buildSeasonSelector();
                 renderEpisodes();
                 updateCountdown();
                 updateStats();
+                updateContinueBanner();
                 setInterval(updateCountdown, 1000);
-                setInterval(() => {
+                setInterval(function() {
                     buildSeasonSelector();
                     renderEpisodes();
                     updateStats();
                 }, 3600000);
-                document.getElementById('seasonArcSubtitle').textContent = SEASON_ARCS[currentViewingSeason-1] || '';
+                document.getElementById('seasonArcSubtitle').textContent = SEASON_ARCS[currentViewingSeason - 1] || '';
             }
 
-            // ── Start ──
-            initThree();
-            initApp();
+            init();
 
         })();
     </script>
+
 </body>
 </html>

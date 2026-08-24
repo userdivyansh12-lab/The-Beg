@@ -896,9 +896,29 @@
                      // ─── PDF VIEWER ──────────────────────────────────────
 
             function openPdfViewer(fileKey, season, episode) {
-                const pdfUrl = PDF_BASE_URL + fileKey + '.pdf';
-                currentPdfUrl = pdfUrl;
+    // Build the direct URL (works for both download and viewing)
+    const pdfUrl = PDF_BASE_URL + fileKey + '.pdf';
+    currentPdfUrl = pdfUrl;
 
+    // Mark as read (internal tracking)
+    markEpisodeRead(fileKey);
+    localStorage.setItem('beg_last_read', JSON.stringify({ season: season, episode: episode, time: Date.now() }));
+    updateStats();
+    renderEpisodes();
+
+    // Open in a new tab
+    const win = window.open(pdfUrl, '_blank');
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+        // Fallback: download via anchor click
+        const a = document.createElement('a');
+        a.href = pdfUrl;
+        a.download = pdfUrl.split('/').pop();
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+    showToast('Opening PDF…');
+            }
                 document.getElementById('pdfModalTitle').textContent = 'The Beg – S'+season+'E'+String(episode).padStart(2,'0');
 
                 const embed = document.getElementById('pdfEmbed');

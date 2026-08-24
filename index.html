@@ -33,7 +33,7 @@
         .hero-bg-image {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/hero-bg.jpg?raw=true') center/cover no-repeat;
-            opacity: 0.5; z-index: 0;
+            opacity: 0.7; z-index: 0;
             mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
             -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
         }
@@ -371,9 +371,9 @@
                     card.innerHTML = `
                         <div class="episode-number">Ep. ${String(ep).padStart(2,'0')}</div>
                         <div class="episode-title-area">Season ${currentViewingSeason}, Episode ${ep}</div>
-                        <span class="episode-status ${isAvailable?'status-available':isNext?'status-next':'status-coming'}">${isAvailable?'âœ… Available Now':isNext?'â³ Next Release':isReleased?'â³ Awaiting Upload':'ðŸ”’ Coming Soon'}</span>
+                        <span class="episode-status ${isAvailable?'status-available':isNext?'status-next':'status-coming'}">${isAvailable?'✅ Available Now':isNext?'⏳ Next Release':isReleased?'⏳ Awaiting Upload':'🔒 Coming Soon'}</span>
                         <div class="episode-date">${releaseDate.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'})}</div>
-                        ${isAvailable?'<div class="read-now-badge">ðŸ“– READ</div>':''}
+                        ${isAvailable?'<div class="read-now-badge">📖 READ</div>':''}
                     `;
                     if (isAvailable) { card.addEventListener('click', () => openPdfViewer(fileKey, currentViewingSeason, ep)); card.style.cursor = 'pointer'; }
                     grid.appendChild(card);
@@ -383,7 +383,7 @@
 
             function openPdfViewer(fileKey, season, episode) {
                 const pdfUrl = RELEASE_BASE_URL + fileKey + '.pdf?raw=true';
-                document.getElementById('pdfModalTitle').textContent = `ðŸ“– The Beg â€” Season ${season}, Episode ${episode}`;
+                document.getElementById('pdfModalTitle').textContent = `📖 The Beg — Season ${season}, Episode ${episode}`;
                 document.getElementById('pdfIframe').src = pdfUrl;
                 document.getElementById('pdfModal').classList.add('active');
                 document.body.style.overflow = 'hidden';

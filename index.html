@@ -3,1559 +3,1278 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- SEO Title & Description -->
 <title>The Beg | Read Free Graphic Novel & Webtoon Series</title>
-<meta name="description" content="Read The Beg online. A 10-season graphic novel series following Aarav and Meher in a city where attention is a trap. New episodes every Sunday!">
-<meta name="keywords" content="The Beg, webtoon, graphic novel, read webtoon online, psychological thriller comic, original webtoon" />
-
-<!-- Social Media Sharing Previews (WhatsApp / Discord / X) -->
+<meta name="description" content="Read The Beg online. A 10-season graphic novel series. New episodes every Sunday!">
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://userdivyansh12-lab.github.io/The-Beg/" />
 <meta property="og:title" content="The Beg - Official Graphic Novel & Webtoon" />
-<meta property="og:description" content="10 Seasons, 100 Episodes. Some people beg to be seen. Few dare to disappear. Read free online." />
-    
+<meta property="og:description" content="10 Seasons, 100 Episodes. Read free online." />
+
 <style>
-        :root {
-            --bg-deep: #0a0a0f;
-            --bg-card: rgba(18, 18, 26, 0.8);
-            --bg-card-hover: rgba(26, 26, 40, 0.92);
-            --gold: #d4a853;
-            --gold-light: #f0d078;
-            --accent: #c0392b;
-            --text: #e0d5c1;
-            --text-muted: #8a8070;
-            --glass-border: rgba(212, 168, 83, 0.2);
-            --card-radius: 16px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; -webkit-user-select: none; user-select: none; }
-        body {
-            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background: var(--bg-deep);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-        .hero-bg-image {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/hero-bg.jpg?raw=true') center/cover no-repeat;
-            opacity: 1.0; z-index: 0;
-            mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
-            -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%);
-        }
-        .hero-bg-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(ellipse at center, rgba(10,10,15,0.2) 0%, rgba(10,10,15,0.5) 70%, rgba(10,10,15,0.85) 100%);
-            z-index: 1; pointer-events: none;
-        }
-        #particlesCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.35; }
-        .main-container { position: relative; z-index: 2; max-width: 1300px; margin: 0 auto; padding: 20px 24px 40px; }
-        .header-area { display: flex; justify-content: space-between; align-items: flex-start; padding: 15px 0 10px; flex-wrap: wrap; gap: 15px; }
-        .nav-logo {
-            font-family: 'Georgia', serif; font-size: 2rem; font-weight: bold;
-            background: linear-gradient(135deg, #f0d078 0%, #d4a853 40%, #8b6914 100%);
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: 4px; text-transform: uppercase;
-        }
-        .golden-quote-wrapper { position: relative; display: inline-block; text-align: right; }
-        .star-top-left, .star-bottom-right {
-            position: absolute; color: #f0d078; font-size: 1.2rem;
-            animation: starPulse 2s ease-in-out infinite;
-            text-shadow: 0 0 12px rgba(240,208,120,0.9), 0 0 25px rgba(212,168,83,0.5);
-        }
-        .star-top-left { top: -16px; left: -20px; }
-        .star-bottom-right { bottom: -16px; right: -20px; animation-delay: 1s; }
-        @keyframes starPulse {
-            0%, 100% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.4); opacity: 1; }
-        }
-        .golden-quote {
-            font-family: 'Georgia', serif; font-size: 0.8rem; color: #f0d078;
-            letter-spacing: 2px; line-height: 1.6; text-shadow: 0 0 6px rgba(212,168,83,0.3);
-        }
-        .hero-section { text-align: center; padding: 25px 20px 20px; }
-        .hero-badge {
-            display: inline-block; background: rgba(212,168,83,0.1); border: 1px solid rgba(212,168,83,0.3);
-            padding: 6px 16px; border-radius: 30px; font-size: 0.75rem; letter-spacing: 2px;
-            color: var(--gold-light); margin-bottom: 15px; animation: pulseBadge 3s ease-in-out infinite;
-        }
-        @keyframes pulseBadge {
-            0%, 100% { box-shadow: 0 0 8px rgba(212,168,83,0.2); }
-            50% { box-shadow: 0 0 20px rgba(212,168,83,0.5); }
-        }
-        .hero-title {
-            font-family: 'Georgia', serif; font-size: clamp(2.5rem,6vw,4.5rem); font-weight: bold;
-            background: linear-gradient(180deg, #f5e6c8 0%, #d4a853 50%, #8b6914 100%);
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: 6px; margin-bottom: 8px;
-        }
-        .hero-subtitle { font-size: 0.9rem; color: var(--text-muted); letter-spacing: 3px; margin-bottom: 20px; }
-        .countdown-container { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .countdown-item {
-            background: var(--bg-card); backdrop-filter: blur(15px); border: 1px solid var(--glass-border);
-            border-radius: 16px; padding: 14px 18px; min-width: 70px; text-align: center;
-            box-shadow: 0 0 15px rgba(212,168,83,0.1);
-        }
-        .countdown-value { font-family: 'Georgia', serif; font-size: 2rem; font-weight: bold; color: var(--gold-light); }
-        .countdown-label { font-size: 0.6rem; letter-spacing: 2px; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; }
-        .next-episode-info { margin-top: 12px; color: var(--gold); font-size: 0.8rem; letter-spacing: 1px; }
-        .season-selector-wrapper {
-            margin: 20px 0 10px; overflow-x: auto; scrollbar-width: thin;
-            scrollbar-color: rgba(212,168,83,0.3) transparent; padding-bottom: 6px;
-        }
-        .season-selector-wrapper::-webkit-scrollbar { height: 3px; }
-        .season-selector-wrapper::-webkit-scrollbar-thumb { background: rgba(212,168,83,0.3); border-radius: 10px; }
-        .season-selector { display: flex; gap: 8px; padding: 4px 6px; min-width: max-content; }
-        .season-tab {
-            flex-shrink: 0; padding: 10px 20px; border-radius: 25px;
-            border: 1px solid rgba(255,255,255,0.12); background: var(--bg-card);
-            color: var(--text-muted); cursor: pointer; font-weight: 600; letter-spacing: 1px;
-            transition: var(--transition); font-size: 0.78rem; white-space: nowrap; backdrop-filter: blur(10px);
-        }
-        .season-tab:hover { border-color: var(--gold); color: var(--text); background: var(--bg-card-hover); }
-        .season-tab.active {
-            background: linear-gradient(135deg, rgba(212,168,83,0.2) 0%, rgba(139,105,20,0.3) 100%);
-            border-color: var(--gold); color: var(--gold-light); box-shadow: 0 0 20px rgba(212,168,83,0.2);
-        }
-        .season-tab.locked { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
-        .episodes-section { margin-top: 8px; }
-        .season-title-display {
-            font-family: 'Georgia', serif; font-size: 1.3rem; color: var(--gold-light);
-            margin-bottom: 16px; letter-spacing: 2px; text-align: center;
-        }
-        .episode-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
-        .episode-card {
-            background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
-            border-radius: var(--card-radius); padding: 16px; transition: var(--transition);
-            position: relative; backdrop-filter: blur(10px);
-        }
-        .episode-card:hover { background: var(--bg-card-hover); border-color: rgba(212,168,83,0.3); transform: translateY(-2px); }
-        .episode-card.available { border-color: rgba(46,204,113,0.4); cursor: pointer; }
-        .episode-card.available:hover { border-color: rgba(46,204,113,0.7); box-shadow: 0 0 28px rgba(46,204,113,0.15); }
-        .episode-card.next-episode { border-color: rgba(240,208,120,0.5); animation: nextPulse 2.5s ease-in-out infinite; }
-        @keyframes nextPulse {
-            0%, 100% { box-shadow: 0 0 12px rgba(240,208,120,0.08); }
-            50% { box-shadow: 0 0 35px rgba(240,208,120,0.3); }
-        }
-        .episode-number { font-family: 'Georgia', serif; font-size: 1.7rem; font-weight: bold; color: var(--gold); letter-spacing: 2px; }
-        .episode-title-area { margin-top: 2px; font-size: 0.78rem; color: var(--text-muted); letter-spacing: 1px; }
-        .episode-status {
-            display: inline-block; padding: 4px 10px; border-radius: 16px;
-            font-size: 0.65rem; letter-spacing: 1.5px; margin-top: 7px; font-weight: 600;
-        }
-        .status-available { background: rgba(46,204,113,0.12); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
-        .status-next { background: rgba(240,208,120,0.12); color: #f0d078; border: 1px solid rgba(240,208,120,0.35); }
-        .status-coming { background: rgba(138,128,112,0.1); color: #8a8070; border: 1px solid rgba(138,128,112,0.2); }
-        .episode-date { font-size: 0.68rem; color: var(--text-muted); margin-top: 5px; letter-spacing: 1px; }
-        .read-now-badge {
-            position: absolute; top: 10px; right: 10px; background: #2ecc71; color: #000;
-            padding: 3px 9px; border-radius: 12px; font-size: 0.62rem; letter-spacing: 1.5px;
-            font-weight: 700; animation: badgeGlow 2s ease-in-out infinite; pointer-events: none;
-        }
-        @keyframes badgeGlow {
-            0%, 100% { box-shadow: 0 0 5px rgba(46,204,113,0.4); }
-            50% { box-shadow: 0 0 18px rgba(46,204,113,0.8); }
-        }
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 1000; display: none;
-            align-items: center; justify-content: center; flex-direction: column;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-header {
-            display: flex; align-items: center; justify-content: space-between;
-            width: 95%; max-width: 1100px; padding: 12px 18px; background: var(--bg-card);
-            border-radius: 16px 16px 0 0; border: 1px solid rgba(255,255,255,0.08);
-        }
-        .modal-title { font-family: 'Georgia', serif; color: var(--gold-light); letter-spacing: 2px; font-size: 0.9rem; }
-        .modal-close {
-            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
-            color: #fff; width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
-            font-size: 1.1rem; transition: var(--transition); display: flex; align-items: center; justify-content: center;
-        }
-        .modal-close:hover { background: var(--accent); border-color: var(--accent); }
-        .pdf-iframe-container {
-            position: relative; width: 95%; max-width: 1100px; height: 75vh; background: #525659;
-            border-radius: 0 0 16px 16px; border: 1px solid rgba(255,255,255,0.08); border-top: none; overflow: hidden;
-        }
-        .pdf-iframe-container iframe { width: 100%; height: 100%; border: none; }
-        .iframe-protection {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; background: transparent; pointer-events: all;
-        }
-        @media (max-width:768px) {
-            .hero-title { font-size: 2rem; letter-spacing: 3px; }
-            .countdown-item { min-width: 55px; padding: 10px 12px; }
-            .countdown-value { font-size: 1.5rem; }
-            .episode-grid { grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 8px; }
-            .season-tab { padding: 8px 14px; font-size: 0.7rem; }
-            .golden-quote { font-size: 0.65rem; }
-            .pdf-iframe-container { height: 55vh; width: 98%; }
-        }
-.season-block {
-  margin-bottom: 3rem;
-  padding: 1rem;
+:root {
+    --bg-deep: #05050a;
+    --bg-card: rgba(18, 18, 30, 0.72);
+    --gold: #d4a853;
+    --gold-light: #f0d078;
+    --accent: #c0392b;
+    --text: #e0d5c1;
+    --text-muted: #8a8070;
+    --glass-border: rgba(212, 168, 83, 0.25);
+    --card-radius: 20px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    background: var(--bg-deep);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-user-select: none; user-select: none;
 }
 
-.season-header h2 {
-  color: #f39c12;
-  font-size: 1.6rem;
-  margin-bottom: 0.25rem;
+/* ============ SEASON BACKGROUND LAYERS ============ */
+.season-bg-layer {
+    position: fixed; inset: 0;
+    z-index: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: saturate(0.7) brightness(0.6);
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    will-change: opacity;
+}
+.season-bg-layer.active { opacity: 1; }
+
+#threeCanvas {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+.bg-vignette {
+    position: fixed; inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(5,5,10,0.4) 60%, rgba(5,5,10,0.92) 100%);
+}
+.cursor-glow {
+    position: fixed; width: 400px; height: 400px;
+    border-radius: 50%; pointer-events: none; z-index: 3;
+    background: radial-gradient(circle, rgba(212,168,83,0.1) 0%, transparent 65%);
+    transform: translate(-50%, -50%);
+    top: 0; left: 0;
+    will-change: transform;
 }
 
-.season-theme {
-  color: #bdc3c7;
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
+/* ============ MAIN CONTAINER ============ */
+.main-container {
+    position: relative; z-index: 5;
+    max-width: 1350px; margin: 0 auto;
+    padding: 20px 24px 60px;
 }
 
-.episodes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.25rem;
+.header-area {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 15px 0 10px; flex-wrap: wrap; gap: 15px;
+}
+.nav-logo {
+    font-family: 'Georgia', serif; font-size: 2rem; font-weight: bold;
+    background: linear-gradient(135deg, #f0d078 0%, #d4a853 40%, #8b6914 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 4px; text-transform: uppercase;
+    cursor: default;
+}
+.golden-quote-wrapper { position: relative; display: inline-block; text-align: right; }
+.star-top-left, .star-bottom-right {
+    position: absolute; color: #f0d078; font-size: 1.2rem;
+    animation: starPulse 2.4s ease-in-out infinite;
+    text-shadow: 0 0 14px rgba(240,208,120,0.9), 0 0 30px rgba(212,168,83,0.5);
+}
+.star-top-left { top: -16px; left: -22px; }
+.star-bottom-right { bottom: -16px; right: -22px; animation-delay: 1.2s; }
+@keyframes starPulse {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.75; }
+    50% { transform: scale(1.45) rotate(45deg); opacity: 1; }
+}
+.golden-quote {
+    font-family: 'Georgia', serif; font-size: 0.8rem; color: #f0d078;
+    letter-spacing: 2px; line-height: 1.6; text-shadow: 0 0 8px rgba(212,168,83,0.4);
 }
 
-.episode-card {
-  background: #1e1e24;
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+/* ============ HERO ============ */
+.hero-section { text-align: center; padding: 25px 20px 15px; }
+.hero-badge {
+    display: inline-block;
+    background: rgba(212,168,83,0.08);
+    border: 1px solid rgba(212,168,83,0.35);
+    padding: 7px 18px; border-radius: 30px;
+    font-size: 0.75rem; letter-spacing: 2.5px;
+    color: var(--gold-light); margin-bottom: 16px;
+    animation: pulseBadge 3s ease-in-out infinite;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+@keyframes pulseBadge {
+    0%, 100% { box-shadow: 0 0 10px rgba(212,168,83,0.2); }
+    50% { box-shadow: 0 0 30px rgba(212,168,83,0.6); }
+}
+.hero-title {
+    font-family: 'Georgia', serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: bold;
+    background: linear-gradient(180deg, #fff8e7 0%, #f0d078 30%, #d4a853 60%, #8b6914 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 8px; margin-bottom: 8px;
+    filter: drop-shadow(0 6px 20px rgba(212,168,83,0.4));
+}
+.hero-subtitle {
+    font-size: 0.85rem; color: var(--text-muted);
+    letter-spacing: 3px; margin-bottom: 20px;
+}
+.countdown-container { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.countdown-item {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px; padding: 13px 18px;
+    min-width: 72px; text-align: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+    transition: transform 0.4s, box-shadow 0.4s;
+}
+.countdown-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 45px rgba(212,168,83,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.countdown-value {
+    font-family: 'Georgia', serif; font-size: 1.8rem; font-weight: bold;
+    color: var(--gold-light);
+    text-shadow: 0 0 20px rgba(240,208,120,0.6);
+}
+.countdown-label {
+    font-size: 0.6rem; letter-spacing: 2px;
+    color: var(--text-muted); margin-top: 3px; text-transform: uppercase;
+}
+.next-episode-info {
+    margin-top: 14px; color: var(--gold);
+    font-size: 0.8rem; letter-spacing: 1px;
 }
 
-.tag {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  background: #2c3e50;
-  color: #ecf0f1;
-  margin-bottom: 0.75rem;
-  width: fit-content;
+/* ============ SEASON SELECTOR ============ */
+.season-selector-wrapper {
+    margin: 20px 0 5px;
+    overflow-x: auto; scrollbar-width: thin;
+    scrollbar-color: rgba(212,168,83,0.3) transparent;
+    padding: 10px 6px;
+}
+.season-selector-wrapper::-webkit-scrollbar { height: 4px; }
+.season-selector-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, transparent, rgba(212,168,83,0.5), transparent);
+    border-radius: 10px;
+}
+.season-selector { display: flex; gap: 10px; padding: 4px 6px; min-width: max-content; }
+.season-tab {
+    flex-shrink: 0; padding: 11px 22px; border-radius: 28px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    color: var(--text-muted); cursor: pointer;
+    font-weight: 600; letter-spacing: 1.2px;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    font-size: 0.78rem; white-space: nowrap;
+    position: relative; overflow: hidden;
+}
+.season-tab::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+}
+.season-tab:hover::before { transform: translateX(100%); }
+.season-tab:hover {
+    border-color: var(--gold); color: var(--text);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(212,168,83,0.25);
+}
+.season-tab.active {
+    background: linear-gradient(135deg, rgba(212,168,83,0.25) 0%, rgba(139,105,20,0.4) 100%);
+    border-color: var(--gold); color: var(--gold-light);
+    box-shadow: 0 0 25px rgba(212,168,83,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+.season-tab.locked {
+    opacity: 0.3; cursor: not-allowed;
+    pointer-events: none; filter: grayscale(1);
 }
 
-.episode-card h3 {
-  font-size: 1.1rem;
-  color: #fff;
-  margin-bottom: 0.5rem;
+.season-title-display {
+    font-family: 'Georgia', serif; font-size: 1.3rem;
+    color: var(--gold-light); margin: 15px 0 0;
+    letter-spacing: 3px; text-align: center;
+    text-shadow: 0 0 25px rgba(240,208,120,0.4);
 }
 
-.episode-desc {
-  font-size: 0.88rem;
-  color: #b3b3b3;
-  line-height: 1.45;
-  margin-bottom: 1rem;
+/* ============ 3D CAROUSEL ============ */
+.carousel-section {
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+    padding-bottom: 30px;
+}
+.carousel-stage {
+    position: relative;
+    width: 100%;
+    height: 540px;
+    perspective: 1600px;
+    perspective-origin: 50% 45%;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+}
+.carousel-stage.grabbing { cursor: grabbing; }
+.carousel-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 700px; height: 700px;
+    transform: translate(-50%, -40%);
+    background: radial-gradient(circle, rgba(212,168,83,0.16) 0%, transparent 60%);
+    pointer-events: none;
+    animation: glowPulse 5s ease-in-out infinite;
+}
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -40%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -40%) scale(1.15); }
+}
+.carousel-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+}
+.carousel-ring.dragging {
+    transition: none !important;
+}
+.carousel-ring.dragging .carousel-card {
+    transition: none !important;
 }
 
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid #2a2a32;
-  padding-top: 0.75rem;
+.carousel-card {
+    position: absolute;
+    left: 0; top: 0;
+    width: var(--card-w, 260px);
+    height: var(--card-h, 380px);
+    margin-left: calc(var(--card-w, 260px) / -2);
+    margin-top: calc(var(--card-h, 380px) / -2);
+    transform-style: preserve-3d;
+    transition: opacity 0.4s ease;
+    cursor: pointer;
+    will-change: transform, opacity;
+}
+.card-inner {
+    position: absolute; inset: 0;
+    transform-style: preserve-3d;
+    transition: transform 0.75s cubic-bezier(0.4, 0.0, 0.2, 1);
+    will-change: transform;
+}
+.card-inner.flipped { transform: rotateY(180deg); }
+
+.card-front, .card-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border-radius: var(--card-radius);
+    padding: 22px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    background: var(--bg-card);
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.6),
+        0 0 30px rgba(212,168,83,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    overflow: hidden;
+}
+.card-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(155deg, rgba(35,28,55,0.95) 0%, rgba(18,18,30,0.96) 100%);
+    border: 1px solid rgba(212,168,83,0.4);
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.7),
+        0 0 40px rgba(212,168,83,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.12);
 }
 
-.ep-meta {
-  font-size: 0.8rem;
-  color: #7f8c8d;
+.ep-front-status {
+    position: absolute; top: 15px; right: 15px;
+    padding: 4px 11px; border-radius: 14px;
+    font-size: 0.6rem; letter-spacing: 1.5px; font-weight: 700;
+    text-transform: uppercase;
+}
+.status-available { background: rgba(46,204,113,0.15); color: #4ade80; border: 1px solid rgba(46,204,113,0.45); }
+.status-next { background: rgba(240,208,120,0.15); color: #f0d078; border: 1px solid rgba(240,208,120,0.5); animation: nextGlow 2.5s ease-in-out infinite; }
+.status-coming { background: rgba(138,128,112,0.12); color: #8a8070; border: 1px solid rgba(138,128,112,0.28); }
+@keyframes nextGlow {
+    0%, 100% { box-shadow: 0 0 10px rgba(240,208,120,0.25); }
+    50% { box-shadow: 0 0 28px rgba(240,208,120,0.7); }
 }
 
-.read-btn {
-  background: #27ae60;
-  color: #fff;
-  padding: 0.35rem 0.85rem;
-  border-radius: 4px;
-  text-decoration: none;
-  font-size: 0.8rem;
-  font-weight: bold;
+.ep-num-big {
+    font-family: 'Georgia', serif;
+    font-size: 4rem; font-weight: bold;
+    background: linear-gradient(135deg, #f0d078, #d4a853, #8b6914);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 4px; line-height: 1;
+    filter: drop-shadow(0 6px 16px rgba(212,168,83,0.5));
+}
+.ep-label {
+    font-size: 0.68rem; color: var(--text-muted);
+    letter-spacing: 2.5px; text-transform: uppercase;
+    margin-top: 10px;
+}
+.ep-lock-icon {
+    font-size: 3.5rem;
+    opacity: 0.4;
+    text-align: center;
+    margin: auto 0;
+    filter: drop-shadow(0 6px 16px rgba(138,128,112,0.6));
+}
+.ep-date-line {
+    font-size: 0.7rem; color: var(--text-muted);
+    letter-spacing: 1px; margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+}
+.ep-back-tag {
+    display: inline-block;
+    font-size: 0.62rem; letter-spacing: 1.3px;
+    padding: 4px 10px; border-radius: 10px;
+    background: rgba(212,168,83,0.15);
+    color: var(--gold-light);
+    border: 1px solid rgba(212,168,83,0.35);
+    margin-bottom: 10px;
+    width: fit-content;
+}
+.ep-back-title {
+    font-family: 'Georgia', serif;
+    font-size: 1rem; color: var(--gold-light);
+    letter-spacing: 1px; margin-bottom: 10px;
+    text-shadow: 0 0 15px rgba(240,208,120,0.5);
+}
+.ep-back-desc {
+    font-size: 0.78rem; color: #b8b0a0;
+    line-height: 1.55; flex: 1;
+    overflow-y: auto;
+    padding-right: 6px;
+    margin-bottom: 10px;
+}
+.ep-back-desc::-webkit-scrollbar { width: 3px; }
+.ep-back-desc::-webkit-scrollbar-thumb { background: rgba(212,168,83,0.5); border-radius: 3px; }
+.btn-read-3d {
+    display: block;
+    padding: 11px 22px; border-radius: 12px;
+    background: linear-gradient(135deg, #f0d078, #d4a853);
+    color: #1a1a1a; font-weight: 800;
+    font-size: 0.75rem; letter-spacing: 2.5px;
+    text-decoration: none; text-align: center;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 8px 22px rgba(212,168,83,0.5), inset 0 1px 0 rgba(255,255,255,0.6);
+    border: none; cursor: pointer;
+    width: 100%;
+}
+.btn-read-3d:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 14px 35px rgba(212,168,83,0.8), inset 0 1px 0 rgba(255,255,255,0.7);
+}
+.ep-back-hint {
+    font-size: 0.65rem; color: rgba(212,168,83,0.65);
+    letter-spacing: 1.5px; text-align: center;
+    margin-top: 8px;
+}
+
+.carousel-hint {
+    text-align: center;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    margin-top: 5px;
+    opacity: 0.65;
+}
+
+/* ============ MODAL ============ */
+.modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.94);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    z-index: 1000; display: none;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+    perspective: 1500px;
+}
+.modal-overlay.active { display: flex; }
+.modal-overlay.active .modal-header,
+.modal-overlay.active .pdf-iframe-container {
+    animation: modalEnter 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+@keyframes modalEnter {
+    from { opacity: 0; transform: translateZ(-400px) rotateX(25deg) scale(0.85); }
+    to { opacity: 1; transform: translateZ(0) rotateX(0) scale(1); }
+}
+.modal-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    width: 95%; max-width: 1150px;
+    padding: 14px 22px;
+    background: linear-gradient(135deg, rgba(30,25,50,0.95), rgba(18,18,30,0.95));
+    border-radius: 18px 18px 0 0;
+    border: 1px solid rgba(212,168,83,0.3);
+    border-bottom: none;
+    gap: 15px;
+}
+.modal-title {
+    font-family: 'Georgia', serif; color: var(--gold-light);
+    letter-spacing: 2px; font-size: 1rem;
+    display: block;
+}
+.modal-desc {
+    font-size: 0.78rem; color: #b8b0a0;
+    margin-top: 6px; max-width: 800px;
+    line-height: 1.5;
+}
+.modal-close {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff; width: 38px; height: 38px;
+    border-radius: 50%; cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.35s;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.modal-close:hover {
+    background: var(--accent); border-color: var(--accent);
+    transform: rotate(90deg) scale(1.1);
+}
+.pdf-iframe-container {
+    position: relative; width: 95%; max-width: 1150px;
+    height: 75vh; background: #525659;
+    border-radius: 0 0 18px 18px;
+    border: 1px solid rgba(212,168,83,0.3);
+    border-top: none;
+    overflow: hidden;
+}
+.pdf-iframe-container iframe { width: 100%; height: 100%; border: none; }
+.iframe-protection {
+    position: absolute; inset: 0;
+    z-index: 10; background: transparent; pointer-events: all;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+    .hero-title { font-size: 2rem; letter-spacing: 4px; }
+    .countdown-item { min-width: 58px; padding: 10px 12px; }
+    .countdown-value { font-size: 1.4rem; }
+    .season-tab { padding: 8px 15px; font-size: 0.7rem; }
+    .golden-quote { font-size: 0.62rem; }
+    .pdf-iframe-container { height: 60vh; width: 98%; }
+    .modal-desc { display: none; }
+    .nav-logo { font-size: 1.5rem; }
+    .carousel-stage { height: 420px; }
 }
 </style>
 </head>
 <body>
-    <div class="hero-bg-image"></div>
-    <div class="hero-bg-overlay"></div>
-    <canvas id="particlesCanvas"></canvas>
 
-    <div class="main-container">
-        <div class="header-area">
-            <span class="nav-logo">The Beg</span>
-            <div class="golden-quote-wrapper">
-                <span class="star-top-left">✦</span>
-                <span class="star-bottom-right">✦</span>
-                <div class="golden-quote">SOME PEOPLE BEG TO BE SEEN.<br>FEW DARE TO DISAPPEAR.</div>
-            </div>
+<div class="season-bg-layer" id="seasonBgA"></div>
+<div class="season-bg-layer" id="seasonBgB"></div>
+
+<canvas id="threeCanvas"></canvas>
+<div class="bg-vignette"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<div class="main-container">
+    <div class="header-area">
+        <span class="nav-logo">The Beg</span>
+        <div class="golden-quote-wrapper">
+            <span class="star-top-left">✦</span>
+            <span class="star-bottom-right">✦</span>
+            <div class="golden-quote">SOME PEOPLE BEG TO BE SEEN.<br>FEW DARE TO DISAPPEAR.</div>
         </div>
+    </div>
 
-        <section class="hero-section">
-            <div class="hero-badge">🎬 GRAPHIC NOVEL SERIES</div>
-            <h1 class="hero-title">THE BEG</h1>
-            <p class="hero-subtitle">10 Seasons · 100 Episodes · New Episode Every Sunday</p>
-            <div class="countdown-container" id="countdownContainer">
-                <div class="countdown-item"><div class="countdown-value" id="countDays">--</div><div class="countdown-label">Days</div></div>
-                <div class="countdown-item"><div class="countdown-value" id="countHours">--</div><div class="countdown-label">Hours</div></div>
-                <div class="countdown-item"><div class="countdown-value" id="countMins">--</div><div class="countdown-label">Minutes</div></div>
-                <div class="countdown-item"><div class="countdown-value" id="countSecs">--</div><div class="countdown-label">Seconds</div></div>
-            </div>
-            <p class="next-episode-info" id="nextEpisodeInfo">Loading schedule...</p>
-        </section>
-
-        <div class="season-selector-wrapper">
-            <div class="season-selector" id="seasonSelector"></div>
+    <section class="hero-section">
+        <div class="hero-badge">🎬 GRAPHIC NOVEL SERIES</div>
+        <h1 class="hero-title">THE BEG</h1>
+        <p class="hero-subtitle">10 Seasons · 100 Episodes · New Episode Every Sunday</p>
+        <div class="countdown-container">
+            <div class="countdown-item"><div class="countdown-value" id="countDays">--</div><div class="countdown-label">Days</div></div>
+            <div class="countdown-item"><div class="countdown-value" id="countHours">--</div><div class="countdown-label">Hours</div></div>
+            <div class="countdown-item"><div class="countdown-value" id="countMins">--</div><div class="countdown-label">Minutes</div></div>
+            <div class="countdown-item"><div class="countdown-value" id="countSecs">--</div><div class="countdown-label">Seconds</div></div>
         </div>
-        <!-- ========================================================= -->
-<!-- THE BEG - COMPLETE GRAPHIC NOVEL EPISODE GRID (SEASONS 1-10) -->
-<!-- ========================================================= -->
+        <p class="next-episode-info" id="nextEpisodeInfo">Loading schedule...</p>
+    </section>
 
-<div class="seasons-container">
-
-  <!-- SEASON 1: THE CITY OF MIRRORS -->
-  <section id="season-1" class="season-block">
-    <div class="season-header">
-      <h2>Season 1: The City of Mirrors</h2>
-      <p class="season-theme"><strong>Theme:</strong> Validation | <em>"Who are you when nobody is watching?"</em></p>
+    <div class="season-selector-wrapper">
+        <div class="season-selector" id="seasonSelector"></div>
     </div>
-    <div class="episodes-grid">
 
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 01: The Invisible One</h3>
-        <p class="episode-desc">
-          Read Episode 1 of <em>The Beg</em> webtoon online free[span_2](start_span)[span_2](end_span). Introduced as quiet and mid-ranked, Aarav measures his self-worth against everyone else's highlight reels in a city obsessed with visibility[span_3](start_span)[span_3](end_span).
-        </p>
-        <div class="card-footer">
-          <span class="ep-meta">Season 1, Ep 1</span>
-          <a href="#" class="read-btn" aria-label="Read Episode 1 of The Beg Webtoon">READ</a>
+    <div class="season-title-display" id="seasonTitleDisplay">Season 1</div>
+
+    <div class="carousel-section">
+        <div class="carousel-stage" id="carouselStage">
+            <div class="carousel-glow"></div>
+            <div class="carousel-ring" id="carouselRing"></div>
         </div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 02: Scroll Therapy</h3>
-        <p class="episode-desc">
-          Read Episode 2 of <em>The Beg</em>[span_4](start_span)[span_4](end_span). At 2 AM, Meher performs a happy life online while feeling hollow inside, widening the gap between her curated feed and actual feelings[span_5](start_span)[span_5](end_span).
-        </p>
-        <div class="card-footer">
-          <span class="ep-meta">Season 1, Ep 2</span>
-          <a href="#" class="read-btn" aria-label="Read Episode 2 of The Beg Webtoon">READ</a>
-        </div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-validation">Validation via Likes</span>
-        <h3>Ep. 03: Ten Thousand Eyes</h3>
-        <p class="episode-desc">
-          Read Episode 3 of <em>The Beg</em>[span_6](start_span)[span_6](end_span). The anonymous account @THEBEG posts its first brutally honest message, driving the entire campus into a spiral of obsession and paranoia[span_7](start_span)[span_7](end_span).
-        </p>
-        <div class="card-footer">
-          <span class="ep-meta">Season 1, Ep 3</span>
-          <a href="#" class="read-btn" aria-label="Read Episode 3 of The Beg Webtoon">READ</a>
-        </div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-dopamine">Dopamine / Phone Addiction</span>
-        <h3>Ep. 04: The Like Economy</h3>
-        <p class="episode-desc">
-          Read Episode 4 of <em>The Beg</em>[span_8](start_span)[span_8](end_span). Aarav's throwaway post goes mini-viral, trapping him in a loop as he endlessly chases the chemical rush of digital notifications[span_9](start_span)[span_9](end_span).
-        </p>
-        <div class="card-footer">
-          <span class="ep-meta">Season 1, Ep 4</span>
-          <a href="#" class="read-btn" aria-label="Read Episode 4 of The Beg Webtoon">READ</a>
-        </div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 05: Mirror Selfie</h3>
-        <p class="episode-desc">
-          Read Episode 5 of <em>The Beg</em>[span_10](start_span)[span_10](end_span). Comparing her rising follower count against her lonely mornings, Meher realizes her curated online persona is the only self she trusts[span_11](start_span)[span_11](end_span).
-        </p>
-        <div class="card-footer">
-          <span class="ep-meta">Season 1, Ep 5</span>
-          <a href="#" class="read-btn" aria-label="Read Episode 5 of The Beg Webtoon">READ</a>
-        </div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-validation">Validation via Likes</span>
-        <h3>Ep. 06: Everyone's Watching</h3>
-        <p class="episode-desc">
-          Read Episode 6 of <em>The Beg</em>[span_12](start_span)[span_12](end_span). THE BEG account publishes secrets no stranger should know, hooking the public into decoding who is targeted next[span_13](start_span)[span_13](end_span).
-        </p>
-        <div class="card-footer">
-          <span class="ep-meta">Season 1, Ep 6</span>
-          <a href="#" class="read-btn" aria-label="Read Episode 6 of The Beg Webtoon">READ</a>
-        </div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 07: Compare and Despair</h3>
-        <p class="episode-desc">
-          Read Episode 7 of <em>The Beg</em>[span_14](start_span)[span_14](end_span). A peer's high-profile job offer lands, causing Aarav's stomach to drop as toxic comparison culture sharpens on campus[span_15](start_span)[span_15](end_span).
-        </p>
-        <div class="card-footer">
-          <span class="ep-meta">Season 1, Ep 7</span>
-          <a href="#" class="read-btn" aria-label="Read Episode 7 of The Beg Webtoon">READ</a>
-        </div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-dopamine">Dopamine / Phone Addiction</span>
-        <h3>Ep. 08: The Red Dot</h3>
-        <p class="episode-desc">
-          Read Episode 8 of <em>The Beg</em>[span_16](start_span)[span_16](end_span). Neither Aarav nor Meher can put their phones down; notification compulsion is framed as physical hunger rather than a habit[span_17](start_span)[span_17](end_span).
-        </p>
-        <div class="card-footer">
-          <span class="ep-meta">Season 1, Ep 8</span>
-          <a href="#" class="read-btn" aria-label="Read Episode 8 of The Beg Webtoon">READ</a>
-        </div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 09: Who Posted It?</h3>
-        <p class="episode-desc">
-          Read Episode 9 of <em>The Beg</em>[span_18](start_span)[span_18](end_span). The campus witch hunt for THE BEG's creator begins, mirroring society's urge to find external blame for collective anxiety[span_19](start_span)[span_19](end_span).
-        </p>
-        <div class="card-footer">
-          <span class="ep-meta">Season 1, Ep 9</span>
-          <a href="#" class="read-btn" aria-label="Read Episode 9 of The Beg Webtoon">READ</a>
-        </div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-validation">Validation via Likes</span>
-        <h3>Ep. 10: Why, Not Who</h3>
-        <p class="episode-desc">
-          Read Episode 10 (Season 1 Finale) of <em>The Beg</em>[span_20](start_span)[span_20](end_span). Aarav and Meher stop asking who created THE BEG and start confronting why its messages resonate so deeply[span_21](start_span)[span_21](end_span).
-        </p>
-        <div class="card-footer">
-          <span class="ep-meta">Season 1, Ep 10</span>
-          <a href="#" class="read-btn" aria-label="Read Episode 10 of The Beg Webtoon">READ</a>
-        </div>
-      </article>
-
+        <p class="carousel-hint">↔ DRAG TO ROTATE · TAP A SIDE CARD TO BRING IT FORWARD · TAP FRONT CARD TO FLIP</p>
     </div>
-  </section>
-
-  <!-- SEASON 2: THE GARDEN OF WANTING -->
-  <section id="season-2" class="season-block">
-    <div class="season-header">
-      <h2>Season 2: The Garden of Wanting</h2>
-      <p class="season-theme"><strong>Theme:</strong> Love, Attraction & Desire | <em>"Do you want love or proof you're lovable?"</em></p>
-    </div>
-    <div class="episodes-grid">
-
-      <article class="episode-card">
-        <span class="tag tag-validation">Validation via Likes</span>
-        <h3>Ep. 01: The Perfect Match</h3>
-        <p class="episode-desc">
-          Read Season 2 Ep 1 of <em>The Beg</em> comic[span_22](start_span)[span_22](end_span). Dating apps reduce intimacy to quick swipes; getting a match feels more like a validation score than connection[span_23](start_span)[span_23](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 2, Ep 1</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-ai">AI Companions</span>
-        <h3>Ep. 02: Bae.exe</h3>
-        <p class="episode-desc">
-          Read Season 2 Ep 2 of <em>The Beg</em>[span_24](start_span)[span_24](end_span). Seeking comfort, Meher downloads an AI partner app that delivers perfect, scripted affirmations on demand[span_25](start_span)[span_25](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 2, Ep 2</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 03: Ghosted</h3>
-        <p class="episode-desc">
-          Read Season 2 Ep 3 of <em>The Beg</em>[span_26](start_span)[span_26](end_span). A friend is abruptly abandoned mid-conversation by a date, highlighting digital rejection without emotional closure[span_27](start_span)[span_27](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 2, Ep 3</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 04: Proof of Love</h3>
-        <p class="episode-desc">
-          Read Season 2 Ep 4 of <em>The Beg</em>[span_28](start_span)[span_28](end_span). Aarav confuses being desired with being loved, realizing he craves constant digital evidence that he is worthy of affection[span_29](start_span)[span_29](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 2, Ep 4</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 05: The Replacement</h3>
-        <p class="episode-desc">
-          Read Season 2 Ep 5 of <em>The Beg</em>[span_30](start_span)[span_30](end_span). Meher's deepest insecurity surfaces: the constant fear of being replaced online by someone prettier, younger, or louder[span_31](start_span)[span_31](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 2, Ep 5</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-ai">AI Companions</span>
-        <h3>Ep. 06: Synthetic Warmth</h3>
-        <p class="episode-desc">
-          Read Season 2 Ep 6 of <em>The Beg</em>[span_32](start_span)[span_32](end_span). The AI bot becomes Meher's daily ritual, leading her to feel that real human interactions feel flawed and 'laggy[span_33](start_span)'[span_33](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 2, Ep 6</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-ai">AI Companions</span>
-        <h3>Ep. 07: Real vs Rendered</h3>
-        <p class="episode-desc">
-          Read Season 2 Ep 7 of <em>The Beg</em>[span_34](start_span)[span_34](end_span). Aarav meets someone genuine face-to-face, yet struggles because real humans lack the polished perfection of AI avatars[span_35](start_span)[span_35](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 2, Ep 7</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 08: Jealousy, Filtered</h3>
-        <p class="episode-desc">
-          Read Season 2 Ep 8 of <em>The Beg</em>[span_36](start_span)[span_36](end_span). Aarav and Meher compare their messy connection against flawless, staged power couples performing on social feeds[span_37](start_span)[span_37](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 2, Ep 8</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 09: The Unfollow</h3>
-        <p class="episode-desc">
-          Read Season 2 Ep 9 of <em>The Beg</em>[span_38](start_span)[span_38](end_span). A romantic breakup is staged publicly for sympathy views, commodifying heartbreak for engagement and clout[span_39](start_span)[span_39](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 2, Ep 9</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 10: Almost Together</h3>
-        <p class="episode-desc">
-          Read Season 2 Ep 10 (Finale) of <em>The Beg</em>[span_40](start_span)[span_40](end_span). Aarav and Meher grow closer but refuse to label their relationship online, rejecting validation-seeking romance[span_41](start_span)[span_41](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 2, Ep 10</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- SEASON 3: THE CLIMBING TOWER -->
-  <section id="season-3" class="season-block">
-    <div class="season-header">
-      <h2>Season 3: The Climbing Tower</h2>
-      <p class="season-theme"><strong>Theme:</strong> Status, Success & Competition | <em>"How high are you willing to climb to be noticed?"</em></p>
-    </div>
-    <div class="episodes-grid">
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 01: The Ladder</h3>
-        <p class="episode-desc">
-          Read Season 3 Ep 1 of <em>The Beg</em> graphic novel[span_42](start_span)[span_42](end_span). Startup culture and internship season transform campus life into a cutthroat corporate leaderboard[span_43](start_span)[span_43](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 3, Ep 1</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-validation">Validation via Likes</span>
-        <h3>Ep. 02: LinkedIn Lunatic</h3>
-        <p class="episode-desc">
-          Read Season 3 Ep 2 of <em>The Beg</em>[span_44](start_span)[span_44](end_span). Aarav broadcasts every minor career win for professional clout, tying his self-worth directly to career engagement[span_45](start_span)[span_45](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 3, Ep 2</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-burnout">Burnout / The Grind</span>
-        <h3>Ep. 03: The All-Nighter</h3>
-        <p class="episode-desc">
-          Read Season 3 Ep 3 of <em>The Beg</em>[span_46](start_span)[span_46](end_span). Toxic grind culture takes over, causing Aarav to experience the initial physical and mental warning signs of total burnout[span_47](start_span)[span_47](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 3, Ep 3</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 04: Placement Day</h3>
-        <p class="episode-desc">
-          Read Season 3 Ep 4 of <em>The Beg</em>[span_48](start_span)[span_48](end_span). A fellow classmate lands a dream job offer, making Aarav's personal accomplishments instantly feel insignificant[span_49](start_span)[span_49](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 3, Ep 4</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-dopamine">Dopamine / Phone Addiction</span>
-        <h3>Ep. 05: Hustle Porn</h3>
-        <p class="episode-desc">
-          Read Season 3 Ep 5 of <em>The Beg</em>[span_50](start_span)[span_50](end_span). Constant exposure to hyper-motivational hustle content drains Aarav's focus, turning ambition into chronic exhaustion[span_51](start_span)[span_51](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 3, Ep 5</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-burnout">Burnout / The Grind</span>
-        <h3>Ep. 06: The Higher, The Lonelier</h3>
-        <p class="episode-desc">
-          Read Season 3 Ep 6 of <em>The Beg</em>[span_52](start_span)[span_52](end_span). As Aarav's career metrics climb, he quietly isolates himself from old friends who remembered who he was before[span_53](start_span)[span_53](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 3, Ep 6</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-burnout">Burnout / The Grind</span>
-        <h3>Ep. 07: Quiet Quit</h3>
-        <p class="episode-desc">
-          Read Season 3 Ep 7 of <em>The Beg</em>[span_54](start_span)[span_54](end_span). Exhausted by hustle culture, a friend mentally checks out while continuing to perform fake productivity online[span_55](start_span)[span_55](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 3, Ep 7</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-validation">Validation via Likes</span>
-        <h3>Ep. 08: Side Project</h3>
-        <p class="episode-desc">
-          Read Season 3 Ep 8 of <em>The Beg</em>[span_56](start_span)[span_56](end_span). Builder culture exposed: Aarav launches a product not to solve a problem, but to gain launch-day upvotes and praise[span_57](start_span)[span_57](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 3, Ep 8</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 09: The Comparison Spiral</h3>
-        <p class="episode-desc">
-          Read Season 3 Ep 9 of <em>The Beg</em>[span_58](start_span)[span_58](end_span). News of a peer's venture capital funding round triggers a three-day downward emotional spiral for Aarav[span_59](start_span)[span_59](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 3, Ep 9</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-burnout">Burnout / The Grind</span>
-        <h3>Ep. 10: Losing Himself</h3>
-        <p class="episode-desc">
-          Read Season 3 Ep 10 (Finale) of <em>The Beg</em>[span_60](start_span)[span_60](end_span). At the top of the leaderboard, Aarav admits he is merely curating the image of success rather than living it[span_61](start_span)[span_61](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 3, Ep 10</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- SEASON 4: THE FOG BELOW -->
-  <section id="season-4" class="season-block">
-    <div class="season-header">
-      <h2>Season 4: The Fog Below</h2>
-      <p class="season-theme"><strong>Theme:</strong> Fear, Anxiety & Failure | <em>"Who are you after your biggest loss?"</em></p>
-    </div>
-    <div class="episodes-grid">
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 01: The Smile Mask</h3>
-        <p class="episode-desc">
-          Read Season 4 Ep 1 of <em>The Beg</em> webtoon[span_62](start_span)[span_62](end_span). Everyone on campus insists they are doing great, rendering emotional honesty taboo as fake calm becomes mandatory[span_63](start_span)[span_63](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 4, Ep 1</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 02: 3am Thoughts</h3>
-        <p class="episode-desc">
-          Read Season 4 Ep 2 of <em>The Beg</em>[span_64](start_span)[span_64](end_span). Late-night anxiety spirals reveal the true scale of youth isolation in an hyper-connected world[span_65](start_span)[span_65](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 4, Ep 2</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-burnout">Burnout / The Grind</span>
-        <h3>Ep. 03: The Collapse</h3>
-        <p class="episode-desc">
-          Read Season 4 Ep 3 of <em>The Beg</em>[span_66](start_span)[span_66](end_span). A major project that Aarav staked his reputation on fails publicly, causing his identity to crumble[span_67](start_span)[span_67](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 4, Ep 3</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 04: Unspoken</h3>
-        <p class="episode-desc">
-          Read Season 4 Ep 4 of <em>The Beg</em>[span_68](start_span)[span_68](end_span). The entire friend group is drowning in unspoken pressure, yet no one dares break the silence to ask for help[span_69](start_span)[span_69](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 4, Ep 4</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-layoffs">Layoffs & Job Insecurity</span>
-        <h3>Ep. 05: The News</h3>
-        <p class="episode-desc">
-          Read Season 4 Ep 5 of <em>The Beg</em>[span_70](start_span)[span_70](end_span). Layoff rumors at a relative's tech corporate job plant financial insecurity and dread early in Aarav's mindset[span_71](start_span)[span_71](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 4, Ep 5</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 06: Performance of Calm</h3>
-        <p class="episode-desc">
-          Read Season 4 Ep 6 of <em>The Beg</em>[span_72](start_span)[span_72](end_span). Meher posts polished, tranquil aesthetic content while experiencing internal panic, tightening her psychological mask[span_73](start_span)[span_73](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 4, Ep 6</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 07: The Fog</h3>
-        <p class="episode-desc">
-          Read Season 4 Ep 7 of <em>The Beg</em>[span_74](start_span)[span_74](end_span). A heavy depressive episode sets in; even endless phone scrolling fails to numb the underlying emptiness[span_75](start_span)[span_75](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 4, Ep 7</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 08: Comparison in Crisis</h3>
-        <p class="episode-desc">
-          Read Season 4 Ep 8 of <em>The Beg</em>[span_76](start_span)[span_76](end_span). Even at his lowest emotional point, Aarav compulsively measures his pain against others pretending to thrive online[span_77](start_span)[span_77](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 4, Ep 8</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 09: The Reach</h3>
-        <p class="episode-desc">
-          Read Season 4 Ep 9 of <em>The Beg</em>[span_78](start_span)[span_78](end_span). Aarav calls Meher late at night, creating the first genuine, unperformed moment of emotional vulnerability between them[span_79](start_span)[span_79](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 4, Ep 9</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-layoffs">Layoffs & Job Insecurity</span>
-        <h3>Ep. 10: After the Loss</h3>
-        <p class="episode-desc">
-          Read Season 4 Ep 10 (Finale) of <em>The Beg</em>[span_80](start_span)[span_80](end_span). Stripped of past achievements, Aarav confronts the core question: who are you when status disappears?[span_81](start_span)[span_81](end_span)
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 4, Ep 10</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- SEASON 5: THE HALL OF MASKS -->
-  <section id="season-5" class="season-block">
-    <div class="season-header">
-      <h2>Season 5: The Hall of Masks</h2>
-      <p class="season-theme"><strong>Theme:</strong> Identity | <em>"Which version of yourself is real?"</em></p>
-    </div>
-    <div class="episodes-grid">
-
-      <article class="episode-card">
-        <span class="tag tag-ai">AI Companions</span>
-        <h3>Ep. 01: The Filter Self</h3>
-        <p class="episode-desc">
-          Read Season 5 Ep 1 of <em>The Beg</em>[span_82](start_span)[span_82](end_span). Meher creates an AI-enhanced avatar—flawless, witty, and effortless—that gradually eclipses her real personality[span_83](start_span)[span_83](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 5, Ep 1</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 02: Boss Mode</h3>
-        <p class="episode-desc">
-          Read Season 5 Ep 2 of <em>The Beg</em>[span_84](start_span)[span_84](end_span). Entering a corporate role, Aarav adopts a dominant "Boss" persona, fragmenting his personality into multiple digital masks[span_85](start_span)[span_85](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 5, Ep 2</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 03: The Real Me, Buffered</h3>
-        <p class="episode-desc">
-          Read Season 5 Ep 3 of <em>The Beg</em>[span_86](start_span)[span_86](end_span). Inability to communicate raw emotion forces both characters to pre-edit every thought before speaking aloud[span_87](start_span)[span_87](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 5, Ep 3</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-layoffs">Layoffs & Job Insecurity</span>
-        <h3>Ep. 04: The Pink Slip</h3>
-        <p class="episode-desc">
-          Read Season 5 Ep 4 of <em>The Beg</em>[span_88](start_span)[span_88](end_span). A peer is terminated overnight via automated email; his professional mask shatters before the entire company[span_89](start_span)[span_89](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 5, Ep 4</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 05: Performative Healing</h3>
-        <p class="episode-desc">
-          Read Season 5 Ep 5 of <em>The Beg</em>[span_90](start_span)[span_90](end_span). Personal trauma is turned into public content; vulnerability becomes just another brand strategy to drive engagement[span_91](start_span)[span_91](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 5, Ep 5</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 06: Which Version Is Real?</h3>
-        <p class="episode-desc">
-          Read Season 5 Ep 6 of <em>The Beg</em>[span_92](start_span)[span_92](end_span). The boundary between online personas and reality blurs until neither Aarav nor Meher remembers who they originally were[span_93](start_span)[span_93](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 5, Ep 6</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-ai">AI Companions</span>
-        <h3>Ep. 07: The AI Twin</h3>
-        <p class="episode-desc">
-          Read Season 5 Ep 7 of <em>The Beg</em>[span_94](start_span)[span_94](end_span). Meher's AI chatbot companion knows her preferences better than her real friends do—eerie, convenient, yet completely hollow[span_95](start_span)[span_95](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 5, Ep 7</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-layoffs">Layoffs & Job Insecurity</span>
-        <h3>Ep. 08: LinkedOut</h3>
-        <p class="episode-desc">
-          Read Season 5 Ep 8 of <em>The Beg</em>[span_96](start_span)[span_96](end_span). Following a corporate layoff, a former high-performer suffers an identity crisis after realizing he was only defined by his job title[span_97](start_span)[span_97](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 5, Ep 8</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 09: The Mirror Cracks</h3>
-        <p class="episode-desc">
-          Read Season 5 Ep 9 of <em>The Beg</em>[span_98](start_span)[span_98](end_span). A sudden glitch in their digital image forces Aarav and Meher to confront how fake their online lives have become[span_99](start_span)[span_99](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 5, Ep 9</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 10: Unmasked, Briefly</h3>
-        <p class="episode-desc">
-          Read Season 5 Ep 10 (Finale) of <em>The Beg</em>[span_100](start_span)[span_100](end_span). One completely honest moment occurs without cameras or audience—the rare turning point of the series[span_101](start_span)[span_101](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 5, Ep 10</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- SEASON 6: THE BRIDGE OF TWO -->
-  <section id="season-6" class="season-block">
-    <div class="season-header">
-      <h2>Season 6: The Bridge of Two</h2>
-      <p class="season-theme"><strong>Theme:</strong> Real Connection | <em>"Can someone love you if they've never met the real you?"</em></p>
-    </div>
-    <div class="episodes-grid">
-
-      <article class="episode-card">
-        <span class="tag tag-dopamine">Dopamine Detox</span>
-        <h3>Ep. 01: Offline</h3>
-        <p class="episode-desc">
-          Read Season 6 Ep 1 of <em>The Beg</em> graphic novel[span_102](start_span)[span_102](end_span). Aarav and Meher meet in person with smartphones put away; initial awkwardness gives way to genuine freedom[span_103](start_span)[span_103](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 6, Ep 1</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 02: The First Real Word</h3>
-        <p class="episode-desc">
-          Read Season 6 Ep 2 of <em>The Beg</em>[span_104](start_span)[span_104](end_span). Speaking unscripted thoughts face-to-face unlocks authentic human connection for the first time[span_105](start_span)[span_105](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 6, Ep 2</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 03: No Filter</h3>
-        <p class="episode-desc">
-          Read Season 6 Ep 3 of <em>The Beg</em>[span_106](start_span)[span_106](end_span). Seeing each other completely unfiltered, they realize that human flaws are what make real relationships safe and grounding[span_107](start_span)[span_107](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 6, Ep 3</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-ai">AI Companions</span>
-        <h3>Ep. 04: The Bot Goodbye</h3>
-        <p class="episode-desc">
-          Read Season 6 Ep 4 of <em>The Beg</em>[span_108](start_span)[span_108](end_span). Meher permanently deletes her AI companion app; the silence is intimidating but opens space for real affection[span_109](start_span)[span_109](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 6, Ep 4</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 05: Comparison, Defused</h3>
-        <p class="episode-desc">
-          Read Season 6 Ep 5 of <em>The Beg</em>[span_110](start_span)[span_110](end_span). They stop measuring their private bond against the performative, staged relationships plastered on social feeds[span_111](start_span)[span_111](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 6, Ep 5</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 06: The Argument</h3>
-        <p class="episode-desc">
-          Read Season 6 Ep 6 of <em>The Beg</em>[span_112](start_span)[span_112](end_span). Their first disagreement is navigated through direct conversation rather than passive-aggressive online posts[span_113](start_span)[span_113](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 6, Ep 6</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 07: Trust</h3>
-        <p class="episode-desc">
-          Read Season 6 Ep 7 of <em>The Beg</em>[span_114](start_span)[span_114](end_span). Letting someone past the digital mask is a vulnerability risk that answers the season's core question[span_115](start_span)[span_115](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 6, Ep 7</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-dopamine">Dopamine Detox</span>
-        <h3>Ep. 08: The Quiet Date</h3>
-        <p class="episode-desc">
-          Read Season 6 Ep 8 of <em>The Beg</em>[span_116](start_span)[span_116](end_span). They go out together and deliberately refrain from taking pictures or posting online—prioritizing memory over evidence[span_117](start_span)[span_117](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 6, Ep 8</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 09: Becoming Us</h3>
-        <p class="episode-desc">
-          Read Season 6 Ep 9 of <em>The Beg</em>[span_118](start_span)[span_118](end_span). Now officially together, their bond is built on truly seeing one another rather than seeking public admiration[span_119](start_span)[span_119](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 6, Ep 9</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-validation">Validation via Likes</span>
-        <h3>Ep. 10: The Bridge</h3>
-        <p class="episode-desc">
-          Read Season 6 Ep 10 (Finale) of <em>The Beg</em>[span_120](start_span)[span_120](end_span). Authentic human connection is revealed as the ultimate cure for constant digital validation-seeking[span_121](start_span)[span_121](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 6, Ep 10</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- SEASON 7: THE GOLDEN MACHINE -->
-  <section id="season-7" class="season-block">
-    <div class="season-header">
-      <h2>Season 7: The Golden Machine</h2>
-      <p class="season-theme"><strong>Theme:</strong> Wealth & Value | <em>"Does financial freedom end the begging?"</em></p>
-    </div>
-    <div class="episodes-grid">
-
-      <article class="episode-card">
-        <span class="tag tag-layoffs">Job Insecurity</span>
-        <h3>Ep. 01: The First Salary</h3>
-        <p class="episode-desc">
-          Read Season 7 Ep 1 of <em>The Beg</em> webtoon[span_122](start_span)[span_122](end_span). Aarav receives his first corporate paycheck; the initial financial relief feels like safety, but deeper issues remain[span_123](start_span)[span_123](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 7, Ep 1</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 02: The Flex</h3>
-        <p class="episode-desc">
-          Read Season 7 Ep 2 of <em>The Beg</em>[span_124](start_span)[span_124](end_span). Luxury purchases are posted online for social clout; money becomes just another costume to gain attention[span_125](start_span)[span_125](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 7, Ep 2</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-dopamine">Dopamine / Phone Addiction</span>
-        <h3>Ep. 03: Enough?</h3>
-        <p class="episode-desc">
-          Read Season 7 Ep 3 of <em>The Beg</em>[span_126](start_span)[span_126](end_span). Buying expensive gadgets yields temporary thrill, proving that material wealth cannot satisfy internal hunger[span_127](start_span)[span_127](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 7, Ep 3</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-layoffs">Layoffs & Job Insecurity</span>
-        <h3>Ep. 04: The Layoff Call</h3>
-        <p class="episode-desc">
-          Read Season 7 Ep 4 of <em>The Beg</em>[span_128](start_span)[span_128](end_span). A high-earning mentor is terminated suddenly; corporate stability is exposed as an illusion[span_129](start_span)[span_129](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 7, Ep 4</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 05: Startup Dreams</h3>
-        <p class="episode-desc">
-          Read Season 7 Ep 5 of <em>The Beg</em>[span_130](start_span)[span_130](end_span). Chasing venture capital valuation becomes the new status symbol; funding is pursued purely to prove personal worth[span_131](start_span)[span_131](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 7, Ep 5</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-dopamine">Dopamine Addiction</span>
-        <h3>Ep. 06: The Machine Never Stops</h3>
-        <p class="episode-desc">
-          Read Season 7 Ep 6 of <em>The Beg</em>[span_132](start_span)[span_132](end_span). Financial ambition outpaces every win, demonstrating how lifestyle creep keeps the cycle of seeking alive[span_133](start_span)[span_133](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 7, Ep 6</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 07: Investment FOMO</h3>
-        <p class="episode-desc">
-          Read Season 7 Ep 7 of <em>The Beg</em>[span_134](start_span)[span_134](end_span). Envy over trading portfolios and crypto returns reopens toxic comparison habits among friends[span_135](start_span)[span_135](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 7, Ep 7</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-layoffs">Layoffs & Job Insecurity</span>
-        <h3>Ep. 08: The Safety-Net Myth</h3>
-        <p class="episode-desc">
-          Read Season 7 Ep 8 of <em>The Beg</em>[span_136](start_span)[span_136](end_span). Unexpected economic cuts prove that cash balances alone cannot heal underlying anxiety[span_137](start_span)[span_137](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 7, Ep 8</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 09: Generous, Performed</h3>
-        <p class="episode-desc">
-          Read Season 7 Ep 9 of <em>The Beg</em>[span_138](start_span)[span_138](end_span). Charitable acts are broadcast on video for likes; even altruism gets monetized for social validation[span_139](start_span)[span_139](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 7, Ep 9</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-layoffs">Layoffs & Job Insecurity</span>
-        <h3>Ep. 10: The Bill</h3>
-        <p class="episode-desc">
-          Read Season 7 Ep 10 (Finale) of <em>The Beg</em>[span_140](start_span)[span_140](end_span). The emotional cost arrives: despite high bank balances, internal peace remains unpurchased[span_141](start_span)[span_141](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 7, Ep 10</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- SEASON 8: THE FORGE -->
-  <section id="season-8" class="season-block">
-    <div class="season-header">
-      <h2>Season 8: The Forge</h2>
-      <p class="season-theme"><strong>Theme:</strong> Discipline & Action | <em>"Can pain become purpose?"</em></p>
-    </div>
-    <div class="episodes-grid">
-
-      <article class="episode-card">
-        <span class="tag tag-dopamine">Dopamine Detox</span>
-        <h3>Ep. 01: The Reset</h3>
-        <p class="episode-desc">
-          Read Season 8 Ep 1 of <em>The Beg</em>[span_142](start_span)[span_142](end_span). Social platforms are deleted; Aarav cuts off cheap dopamine sources at the root to regain cognitive clarity[span_143](start_span)[span_143](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 8, Ep 1</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-burnout">Burnout / Discipline</span>
-        <h3>Ep. 02: The Gym</h3>
-        <p class="episode-desc">
-          Read Season 8 Ep 2 of <em>The Beg</em>[span_144](start_span)[span_144](end_span). Physical exertion becomes a grounding anchor, swapping screen scroll time for tangible bodily strength[span_145](start_span)[span_145](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 8, Ep 2</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 03: The Blank Page</h3>
-        <p class="episode-desc">
-          Read Season 8 Ep 3 of <em>The Beg</em>[span_146](start_span)[span_146](end_span). Learning a difficult craft without publishing it for an audience; measuring present self against past self[span_147](start_span)[span_147](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 8, Ep 3</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 04: Meditation, Reluctantly</h3>
-        <p class="episode-desc">
-          Read Season 8 Ep 4 of <em>The Beg</em>[span_148](start_span)[span_148](end_span). Sitting in total silence, Aarav confronts the internal noise he previously escaped through scrolling[span_149](start_span)[span_149](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 8, Ep 4</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-dopamine">Dopamine Detox</span>
-        <h3>Ep. 05: The Withdrawal</h3>
-        <p class="episode-desc">
-          Read Season 8 Ep 5 of <em>The Beg</em>[span_150](start_span)[span_150](end_span). Acute withdrawal symptoms set in, revealing how deeply phone addiction had conditioned his nervous system[span_151](start_span)[span_151](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 8, Ep 5</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 06: Consistency</h3>
-        <p class="episode-desc">
-          Read Season 8 Ep 6 of <em>The Beg</em>[span_152](start_span)[span_152](end_span). Showing up every day to build skills without posting progress, seeking external applause, or keeping score[span_153](start_span)[span_153](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 8, Ep 6</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-ai">AI Companions</span>
-        <h3>Ep. 07: The Bot Detox</h3>
-        <p class="episode-desc">
-          Read Season 8 Ep 7 of <em>The Beg</em>[span_154](start_span)[span_154](end_span). Synthetic companionship is rejected entirely; choosing short-term discomfort over artificial emotional comfort[span_155](start_span)[span_155](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 8, Ep 7</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 08: The Comparison Cure</h3>
-        <p class="episode-desc">
-          Read Season 8 Ep 8 of <em>The Beg</em>[span_156](start_span)[span_156](end_span). Active gratitude practices break the habitual impulse to compare personal progress with others[span_157](start_span)[span_157](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 8, Ep 8</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-burnout">Burnout / Discipline</span>
-        <h3>Ep. 09: The Forge</h3>
-        <p class="episode-desc">
-          Read Season 8 Ep 9 of <em>The Beg</em>[span_158](start_span)[span_158](end_span). Past psychological pain and digital trauma are transformed into fuel for real-world creative discipline[span_159](start_span)[span_159](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 8, Ep 9</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-validation">Validation via Likes</span>
-        <h3>Ep. 10: Drive, Not Beg</h3>
-        <p class="episode-desc">
-          Read Season 8 Ep 10 (Finale) of <em>The Beg</em>[span_160](start_span)[span_160](end_span). The shift completes: internal drive replaces the desperate need for external approval[span_161](start_span)[span_161](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 8, Ep 10</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- SEASON 9: THE EMPTY SUMMIT -->
-  <section id="season-9" class="season-block">
-    <div class="season-header">
-      <h2>Season 9: The Empty Summit</h2>
-      <p class="season-theme"><strong>Theme:</strong> Meaning & Legacy | <em>"What happens after you achieve everything?"</em></p>
-    </div>
-    <div class="episodes-grid">
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 01: The Award</h3>
-        <p class="episode-desc">
-          Read Season 9 Ep 1 of <em>The Beg</em> comic[span_162](start_span)[span_162](end_span). Aarav wins industry recognition; applause fills the room, yet he feels strange emotional detachment[span_163](start_span)[span_163](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 9, Ep 1</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-validation">Validation via Likes</span>
-        <h3>Ep. 02: The Applause</h3>
-        <p class="episode-desc">
-          Read Season 9 Ep 2 of <em>The Beg</em>[span_164](start_span)[span_164](end_span). Public praise lands on his notifications, but fails to ignite the emotional satisfaction he expected[span_165](start_span)[span_165](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 9, Ep 2</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 03: What Was It For?</h3>
-        <p class="episode-desc">
-          Read Season 9 Ep 3 of <em>The Beg</em>[span_166](start_span)[span_166](end_span). Standing at the top of his career, Aarav questions whether years of sacrifice served any real purpose[span_167](start_span)[span_167](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 9, Ep 3</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-layoffs">Layoffs & Job Insecurity</span>
-        <h3>Ep. 04: The Laid-Off Mentor</h3>
-        <p class="episode-desc">
-          Read Season 9 Ep 4 of <em>The Beg</em>[span_168](start_span)[span_168](end_span). An industry titan he admired is let go; professional achievements provide no immunity against system changes[span_169](start_span)[span_169](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 9, Ep 4</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 05: The Comparison Finale</h3>
-        <p class="episode-desc">
-          Read Season 9 Ep 5 of <em>The Beg</em>[span_170](start_span)[span_170](end_span). Even at the summit, the ingrained habit of measuring himself against others briefly re-emerges[span_171](start_span)[span_171](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 9, Ep 5</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-ai">AI Companions</span>
-        <h3>Ep. 06: The AI Year</h3>
-        <p class="episode-desc">
-          Read Season 9 Ep 6 of <em>The Beg</em>[span_172](start_span)[span_172](end_span). A flashback contrasts the shallow year spent with AI companions against the depth of authentic relationships[span_173](start_span)[span_173](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 9, Ep 6</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 07: The Empty Room</h3>
-        <p class="episode-desc">
-          Read Season 9 Ep 7 of <em>The Beg</em>[span_174](start_span)[span_174](end_span). Realizing that professional accolades achieved without human fellowship yield an empty victory[span_175](start_span)[span_175](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 9, Ep 7</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 08: The Post That Flopped</h3>
-        <p class="episode-desc">
-          Read Season 9 Ep 8 of <em>The Beg</em>[span_176](start_span)[span_176](end_span). A major achievement update gets zero traction online, yet Aarav remains surprisingly unaffected[span_177](start_span)[span_177](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 9, Ep 8</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-dopamine">Dopamine / Meaning</span>
-        <h3>Ep. 09: Purpose, External?</h3>
-        <p class="episode-desc">
-          Read Season 9 Ep 9 of <em>The Beg</em>[span_178](start_span)[span_178](end_span). Investigating whether external success can ever provide lasting inner meaning or if it must be cultivated within[span_179](start_span)[span_179](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 9, Ep 9</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-layoffs">Job Insecurity</span>
-        <h3>Ep. 10: The View</h3>
-        <p class="episode-desc">
-          Read Season 9 Ep 10 (Finale) of <em>The Beg</em>[span_180](start_span)[span_180](end_span). Looking back from the peak, Aarav realizes he had spent years climbing the wrong mountain[span_181](start_span)[span_181](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 9, Ep 10</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- SEASON 10: THE STILL DAWN -->
-  <section id="season-10" class="season-block">
-    <div class="season-header">
-      <h2>Season 10: The Still Dawn</h2>
-      <p class="season-theme"><strong>Theme:</strong> Inner Peace | <em>"If nobody remembered your name... would your life still matter?"</em></p>
-    </div>
-    <div class="episodes-grid">
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 01: The Same City</h3>
-        <p class="episode-desc">
-          Read Season 10 Ep 1 of <em>The Beg</em> webtoon[span_182](start_span)[span_182](end_span). Returning to where their journey began; the city remains obsessed with status, but they have changed[span_183](start_span)[span_183](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 10, Ep 1</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-validation">Validation via Likes</span>
-        <h3>Ep. 02: The Mirror Account</h3>
-        <p class="episode-desc">
-          Read Season 10 Ep 2 of <em>The Beg</em>[span_184](start_span)[span_184](end_span). THE BEG account is revealed not as a person or adversary, but as a mirror of society's hidden anxieties[span_185](start_span)[span_185](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 10, Ep 2</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 03: Who Created It?</h3>
-        <p class="episode-desc">
-          Read Season 10 Ep 3 of <em>The Beg</em>[span_186](start_span)[span_186](end_span). The revelation lands: everyone created THE BEG collectively through their shared need to be seen[span_187](start_span)[span_187](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 10, Ep 3</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-dopamine">Dopamine / Freedom</span>
-        <h3>Ep. 04: The Last Scroll</h3>
-        <p class="episode-desc">
-          Read Season 10 Ep 4 of <em>The Beg</em>[span_188](start_span)[span_188](end_span). Aarav puts his phone down for good, permanently choosing presence in the moment over online performance[span_189](start_span)[span_189](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 10, Ep 4</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-ai">AI Companions</span>
-        <h3>Ep. 05: The Bot Memory</h3>
-        <p class="episode-desc">
-          Read Season 10 Ep 5 of <em>The Beg</em>[span_190](start_span)[span_190](end_span). Meher recalls her past dependence on AI avatars, feeling completely liberated from digital illusions[span_191](start_span)[span_191](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 10, Ep 5</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-layoffs">Layoffs & Job Insecurity</span>
-        <h3>Ep. 06: The Layoff, Reframed</h3>
-        <p class="episode-desc">
-          Read Season 10 Ep 6 of <em>The Beg</em>[span_192](start_span)[span_192](end_span). Job security losing its psychological grip; professional titles no longer define their human worth[span_193](start_span)[span_193](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 10, Ep 6</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-loneliness">Loneliness Epidemic</span>
-        <h3>Ep. 07: The Lonely Crowd</h3>
-        <p class="episode-desc">
-          Read Season 10 Ep 7 of <em>The Beg</em>[span_194](start_span)[span_194](end_span). Observing others still seeking digital approval; feeling empathy rather than superiority or detachment[span_195](start_span)[span_195](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 10, Ep 7</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-mental-health">Social Media & Mental Illness</span>
-        <h3>Ep. 08: The Quiet Confidence</h3>
-        <p class="episode-desc">
-          Read Season 10 Ep 8 of <em>The Beg</em>[span_196](start_span)[span_196](end_span). Living authentically without needing witnesses or public approval; the cycle of seeking comes to an end[span_197](start_span)[span_197](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 10, Ep 8</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-comparison">Comparison Culture</span>
-        <h3>Ep. 09: The Two</h3>
-        <p class="episode-desc">
-          Read Season 10 Ep 9 of <em>The Beg</em>[span_198](start_span)[span_198](end_span). Aarav and Meher walk together through the city, unseen by the crowd yet genuinely content[span_199](start_span)[span_199](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 10, Ep 9</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-      <article class="episode-card">
-        <span class="tag tag-validation">Validation via Likes</span>
-        <h3>Ep. 10: Still Dawn</h3>
-        <p class="episode-desc">
-          Read Season 10 Ep 10 (Series Finale) of <em>The Beg</em>[span_200](start_span)[span_200](end_span). Freedom, not victory. The series closes on the same city, featuring two transformed people[span_201](start_span)[span_201](end_span).
-        </p>
-        <div class="card-footer"><span class="ep-meta">Season 10, Ep 10</span><a href="#" class="read-btn">READ</a></div>
-      </article>
-
-    </div>
-  </section>
-
 </div>
 
-    <div class="modal-overlay" id="pdfModal">
-        <div class="modal-header">
+<div class="modal-overlay" id="pdfModal">
+    <div class="modal-header">
+        <div>
             <span class="modal-title" id="pdfModalTitle">📖 Reading Episode</span>
-            <button class="modal-close" onclick="closePdfViewer()">✕</button>
+            <p class="modal-desc" id="pdfModalDesc"></p>
         </div>
-        <div class="pdf-iframe-container" oncontextmenu="return false">
-            <div class="iframe-protection"></div>
-            <iframe id="pdfIframe" src="" allowfullscreen></iframe>
-        </div>
+        <button class="modal-close" onclick="closePdfViewer()">✕</button>
     </div>
+    <div class="pdf-iframe-container" oncontextmenu="return false">
+        <div class="iframe-protection"></div>
+        <iframe id="pdfIframe" src="" allowfullscreen></iframe>
+    </div>
+</div>
 
-    <script>
-        (function() {
-            const TOTAL_SEASONS = 10;
-            const EPISODES_PER_SEASON = 10;
-            const START_DATE = new Date(2026, 6, 26);
-            const RELEASE_BASE_URL = 'https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/';
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-            const uploadedEpisodes = [
-                'S1E01',
-                'S1E02',
-                'S1E03',
-                'S1E04',
-                'S1E05',
-                'S1E06',
-                'S1E07',
-                'S1E08',
-                'S1E09',
-                'S1E10'
-        
-            ];
+<script>
+// ============ SERIES DATA ============
+const seriesData = {
+  1: [
+    {t:"The Invisible One",g:"Comparison Culture",d:"Aarav measures his self-worth against everyone else's highlight reels in a city obsessed with visibility."},
+    {t:"Scroll Therapy",g:"Social Media & Mental Illness",d:"At 2 AM, Meher performs a happy life online while feeling hollow inside, widening the gap between her curated feed and real feelings."},
+    {t:"Ten Thousand Eyes",g:"Validation via Likes",d:"The anonymous account @THEBEG posts its first brutally honest message, driving campus into obsession and paranoia."},
+    {t:"The Like Economy",g:"Dopamine / Phone Addiction",d:"Aarav's throwaway post goes mini-viral, trapping him in a loop chasing the chemical rush of notifications."},
+    {t:"Mirror Selfie",g:"Social Media & Mental Illness",d:"Comparing her rising follower count against her lonely mornings, Meher realizes her curated persona is the only self she trusts."},
+    {t:"Everyone's Watching",g:"Validation via Likes",d:"THE BEG account publishes secrets no stranger should know, hooking the public into decoding who is targeted next."},
+    {t:"Compare and Despair",g:"Comparison Culture",d:"A peer's high-profile job offer lands, causing Aarav's stomach to drop as toxic comparison culture sharpens on campus."},
+    {t:"The Red Dot",g:"Dopamine / Phone Addiction",d:"Neither Aarav nor Meher can put their phones down; notification compulsion is framed as physical hunger rather than habit."},
+    {t:"Who Posted It?",g:"Social Media & Mental Illness",d:"The campus witch hunt for THE BEG's creator begins, mirroring society's urge to find external blame for collective anxiety."},
+    {t:"Why, Not Who",g:"Validation via Likes",d:"Aarav and Meher stop asking who created THE BEG and start confronting why its messages resonate so deeply."}
+  ],
+  2: [
+    {t:"The Perfect Match",g:"Validation via Likes",d:"Dating apps reduce intimacy to quick swipes; getting a match feels more like a validation score than connection."},
+    {t:"Bae.exe",g:"AI Companions",d:"Seeking comfort, Meher downloads an AI partner app that delivers perfect, scripted affirmations on demand."},
+    {t:"Ghosted",g:"Social Media & Mental Illness",d:"A friend is abruptly abandoned mid-conversation by a date, highlighting digital rejection without emotional closure."},
+    {t:"Proof of Love",g:"Loneliness Epidemic",d:"Aarav confuses being desired with being loved, realizing he craves constant digital evidence that he is worthy of affection."},
+    {t:"The Replacement",g:"Comparison Culture",d:"Meher's deepest insecurity surfaces: the constant fear of being replaced online by someone prettier, younger, or louder."},
+    {t:"Synthetic Warmth",g:"AI Companions",d:"The AI bot becomes Meher's daily ritual, leading her to feel that real human interactions are flawed and 'laggy'."},
+    {t:"Real vs Rendered",g:"AI Companions",d:"Aarav meets someone genuine face-to-face, yet struggles because real humans lack the polished perfection of AI avatars."},
+    {t:"Jealousy, Filtered",g:"Comparison Culture",d:"Aarav and Meher compare their messy connection against flawless, staged power couples performing on social feeds."},
+    {t:"The Unfollow",g:"Social Media & Mental Illness",d:"A romantic breakup is staged publicly for sympathy views, commodifying heartbreak for engagement and clout."},
+    {t:"Almost Together",g:"Loneliness Epidemic",d:"Aarav and Meher grow closer but refuse to label their relationship online, rejecting validation-seeking romance."}
+  ],
+  3: [
+    {t:"The Ladder",g:"Comparison Culture",d:"Startup culture and internship season transform campus life into a cutthroat corporate leaderboard."},
+    {t:"LinkedIn Lunatic",g:"Validation via Likes",d:"Aarav broadcasts every minor career win for professional clout, tying his self-worth directly to career engagement."},
+    {t:"The All-Nighter",g:"Burnout / The Grind",d:"Toxic grind culture takes over, causing Aarav to experience the initial physical warning signs of total burnout."},
+    {t:"Placement Day",g:"Comparison Culture",d:"A fellow classmate lands a dream job offer, making Aarav's personal accomplishments instantly feel insignificant."},
+    {t:"Hustle Porn",g:"Dopamine / Phone Addiction",d:"Constant exposure to hyper-motivational hustle content drains Aarav's focus, turning ambition into chronic exhaustion."},
+    {t:"The Higher, The Lonelier",g:"Burnout / The Grind",d:"As Aarav's career metrics climb, he quietly isolates himself from old friends who remembered who he was before."},
+    {t:"Quiet Quit",g:"Burnout / The Grind",d:"Exhausted by hustle culture, a friend mentally checks out while continuing to perform fake productivity online."},
+    {t:"Side Project",g:"Validation via Likes",d:"Builder culture exposed: Aarav launches a product not to solve a problem, but to gain launch-day upvotes and praise."},
+    {t:"The Comparison Spiral",g:"Comparison Culture",d:"News of a peer's venture capital funding round triggers a three-day downward emotional spiral for Aarav."},
+    {t:"Losing Himself",g:"Burnout / The Grind",d:"At the top of the leaderboard, Aarav admits he is merely curating the image of success rather than living it."}
+  ],
+  4: [
+    {t:"The Smile Mask",g:"Social Media & Mental Illness",d:"Everyone on campus insists they are doing great, rendering emotional honesty taboo as fake calm becomes mandatory."},
+    {t:"3am Thoughts",g:"Loneliness Epidemic",d:"Late-night anxiety spirals reveal the true scale of youth isolation in a hyper-connected world."},
+    {t:"The Collapse",g:"Burnout / The Grind",d:"A major project that Aarav staked his reputation on fails publicly, causing his identity to crumble."},
+    {t:"Unspoken",g:"Loneliness Epidemic",d:"The entire friend group is drowning in unspoken pressure, yet no one dares break the silence to ask for help."},
+    {t:"The News",g:"Layoffs & Job Insecurity",d:"Layoff rumors at a relative's tech corporate job plant financial insecurity and dread early in Aarav's mindset."},
+    {t:"Performance of Calm",g:"Social Media & Mental Illness",d:"Meher posts polished, tranquil aesthetic content while experiencing internal panic, tightening her psychological mask."},
+    {t:"The Fog",g:"Loneliness Epidemic",d:"A heavy depressive episode sets in; even endless phone scrolling fails to numb the underlying emptiness."},
+    {t:"Comparison in Crisis",g:"Comparison Culture",d:"Even at his lowest emotional point, Aarav compulsively measures his pain against others pretending to thrive online."},
+    {t:"The Reach",g:"Loneliness Epidemic",d:"Aarav calls Meher late at night, creating the first genuine, unperformed moment of emotional vulnerability between them."},
+    {t:"After the Loss",g:"Layoffs & Job Insecurity",d:"Stripped of past achievements, Aarav confronts the core question: who are you when status disappears?"}
+  ],
+  5: [
+    {t:"The Filter Self",g:"AI Companions",d:"Meher creates an AI-enhanced avatar—flawless, witty, effortless—that gradually eclipses her real personality."},
+    {t:"Boss Mode",g:"Social Media & Mental Illness",d:"Entering a corporate role, Aarav adopts a dominant 'Boss' persona, fragmenting his personality into multiple digital masks."},
+    {t:"The Real Me, Buffered",g:"Loneliness Epidemic",d:"Inability to communicate raw emotion forces both characters to pre-edit every thought before speaking aloud."},
+    {t:"The Pink Slip",g:"Layoffs & Job Insecurity",d:"A peer is terminated overnight via automated email; his professional mask shatters before the entire company."},
+    {t:"Performative Healing",g:"Social Media & Mental Illness",d:"Personal trauma is turned into public content; vulnerability becomes just another brand strategy to drive engagement."},
+    {t:"Which Version Is Real?",g:"Comparison Culture",d:"The boundary between online personas and reality blurs until neither Aarav nor Meher remembers who they originally were."},
+    {t:"The AI Twin",g:"AI Companions",d:"Meher's AI chatbot companion knows her preferences better than her real friends do—eerie, convenient, yet completely hollow."},
+    {t:"LinkedOut",g:"Layoffs & Job Insecurity",d:"Following a corporate layoff, a former high-performer suffers an identity crisis after realizing he was only defined by his job title."},
+    {t:"The Mirror Cracks",g:"Social Media & Mental Illness",d:"A sudden glitch in their digital image forces Aarav and Meher to confront how fake their online lives have become."},
+    {t:"Unmasked, Briefly",g:"Loneliness Epidemic",d:"One completely honest moment occurs without cameras or audience—the rare turning point of the series."}
+  ],
+  6: [
+    {t:"Offline",g:"Dopamine Detox",d:"Aarav and Meher meet in person with smartphones put away; initial awkwardness gives way to genuine freedom."},
+    {t:"The First Real Word",g:"Loneliness Epidemic",d:"Speaking unscripted thoughts face-to-face unlocks authentic human connection for the first time."},
+    {t:"No Filter",g:"Social Media & Mental Illness",d:"Seeing each other completely unfiltered, they realize that human flaws are what make real relationships safe and grounding."},
+    {t:"The Bot Goodbye",g:"AI Companions",d:"Meher permanently deletes her AI companion app; the silence is intimidating but opens space for real affection."},
+    {t:"Comparison, Defused",g:"Comparison Culture",d:"They stop measuring their private bond against the performative, staged relationships plastered on social feeds."},
+    {t:"The Argument",g:"Loneliness Epidemic",d:"Their first disagreement is navigated through direct conversation rather than passive-aggressive online posts."},
+    {t:"Trust",g:"Social Media & Mental Illness",d:"Letting someone past the digital mask is a vulnerability risk that answers the season's core question."},
+    {t:"The Quiet Date",g:"Dopamine Detox",d:"They go out together and deliberately refrain from taking pictures or posting online—prioritizing memory over evidence."},
+    {t:"Becoming Us",g:"Loneliness Epidemic",d:"Now officially together, their bond is built on truly seeing one another rather than seeking public admiration."},
+    {t:"The Bridge",g:"Validation via Likes",d:"Authentic human connection is revealed as the ultimate cure for constant digital validation-seeking."}
+  ],
+  7: [
+    {t:"The First Salary",g:"Job Insecurity",d:"Aarav receives his first corporate paycheck; the initial financial relief feels like safety, but deeper issues remain."},
+    {t:"The Flex",g:"Social Media & Mental Illness",d:"Luxury purchases are posted online for social clout; money becomes just another costume to gain attention."},
+    {t:"Enough?",g:"Dopamine / Phone Addiction",d:"Buying expensive gadgets yields temporary thrill, proving that material wealth cannot satisfy internal hunger."},
+    {t:"The Layoff Call",g:"Layoffs & Job Insecurity",d:"A high-earning mentor is terminated suddenly; corporate stability is exposed as an illusion."},
+    {t:"Startup Dreams",g:"Comparison Culture",d:"Chasing venture capital valuation becomes the new status symbol; funding is pursued purely to prove personal worth."},
+    {t:"The Machine Never Stops",g:"Dopamine Addiction",d:"Financial ambition outpaces every win, demonstrating how lifestyle creep keeps the cycle of seeking alive."},
+    {t:"Investment FOMO",g:"Comparison Culture",d:"Envy over trading portfolios and crypto returns reopens toxic comparison habits among friends."},
+    {t:"The Safety-Net Myth",g:"Layoffs & Job Insecurity",d:"Unexpected economic cuts prove that cash balances alone cannot heal underlying anxiety."},
+    {t:"Generous, Performed",g:"Social Media & Mental Illness",d:"Charitable acts are broadcast on video for likes; even altruism gets monetized for social validation."},
+    {t:"The Bill",g:"Layoffs & Job Insecurity",d:"The emotional cost arrives: despite high bank balances, internal peace remains unpurchased."}
+  ],
+  8: [
+    {t:"The Reset",g:"Dopamine Detox",d:"Social platforms are deleted; Aarav cuts off cheap dopamine sources at the root to regain cognitive clarity."},
+    {t:"The Gym",g:"Burnout / Discipline",d:"Physical exertion becomes a grounding anchor, swapping screen scroll time for tangible bodily strength."},
+    {t:"The Blank Page",g:"Comparison Culture",d:"Learning a difficult craft without publishing it for an audience; measuring present self against past self."},
+    {t:"Meditation, Reluctantly",g:"Loneliness Epidemic",d:"Sitting in total silence, Aarav confronts the internal noise he previously escaped through scrolling."},
+    {t:"The Withdrawal",g:"Dopamine Detox",d:"Acute withdrawal symptoms set in, revealing how deeply phone addiction had conditioned his nervous system."},
+    {t:"Consistency",g:"Social Media & Mental Illness",d:"Showing up every day to build skills without posting progress, seeking external applause, or keeping score."},
+    {t:"The Bot Detox",g:"AI Companions",d:"Synthetic companionship is rejected entirely; choosing short-term discomfort over artificial emotional comfort."},
+    {t:"The Comparison Cure",g:"Comparison Culture",d:"Active gratitude practices break the habitual impulse to compare personal progress with others."},
+    {t:"The Forge",g:"Burnout / Discipline",d:"Past psychological pain and digital trauma are transformed into fuel for real-world creative discipline."},
+    {t:"Drive, Not Beg",g:"Validation via Likes",d:"The shift completes: internal drive replaces the desperate need for external approval."}
+  ],
+  9: [
+    {t:"The Award",g:"Social Media & Mental Illness",d:"Aarav wins industry recognition; applause fills the room, yet he feels strange emotional detachment."},
+    {t:"The Applause",g:"Validation via Likes",d:"Public praise lands on his notifications, but fails to ignite the emotional satisfaction he expected."},
+    {t:"What Was It For?",g:"Loneliness Epidemic",d:"Standing at the top of his career, Aarav questions whether years of sacrifice served any real purpose."},
+    {t:"The Laid-Off Mentor",g:"Layoffs & Job Insecurity",d:"An industry titan he admired is let go; professional achievements provide no immunity against system changes."},
+    {t:"The Comparison Finale",g:"Comparison Culture",d:"Even at the summit, the ingrained habit of measuring himself against others briefly re-emerges."},
+    {t:"The AI Year",g:"AI Companions",d:"A flashback contrasts the shallow year spent with AI companions against the depth of authentic relationships."},
+    {t:"The Empty Room",g:"Loneliness Epidemic",d:"Realizing that professional accolades achieved without human fellowship yield an empty victory."},
+    {t:"The Post That Flopped",g:"Social Media & Mental Illness",d:"A major achievement update gets zero traction online, yet Aarav remains surprisingly unaffected."},
+    {t:"Purpose, External?",g:"Dopamine / Meaning",d:"Investigating whether external success can ever provide lasting inner meaning or if it must be cultivated within."},
+    {t:"The View",g:"Job Insecurity",d:"Looking back from the peak, Aarav realizes he had spent years climbing the wrong mountain."}
+  ],
+  10: [
+    {t:"The Same City",g:"Social Media & Mental Illness",d:"Returning to where their journey began; the city remains obsessed with status, but they have changed."},
+    {t:"The Mirror Account",g:"Validation via Likes",d:"THE BEG account is revealed not as a person or adversary, but as a mirror of society's hidden anxieties."},
+    {t:"Who Created It?",g:"Comparison Culture",d:"The revelation lands: everyone created THE BEG collectively through their shared need to be seen."},
+    {t:"The Last Scroll",g:"Dopamine / Freedom",d:"Aarav puts his phone down for good, permanently choosing presence in the moment over online performance."},
+    {t:"The Bot Memory",g:"AI Companions",d:"Meher recalls her past dependence on AI avatars, feeling completely liberated from digital illusions."},
+    {t:"The Layoff, Reframed",g:"Layoffs & Job Insecurity",d:"Job security losing its psychological grip; professional titles no longer define their human worth."},
+    {t:"The Lonely Crowd",g:"Loneliness Epidemic",d:"Observing others still seeking digital approval; feeling empathy rather than superiority or detachment."},
+    {t:"The Quiet Confidence",g:"Social Media & Mental Illness",d:"Living authentically without needing witnesses or public approval; the cycle of seeking comes to an end."},
+    {t:"The Two",g:"Comparison Culture",d:"Aarav and Meher walk together through the city, unseen by the crowd yet genuinely content."},
+    {t:"Still Dawn",g:"Validation via Likes",d:"Freedom, not victory. The series closes on the same city, featuring two transformed people."}
+  ]
+};
 
-            console.log('📚 Uploaded episodes list:', uploadedEpisodes);
+const SEASON_THEMES = {
+  1:"The City of Mirrors", 2:"The Garden of Wanting", 3:"The Climbing Tower",
+  4:"The Fog Below", 5:"The Hall of Masks", 6:"The Bridge of Two",
+  7:"The Golden Machine", 8:"The Forge", 9:"The Empty Summit", 10:"The Still Dawn"
+};
 
-            let currentViewingSeason = 1;
+const TOTAL_SEASONS = 10;
+const EPISODES_PER_SEASON = 10;
+const START_DATE = new Date(2026, 6, 26);
+const RELEASE_BASE_URL = 'https://github.com/userdivyansh12-lab/The-Beg/releases/download/v2.0/';
+const uploadedEpisodes = ['S1E01','S1E02','S1E03','S1E04','S1E05','S1E06','S1E07','S1E08','S1E09','S1E10'];
 
-            function isEpisodeAvailable(fileKey) {
-                return uploadedEpisodes.includes(fileKey);
-            }
+function getSeasonBgFilename(season) {
+    if (season === 1) return 'hero-bg.jpg';
+    return `S${season}.jpg`;
+}
 
-            function initParticles() {
-                const canvas = document.getElementById('particlesCanvas');
-                if (!canvas) return;
-                const ctx = canvas.getContext('2d');
-                let particles = [];
-                function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-                resize(); window.addEventListener('resize', resize);
-                for (let i = 0; i < 40; i++) {
-                    particles.push({
-                        x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                        size: Math.random() * 1.5 + 0.3,
-                        speedX: (Math.random() - 0.5) * 0.3, speedY: (Math.random() - 0.5) * 0.3,
-                        opacity: Math.random() * 0.4 + 0.06, fadeSpeed: Math.random() * 0.003 + 0.001
-                    });
-                }
-                function animate() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    particles.forEach(p => {
-                        p.x += p.speedX; p.y += p.speedY; p.opacity += p.fadeSpeed;
-                        if (p.opacity >= 0.5 || p.opacity <= 0.03) p.fadeSpeed *= -1;
-                        if (p.x < -10 || p.x > canvas.width + 10 || p.y < -10 || p.y > canvas.height + 10) {
-                            p.x = Math.random() * canvas.width; p.y = Math.random() * canvas.height;
-                        }
-                        ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(212,168,83,${p.opacity})`; ctx.fill();
-                    });
-                    requestAnimationFrame(animate);
-                }
-                animate();
-            }
+let currentViewingSeason = 1;
+let currentCardIndex = 0;
+let ringRotation = 0;
+let bgActiveLayer = 'a';
 
-            function getEpisodeDate(season, episode) {
-                const globalNum = (season - 1) * EPISODES_PER_SEASON + episode;
-                const d = new Date(START_DATE);
-                d.setDate(d.getDate() + (globalNum - 1) * 7);
-                return d;
-            }
-            function getFileKey(s, e) { return `S${s}E${String(e).padStart(2, '0')}`; }
-            function isSeasonUnlocked(season) { return getEpisodeDate(season, 1) <= new Date(); }
+function getFileKey(s, e) { return `S${s}E${String(e).padStart(2, '0')}`; }
+function getEpisodeDate(s, e) {
+    const g = (s - 1) * EPISODES_PER_SEASON + e;
+    const d = new Date(START_DATE);
+    d.setDate(d.getDate() + (g - 1) * 7);
+    return d;
+}
+function isEpisodeAvailable(k) { return uploadedEpisodes.includes(k); }
+function isSeasonUnlocked(s) { return getEpisodeDate(s, 1) <= new Date(); }
 
-            function updateCountdown() {
-                const now = new Date();
-                let nextDate = null, nextSeason, nextEpisode;
-                for (let s = 1; s <= TOTAL_SEASONS; s++) {
-                    for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
-                        const date = getEpisodeDate(s, e);
-                        if (date > now) { if (!nextDate || date < nextDate) { nextDate = date; nextSeason = s; nextEpisode = e; } break; }
-                    }
-                    if (nextDate) break;
-                }
-                const daysEl = document.getElementById('countDays');
-                if (!daysEl) return;
-                if (!nextDate) {
-                    ['Days','Hours','Mins','Secs'].forEach(id => document.getElementById('count'+id).textContent = '--');
-                    document.getElementById('nextEpisodeInfo').textContent = '🎉 All episodes released!';
-                    return;
-                }
-                const diff = nextDate - now;
-                document.getElementById('countDays').textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
-                document.getElementById('countHours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
-                document.getElementById('countMins').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
-                document.getElementById('countSecs').textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
-                document.getElementById('nextEpisodeInfo').textContent = `📅 Next: Season ${nextSeason}, Episode ${nextEpisode} — ${nextDate.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}`;
-            }
+// =====================================================================
+// ==================== SEASON BACKGROUND CROSS-FADE ===================
+// =====================================================================
+function updateSeasonBackground(season) {
+    const filename = getSeasonBgFilename(season);
+    const url = `${RELEASE_BASE_URL}${filename}?raw=true`;
 
-            function buildSeasonSelector() {
-                const sel = document.getElementById('seasonSelector');
-                if (!sel) return;
-                sel.innerHTML = '';
-                for (let s = 1; s <= TOTAL_SEASONS; s++) {
-                    const tab = document.createElement('div'); tab.className = 'season-tab';
-                    if (s === currentViewingSeason) tab.classList.add('active');
-                    if (isSeasonUnlocked(s)) {
-                        tab.textContent = `Season ${s}`;
-                        tab.addEventListener('click', () => { currentViewingSeason = s; buildSeasonSelector(); renderEpisodes(); document.getElementById('seasonTitleDisplay').textContent = `Season ${s}`; });
-                    } else {
-                        tab.classList.add('locked');
-                        tab.innerHTML = `Season ${s} 🔒`;
-                    }
-                    sel.appendChild(tab);
-                }
-            }
+    const layerA = document.getElementById('seasonBgA');
+    const layerB = document.getElementById('seasonBgB');
+    const visibleLayer = bgActiveLayer === 'a' ? layerA : layerB;
+    const hiddenLayer = bgActiveLayer === 'a' ? layerB : layerA;
 
-            function renderEpisodes() {
-                const grid = document.getElementById('episodeGrid');
-                if (!grid) return;
-                grid.innerHTML = '';
-                const now = new Date();
-                let firstUnreleased = null;
-                for (let s = 1; s <= TOTAL_SEASONS; s++) {
-                    for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
-                        if (getEpisodeDate(s, e) > now) { firstUnreleased = { season: s, episode: e }; break; }
-                    }
-                    if (firstUnreleased) break;
-                }
-                for (let ep = 1; ep <= EPISODES_PER_SEASON; ep++) {
-                    const releaseDate = getEpisodeDate(currentViewingSeason, ep);
-                    const isReleased = releaseDate <= now;
-                    const fileKey = getFileKey(currentViewingSeason, ep);
-                    const isUploaded = isEpisodeAvailable(fileKey);
-                    const isAvailable = isReleased && isUploaded;
-                    const isNext = firstUnreleased && firstUnreleased.season === currentViewingSeason && firstUnreleased.episode === ep && !isReleased;
-                    
-                    console.log(`Ep. ${ep}: ${fileKey} | Released: ${isReleased} | Uploaded: ${isUploaded} | Status: ${isAvailable?'Available':isNext?'Next':'Coming'}`);
+    const img = new Image();
+    img.onload = () => {
+        hiddenLayer.style.backgroundImage = `url('${url}')`;
+        void hiddenLayer.offsetWidth;
+        hiddenLayer.classList.add('active');
+        visibleLayer.classList.remove('active');
+        bgActiveLayer = bgActiveLayer === 'a' ? 'b' : 'a';
+    };
+    img.onerror = () => {
+        // Silent fallback: keeps previous bg
+    };
+    img.src = url;
+}
 
-                    const card = document.createElement('div'); card.className = 'episode-card';
-                    if (isAvailable) card.classList.add('available');
-                    if (isNext) card.classList.add('next-episode');
-                    card.innerHTML = `
-                        <div class="episode-number">Ep. ${String(ep).padStart(2,'0')}</div>
-                        <div class="episode-title-area">Season ${currentViewingSeason}, Episode ${ep}</div>
-                        <span class="episode-status ${isAvailable?'status-available':isNext?'status-next':'status-coming'}">${isAvailable?'✅ Available Now':isNext?'⏳ Next Release':isReleased?'⏳ Awaiting Upload':'🔒 Coming Soon'}</span>
-                        <div class="episode-date">${releaseDate.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'})}</div>
-                        ${isAvailable?'<div class="read-now-badge">📖 READ</div>':''}
-                    `;
-                    if (isAvailable) { card.addEventListener('click', () => openPdfViewer(fileKey, currentViewingSeason, ep)); card.style.cursor = 'pointer'; }
-                    grid.appendChild(card);
-                }
-                document.getElementById('seasonTitleDisplay').textContent = `Season ${currentViewingSeason}`;
-            }
+// =====================================================================
+// ======================== 3D BACKGROUND SCENE ========================
+// =====================================================================
+let scene, camera, renderer, crystals = [], particles, clock;
+let mouseX = 0, mouseY = 0, camCurrentX = 0, camCurrentY = 2;
 
-            function openPdfViewer(fileKey, season, episode) {
-                const pdfUrl = RELEASE_BASE_URL + fileKey + '.pdf?raw=true';
-                document.getElementById('pdfModalTitle').textContent = `📖 The Beg — Season ${season}, Episode ${episode}`;
-                document.getElementById('pdfIframe').src = pdfUrl;
-                document.getElementById('pdfModal').classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
+function init3D() {
+    const canvas = document.getElementById('threeCanvas');
+    const isMobile = window.innerWidth < 768;
 
-            function closePdfViewer() {
-                document.getElementById('pdfModal').classList.remove('active');
-                document.body.style.overflow = '';
-                document.getElementById('pdfIframe').src = '';
-            }
+    scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x05050a, 0.03);
 
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && ['s','p','u','S','P','U'].includes(e.key)) e.preventDefault();
-                if (e.ctrlKey && e.shiftKey && ['s','S','i','I'].includes(e.key)) e.preventDefault();
-                if (e.key === 'F12' || e.key === 'PrintScreen') e.preventDefault();
-            });
-            document.addEventListener('dragstart', e => e.preventDefault());
-            document.addEventListener('keydown', function(e) {
-                if (document.getElementById('pdfModal').classList.contains('active') && e.key === 'Escape') { e.preventDefault(); closePdfViewer(); }
-            });
-            document.getElementById('pdfModal').addEventListener('click', function(e) { if (e.target === this) closePdfViewer(); });
+    camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 500);
+    camera.position.set(0, 2, 18);
 
-            window.closePdfViewer = closePdfViewer;
+    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
 
-            function init() {
-                initParticles();
+    scene.add(new THREE.AmbientLight(0xd4a853, 0.4));
+    const dirLight = new THREE.DirectionalLight(0xf0d078, 0.85);
+    dirLight.position.set(8, 15, 10);
+    scene.add(dirLight);
+    const pl1 = new THREE.PointLight(0xd4a853, 2.5, 60); pl1.position.set(-12, 8, 5); scene.add(pl1);
+    const pl2 = new THREE.PointLight(0xc0392b, 1.5, 50); pl2.position.set(15, -5, -5); scene.add(pl2);
+
+    const geometries = [
+        new THREE.OctahedronGeometry(1, 0),
+        new THREE.IcosahedronGeometry(1, 0),
+        new THREE.TetrahedronGeometry(1.1, 0),
+        new THREE.DodecahedronGeometry(1, 0),
+        new THREE.OctahedronGeometry(1, 1)
+    ];
+
+    const count = isMobile ? 10 : 20;
+    for (let i = 0; i < count; i++) {
+        const geo = geometries[Math.floor(Math.random() * geometries.length)];
+        const hue = Math.random();
+        let color;
+        if (hue < 0.75) color = 0xd4a853;
+        else if (hue < 0.9) color = 0xc0392b;
+        else color = 0x4a6fa5;
+
+        const mat = new THREE.MeshStandardMaterial({
+            color, emissive: color, emissiveIntensity: 0.35,
+            metalness: 0.92, roughness: 0.18,
+            flatShading: true, transparent: true, opacity: 0.85
+        });
+
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.set(
+            (Math.random() - 0.5) * 46,
+            (Math.random() - 0.5) * 22 + 2,
+            -Math.random() * 32 - 6
+        );
+        mesh.scale.setScalar(Math.random() * 0.9 + 0.35);
+        mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+        mesh.userData = {
+            rotX: (Math.random() - 0.5) * 0.012,
+            rotY: (Math.random() - 0.5) * 0.012,
+            rotZ: (Math.random() - 0.5) * 0.008,
+            floatSpeed: Math.random() * 0.6 + 0.3,
+            floatAmp: Math.random() * 0.6 + 0.25,
+            initialY: mesh.position.y,
+            time: Math.random() * Math.PI * 2
+        };
+        scene.add(mesh);
+        crystals.push(mesh);
+    }
+
+    const pc = isMobile ? 500 : 1200;
+    const positions = new Float32Array(pc * 3);
+    const colors = new Float32Array(pc * 3);
+    for (let i = 0; i < pc; i++) {
+        positions[i * 3]     = (Math.random() - 0.5) * 90;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 45;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 70;
+        const c = Math.random();
+        if (c < 0.7) { colors[i*3]=0.83; colors[i*3+1]=0.66; colors[i*3+2]=0.33; }
+        else if (c < 0.9) { colors[i*3]=0.75; colors[i*3+1]=0.22; colors[i*3+2]=0.17; }
+        else { colors[i*3]=0.35; colors[i*3+1]=0.5; colors[i*3+2]=0.85; }
+    }
+    const pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    pGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    const pMat = new THREE.PointsMaterial({
+        size: isMobile ? 0.12 : 0.09, vertexColors: true,
+        transparent: true, opacity: 0.8, depthWrite: false,
+        blending: THREE.AdditiveBlending, sizeAttenuation: true
+    });
+    particles = new THREE.Points(pGeo, pMat);
+    scene.add(particles);
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+    document.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+            mouseX = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
+            mouseY = (e.touches[0].clientY / window.innerHeight - 0.5) * 2;
+        }
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    clock = new THREE.Clock();
+    animate3D();
+}
+
+function animate3D() {
+    requestAnimationFrame(animate3D);
+    const t = clock.getElapsedTime();
+    camCurrentX += (mouseX * 3.5 - camCurrentX) * 0.035;
+    camCurrentY += (2 - mouseY * 2.5 - camCurrentY) * 0.035;
+    camera.position.x = camCurrentX;
+    camera.position.y = camCurrentY;
+    camera.lookAt(0, 0, -12);
+
+    for (let i = 0; i < crystals.length; i++) {
+        const c = crystals[i];
+        c.rotation.x += c.userData.rotX;
+        c.rotation.y += c.userData.rotY;
+        c.rotation.z += c.userData.rotZ;
+        c.position.y = c.userData.initialY + Math.sin(t * c.userData.floatSpeed + c.userData.time) * c.userData.floatAmp;
+    }
+    if (particles) {
+        particles.rotation.y = t * 0.018;
+        particles.rotation.x = Math.sin(t * 0.1) * 0.05;
+    }
+    renderer.render(scene, camera);
+}
+
+// ============ CURSOR GLOW ============
+function initCursorGlow() {
+    const glow = document.getElementById('cursorGlow');
+    let gx = 0, gy = 0, tx = 0, ty = 0;
+    document.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; });
+    (function loop() {
+        gx += (tx - gx) * 0.12;
+        gy += (ty - gy) * 0.12;
+        glow.style.transform = `translate(${gx}px, ${gy}px) translate(-50%, -50%)`;
+        requestAnimationFrame(loop);
+    })();
+}
+
+// ============ COUNTDOWN ============
+function updateCountdown() {
+    const now = new Date();
+    let next = null, ns, ne;
+    for (let s = 1; s <= TOTAL_SEASONS; s++) {
+        for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
+            const d = getEpisodeDate(s, e);
+            if (d > now) { if (!next || d < next) { next = d; ns = s; ne = e; } break; }
+        }
+        if (next) break;
+    }
+    if (!next) {
+        ['Days','Hours','Mins','Secs'].forEach(id => document.getElementById('count' + id).textContent = '--');
+        document.getElementById('nextEpisodeInfo').textContent = '🎉 All episodes released!';
+        return;
+    }
+    const diff = next - now;
+    document.getElementById('countDays').textContent  = String(Math.floor(diff / 86400000)).padStart(2, '0');
+    document.getElementById('countHours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+    document.getElementById('countMins').textContent  = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+    document.getElementById('countSecs').textContent  = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+    document.getElementById('nextEpisodeInfo').textContent =
+        `📅 Next: Season ${ns}, Episode ${ne} — ${next.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`;
+}
+
+// ============ SEASON SELECTOR ============
+function buildSeasonSelector() {
+    const sel = document.getElementById('seasonSelector');
+    sel.innerHTML = '';
+    for (let s = 1; s <= TOTAL_SEASONS; s++) {
+        const tab = document.createElement('div');
+        tab.className = 'season-tab';
+        if (s === currentViewingSeason) tab.classList.add('active');
+        if (isSeasonUnlocked(s)) {
+            tab.textContent = `Season ${s}`;
+            tab.addEventListener('click', () => {
+                if (s === currentViewingSeason) return;
+                currentViewingSeason = s;
                 buildSeasonSelector();
-                renderEpisodes();
-                updateCountdown();
-                setInterval(updateCountdown, 1000);
-                setInterval(() => { buildSeasonSelector(); renderEpisodes(); }, 3600000);
+                updateSeasonBackground(s);
+                renderCarousel();
+            });
+        } else {
+            tab.classList.add('locked');
+            tab.innerHTML = `Season ${s} 🔒`;
+        }
+        sel.appendChild(tab);
+    }
+}
+
+// =====================================================================
+// ========================== 3D CAROUSEL ==============================
+// =====================================================================
+function renderCarousel() {
+    const ring = document.getElementById('carouselRing');
+    ring.innerHTML = '';
+    currentCardIndex = 0;
+    ringRotation = 0;
+
+    const isMobile = window.innerWidth < 768;
+    const cardW = isMobile ? 200 : 260;
+    const cardH = isMobile ? 300 : 380;
+    const radius = isMobile ? 290 : 420;
+
+    document.documentElement.style.setProperty('--card-w', cardW + 'px');
+    document.documentElement.style.setProperty('--card-h', cardH + 'px');
+
+    const data = seriesData[currentViewingSeason] || [];
+    const n = data.length;
+    const step = 360 / n;
+    const now = new Date();
+
+    document.getElementById('seasonTitleDisplay').textContent =
+        `Season ${currentViewingSeason}: ${SEASON_THEMES[currentViewingSeason]}`;
+
+    // Find first unreleased episode globally
+    let firstUnreleased = null;
+    outer: for (let s = 1; s <= TOTAL_SEASONS; s++) {
+        for (let e = 1; e <= EPISODES_PER_SEASON; e++) {
+            if (getEpisodeDate(s, e) > now) { firstUnreleased = { s, e }; break outer; }
+        }
+    }
+
+    data.forEach((ep, i) => {
+        const epNum = i + 1;
+        const releaseDate = getEpisodeDate(currentViewingSeason, epNum);
+        const isReleased = releaseDate <= now;
+        const fileKey = getFileKey(currentViewingSeason, epNum);
+        const isUploaded = isEpisodeAvailable(fileKey);
+        const isAvailable = isReleased && isUploaded;
+        const isNext = firstUnreleased && firstUnreleased.s === currentViewingSeason && firstUnreleased.e === epNum && !isReleased;
+
+        const angle = i * step;
+        const card = document.createElement('div');
+        card.className = 'carousel-card';
+        card.dataset.index = i;
+        card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+
+        let statusHTML = '';
+        if (isAvailable) statusHTML = '<span class="ep-front-status status-available">✓ Read</span>';
+        else if (isNext) statusHTML = '<span class="ep-front-status status-next">⏳ Soon</span>';
+        else if (isReleased) statusHTML = '<span class="ep-front-status status-coming">⏳ Pending</span>';
+        else statusHTML = '<span class="ep-front-status status-coming">🔒 Locked</span>';
+
+        const frontMid = (!isAvailable && !isNext) ?
+            `<div class="ep-lock-icon">${isReleased ? '⏳' : '🔒'}</div>` :
+            `<div>
+                <div class="ep-num-big">${String(epNum).padStart(2, '0')}</div>
+                <div class="ep-label">Episode ${epNum}</div>
+             </div>`;
+
+        const backHTML = isAvailable ? `
+            <div>
+                <span class="ep-back-tag">${ep.g}</span>
+                <div class="ep-back-title">${ep.t}</div>
+                <div class="ep-back-desc">${ep.d}</div>
+            </div>
+            <div>
+                <button class="btn-read-3d" data-filekey="${fileKey}" data-season="${currentViewingSeason}" data-epnum="${epNum}" data-title="${ep.t.replace(/"/g, '&quot;')}" data-desc="${ep.d.replace(/"/g, '&quot;')}">📖 READ NOW</button>
+                <div class="ep-back-hint">↻ Tap card to flip back</div>
+            </div>
+        ` : `
+            <div>
+                <span class="ep-back-tag">${ep.g}</span>
+                <div class="ep-back-title">${ep.t}</div>
+                <div class="ep-back-desc">${ep.d}</div>
+            </div>
+            <div class="ep-back-hint">${isNext ? '⏳ Releasing soon' : isReleased ? '⏳ Awaiting upload' : '🔒 Not yet released'}</div>
+        `;
+
+        card.innerHTML = `
+            <div class="card-inner">
+                <div class="card-front">
+                    ${statusHTML}
+                    ${frontMid}
+                    <div class="ep-date-line">${releaseDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</div>
+                </div>
+                <div class="card-back">
+                    ${backHTML}
+                </div>
+            </div>
+        `;
+
+        card.dataset.available = isAvailable ? '1' : '0';
+        ring.appendChild(card);
+    });
+
+    // Wire up READ buttons
+    ring.querySelectorAll('.btn-read-3d').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openPdfViewer(
+                btn.dataset.filekey,
+                parseInt(btn.dataset.season),
+                parseInt(btn.dataset.epnum),
+                btn.dataset.title,
+                btn.dataset.desc
+            );
+        });
+    });
+
+    applyRotation(0, true);
+    updateCardOpacities();
+}
+
+// Apply rotation angle to the ring + set currentCardIndex
+function applyRotation(newRot, instant) {
+    ringRotation = newRot;
+    const ring = document.getElementById('carouselRing');
+    if (instant) ring.style.transition = 'none';
+    ring.style.transform = `rotateY(${newRot}deg)`;
+    if (instant) {
+        void ring.offsetWidth;
+        ring.style.transition = '';
+    }
+}
+
+// Rotate to a specific card index (shortest path)
+function animateToCard(targetIndex) {
+    const n = (seriesData[currentViewingSeason] || []).length;
+    if (!n) return;
+    const step = 360 / n;
+
+    // Unflip any flipped card if we're rotating
+    if (targetIndex !== currentCardIndex) {
+        document.querySelectorAll('.card-inner.flipped').forEach(el => el.classList.remove('flipped'));
+    }
+
+    const idealRotation = -targetIndex * step;
+    let targetRingRot = idealRotation;
+
+    // Find shortest equivalent rotation to current ringRotation
+    while (targetRingRot - ringRotation > 180)  targetRingRot -= 360;
+    while (ringRotation - targetRingRot > 180)  targetRingRot += 360;
+
+    currentCardIndex = targetIndex;
+    applyRotation(targetRingRot, false);
+    updateCardOpacities();
+}
+
+function updateCardOpacities(rotationOverride) {
+    const ring = document.getElementById('carouselRing');
+    const cards = ring.children;
+    const n = cards.length;
+    if (!n) return;
+    const step = 360 / n;
+    const rot = (rotationOverride !== undefined) ? rotationOverride : ringRotation;
+
+    for (let i = 0; i < n; i++) {
+        const card = cards[i];
+        let effective = i * step + rot;
+        effective = ((effective % 360) + 360) % 360;
+        if (effective > 180) effective -= 360;
+
+        const absAngle = Math.abs(effective);
+        const opacity = Math.max(0, Math.cos(absAngle * Math.PI / 180));
+
+        card.style.opacity = opacity.toFixed(3);
+        card.style.pointerEvents = opacity < 0.15 ? 'none' : 'auto';
+    }
+}
+
+// =====================================================================
+// ==================== CAROUSEL INTERACTION ===========================
+// =====================================================================
+const DRAG_THRESHOLD = 10;   // px before we consider it a drag
+const SENSITIVITY   = 0.4;   // degrees per pixel
+
+function initCarouselInteraction() {
+    const stage = document.getElementById('carouselStage');
+    const ring = document.getElementById('carouselRing');
+
+    let isDown = false;
+    let hasDragged = false;
+    let startX = 0, startY = 0;
+    let startRotation = 0;
+    let pointerId = null;
+    let downTarget = null;
+
+    stage.addEventListener('pointerdown', (e) => {
+        if (isModalOpen()) return;
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+
+        isDown = true;
+        hasDragged = false;
+        startX = e.clientX;
+        startY = e.clientY;
+        startRotation = ringRotation;
+        pointerId = e.pointerId;
+        downTarget = e.target;
+
+        ring.classList.add('dragging');
+        stage.classList.add('grabbing');
+
+        try { stage.setPointerCapture(pointerId); } catch (_) {}
+    });
+
+    stage.addEventListener('pointermove', (e) => {
+        if (!isDown || e.pointerId !== pointerId) return;
+
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        if (!hasDragged) {
+            if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+            hasDragged = true;
+        }
+
+        const newRotation = startRotation + dx * SENSITIVITY;
+        ringRotation = newRotation;
+        ring.style.transform = `rotateY(${newRotation}deg)`;
+        updateCardOpacities(newRotation);
+    });
+
+    function finishPointer(e) {
+        if (!isDown) return;
+        isDown = false;
+
+        ring.classList.remove('dragging');
+        stage.classList.remove('grabbing');
+
+        try { stage.releasePointerCapture(pointerId); } catch (_) {}
+        const wasDragging = hasDragged;
+        const savedTarget = downTarget;
+
+        pointerId = null;
+        hasDragged = false;
+        downTarget = null;
+
+        if (wasDragging) {
+            snapToNearest();
+        } else {
+            handleTap(savedTarget);
+        }
+    }
+
+    stage.addEventListener('pointerup', finishPointer);
+    stage.addEventListener('pointercancel', finishPointer);
+    stage.addEventListener('lostpointercapture', finishPointer);
+
+    function snapToNearest() {
+        const n = (seriesData[currentViewingSeason] || []).length;
+        if (!n) return;
+        const step = 360 / n;
+        const rawIndex = -ringRotation / step;
+        const nearest = Math.round(rawIndex);
+        // Normalize to [0, n)
+        const targetIndex = ((nearest % n) + n) % n;
+        animateToCard(targetIndex);
+    }
+
+    function handleTap(target) {
+        if (!target) return;
+        if (target.closest('.btn-read-3d')) return;  // button handles its own click
+
+        const card = target.closest('.carousel-card');
+        if (!card) return;
+
+        const idx = parseInt(card.dataset.index, 10);
+        if (idx === currentCardIndex) {
+            if (card.dataset.available === '1') {
+                const inner = card.querySelector('.card-inner');
+                inner.classList.toggle('flipped');
             }
-            init();
-        })();
-    </script>
+        } else {
+            animateToCard(idx);
+        }
+    }
+
+    // Keyboard nav
+    document.addEventListener('keydown', (e) => {
+        if (isModalOpen()) return;
+        const n = (seriesData[currentViewingSeason] || []).length;
+        if (!n) return;
+        if (e.key === 'ArrowLeft')  animateToCard((currentCardIndex - 1 + n) % n);
+        if (e.key === 'ArrowRight') animateToCard((currentCardIndex + 1) % n);
+    });
+}
+
+function isModalOpen() {
+    return document.getElementById('pdfModal').classList.contains('active');
+}
+
+// ============ MODAL ============
+function openPdfViewer(fileKey, season, episode, title, desc) {
+    const pdfUrl = RELEASE_BASE_URL + fileKey + '.pdf?raw=true';
+    document.getElementById('pdfModalTitle').textContent = `📖 S${season} E${episode}: ${title}`;
+    document.getElementById('pdfModalDesc').textContent = desc;
+    document.getElementById('pdfIframe').src = pdfUrl;
+    document.getElementById('pdfModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closePdfViewer() {
+    document.getElementById('pdfModal').classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('pdfIframe').src = '';
+}
+window.closePdfViewer = closePdfViewer;
+
+document.getElementById('pdfModal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closePdfViewer();
+});
+
+// ============ PROTECTION ============
+document.addEventListener('contextmenu', (e) => e.preventDefault());
+document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && ['s', 'p', 'u', 'S', 'P', 'U'].includes(e.key)) e.preventDefault();
+    if (e.ctrlKey && e.shiftKey && ['s', 'S', 'i', 'I'].includes(e.key)) e.preventDefault();
+    if (e.key === 'F12') e.preventDefault();
+    if (isModalOpen() && e.key === 'Escape') {
+        e.preventDefault();
+        closePdfViewer();
+    }
+});
+document.addEventListener('dragstart', (e) => e.preventDefault());
+
+// ============ INIT ============
+(function init() {
+    init3D();
+    initCursorGlow();
+    buildSeasonSelector();
+    updateSeasonBackground(currentViewingSeason);
+    renderCarousel();
+    initCarouselInteraction();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    setInterval(() => { buildSeasonSelector(); renderCarousel(); }, 3600000);
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => renderCarousel(), 300);
+    });
+})();
+</script>
 </body>
 </html>
